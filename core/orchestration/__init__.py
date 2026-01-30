@@ -1,16 +1,19 @@
 """
-Resilience Module - Circuit breaker and atomic commit patterns
+Orchestration Module - Multi-agent coordination and workflow management
 """
 
-# Try to import the full version, fall back to standalone
+# Optional resilience components - only import if available
 try:
-    from .circuit_breaker import CircuitBreaker, CircuitState, CircuitBreakerError
+    from .resilience.circuit_breaker import CircuitBreaker, CircuitState, CircuitBreakerError
 except ImportError:
-    from .circuit_breaker_standalone import CircuitBreaker, CircuitState, CircuitBreakerError
+    CircuitBreaker = None
+    CircuitState = None
+    CircuitBreakerError = None
 
 try:
-    from .atomic_commit_manager import AtomicCommitManager
+    from .resilience.atomic_commit_manager import AtomicCommitManager
 except ImportError:
-    from .atomic_commit_standalone import AtomicCommitManager
+    AtomicCommitManager = None
 
-__all__ = ['CircuitBreaker', 'CircuitState', 'CircuitBreakerError', 'AtomicCommitManager']
+# Core orchestration components are always available
+__all__ = []  # Components should be imported directly from their modules

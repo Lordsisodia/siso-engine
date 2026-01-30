@@ -21,10 +21,14 @@ import click
 
 # Add engine directory to path to import main
 engine_dir = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(engine_dir))
-sys.path.insert(0, str(engine_dir / "infrastructure"))
+core_dir = engine_dir / "core"
 
-from main import get_blackbox5
+# Add paths to sys.path
+sys.path.insert(0, str(engine_dir))
+sys.path.insert(0, str(core_dir))
+
+# Import from infrastructure module
+from infrastructure.main import get_blackbox5
 
 
 @click.group()

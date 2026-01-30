@@ -22,21 +22,15 @@ from pathlib import Path
 # Find the infrastructure directory by going up from interface/api
 api_dir = Path(__file__).parent
 interface_dir = api_dir.parent  # Go up to interface/
-core_dir = interface_dir.parent  # Go up to 01-core/
-infrastructure_path = core_dir / "infrastructure"
+core_dir = interface_dir.parent  # Go up to core/
+engine_dir = core_dir.parent  # Go up to 2-engine/
 
 # Add paths to sys.path
+sys.path.insert(0, str(engine_dir))
 sys.path.insert(0, str(core_dir))
-sys.path.insert(0, str(infrastructure_path))
 
-# Import with explicit module path to avoid circular import
-import importlib.util
-spec = importlib.util.spec_from_file_location("blackbox5_main", str(infrastructure_path / "main.py"))
-blackbox5_main = importlib.util.module_from_spec(spec)
-sys.modules['blackbox5_main'] = blackbox5_main
-spec.loader.exec_module(blackbox5_main)
-
-get_blackbox5 = blackbox5_main.get_blackbox5
+# Import from infrastructure module
+from infrastructure.main import get_blackbox5
 
 # ============================================================================
 # Pydantic Models
