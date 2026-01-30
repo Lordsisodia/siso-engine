@@ -28,68 +28,68 @@ Execute ONE assigned task with full Black Box 5 integration:
 
 ## Environment (Full Paths)
 
-**Working Directory:** `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/`
+**Working Directory:** `~/.blackbox5/`
 
 ### Core Engine Paths
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/` - RALF engine
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/routes.yaml` - BMAD command routing
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py` - Phase gate enforcement
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/context_budget.py` - Context budget management
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/` - BMAD skills directory
+- `~/.blackbox5/2-engine/.autonomous/` - RALF engine
+- `~/.blackbox5/2-engine/.autonomous/routes.yaml` - BMAD command routing
+- `~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py` - Phase gate enforcement
+- `~/.blackbox5/2-engine/.autonomous/lib/context_budget.py` - Context budget management
+- `~/.blackbox5/2-engine/.autonomous/skills/` - BMAD skills directory
 
 ### Project Memories (Multi-Project Access)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/` - RALF self-improvement memory
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/` - Black Box 5 core memory
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/siso-internal/` - SISO-INTERNAL project memory
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/management/` - Management project memory
+- `~/.blackbox5/5-project-memory/ralf-core/` - RALF self-improvement memory
+- `~/.blackbox5/5-project-memory/blackbox5/` - Black Box 5 core memory
+- `~/.blackbox5/5-project-memory/siso-internal/` - SISO-INTERNAL project memory
+- `~/.blackbox5/5-project-memory/management/` - Management project memory
 
 ### Documentation & Guides
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/` - All documentation
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/01-theory/` - Theory and concepts
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/02-implementation/` - Implementation guides
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/03-guides/` - User guides
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/04-project/` - Project-specific docs
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/development/reference/templates/specs/` - Specification templates
+- `~/.blackbox5/1-docs/` - All documentation
+- `~/.blackbox5/1-docs/01-theory/` - Theory and concepts
+- `~/.blackbox5/1-docs/02-implementation/` - Implementation guides
+- `~/.blackbox5/1-docs/03-guides/` - User guides
+- `~/.blackbox5/1-docs/04-project/` - Project-specific docs
+- `~/.blackbox5/1-docs/development/reference/templates/specs/` - Specification templates
 
 ### Roadmap & Planning
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/` - All roadmaps and plans
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/00-proposed/` - Proposed plans
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/01-research/` - Research phase
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/02-design/` - Design phase
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/03-planned/` - Planned implementations
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/04-active/` - Active work
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/05-completed/` - Completed work
+- `~/.blackbox5/6-roadmap/` - All roadmaps and plans
+- `~/.blackbox5/6-roadmap/00-proposed/` - Proposed plans
+- `~/.blackbox5/6-roadmap/01-research/` - Research phase
+- `~/.blackbox5/6-roadmap/02-design/` - Design phase
+- `~/.blackbox5/6-roadmap/03-planned/` - Planned implementations
+- `~/.blackbox5/6-roadmap/04-active/` - Active work
+- `~/.blackbox5/6-roadmap/05-completed/` - Completed work
 
 ### Engine Components
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/core/` - Core engine
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/runtime/` - Runtime systems
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/shell/` - Shell scripts
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/skills/` - All skills
+- `~/.blackbox5/2-engine/core/` - Core engine
+- `~/.blackbox5/2-engine/runtime/` - Runtime systems
+- `~/.blackbox5/2-engine/shell/` - Shell scripts
+- `~/.blackbox5/2-engine/skills/` - All skills
 
 ### GUI & Interface
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/3-gui/` - All GUI components
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/3-gui/apps/vibe-kanban/` - Vibe Kanban app
+- `~/.blackbox5/3-gui/` - All GUI components
+- `~/.blackbox5/3-gui/apps/vibe-kanban/` - Vibe Kanban app
 
 ### BMAD Skills (Automatic Routing)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-pm.md` - Product Manager (John)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-architect.md` - Architect (Winston)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-analyst.md` - Analyst (Mary)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-sm.md` - Scrum Master (Bob)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-ux.md` - UX Designer (Sally)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-dev.md` - Developer (Amelia)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-qa.md` - QA Engineer (Quinn)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-tea.md` - Test Architect (TEA)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-quick-flow.md` - Quick Flow (Barry)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-pm.md` - Product Manager (John)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-architect.md` - Architect (Winston)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-analyst.md` - Analyst (Mary)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-sm.md` - Scrum Master (Bob)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-ux.md` - UX Designer (Sally)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-dev.md` - Developer (Amelia)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-qa.md` - QA Engineer (Quinn)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-tea.md` - Test Architect (TEA)
+- `~/.blackbox5/2-engine/.autonomous/skills/bmad-quick-flow.md` - Quick Flow (Barry)
 
 ### Version History
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/versions/v1/` - Agent-1.x series
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/versions/v2/` - Agent-2.0/2.1
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.2/` - Agent-2.2 (Enforcement)
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.3/` - Agent-2.3 (Integration) - YOU ARE HERE
+- `~/.blackbox5/2-engine/.autonomous/prompt-progression/versions/v1/` - Agent-1.x series
+- `~/.blackbox5/2-engine/.autonomous/prompt-progression/versions/v2/` - Agent-2.0/2.1
+- `~/.blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.2/` - Agent-2.2 (Enforcement)
+- `~/.blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.3/` - Agent-2.3 (Integration) - YOU ARE HERE
 
 **GitHub Configuration:**
 - Repo: `https://github.com/Lordsisodia/blackbox5`
-- Branch: `feature/tier2-skills-integration`
+- Branch: `main`
 
 ---
 

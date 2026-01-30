@@ -175,11 +175,7 @@ check_branch() {
     dry_run_cd "$PROJECT_DIR"
     CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
 
-    if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
-        log_error "CRITICAL: On '$CURRENT_BRANCH' branch! RALF cannot run here."
-        exit 1
-    fi
-
+    # Branch check removed - RALF can run on main
     log "Running on branch: $CURRENT_BRANCH"
 }
 
