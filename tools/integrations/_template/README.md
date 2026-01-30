@@ -1,5 +1,10 @@
 # {SERVICE_NAME} Integration for BlackBox5
 
+> **NOTE:** This is a template directory for creating new integrations.
+> Files contain placeholder syntax like `{SERVICE_NAME}`, `{ServiceName}`, etc.
+> which should be replaced when creating a new integration from this template.
+> These placeholder markers intentionally cause syntax errors - they are not bugs.
+
 {BRIEF_DESCRIPTION_OF_WHAT_THIS_INTEGRATION_DOES}
 
 ## Features

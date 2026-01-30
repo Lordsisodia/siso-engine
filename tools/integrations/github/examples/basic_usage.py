@@ -195,7 +195,7 @@ async def example_5_full_workflow():
     outcome = TaskOutcome(
         success=True,
         patterns=["Redis-based rate limiting is efficient"],
-        gotchas["Rate limit headers must be on ALL responses"],
+        gotchas=["Rate limit headers must be on ALL responses"],
         deliverables=["Rate limiting middleware", "Error handlers"],
         unit_test_status="passing",
         integration_test_status="passing",
