@@ -1,0 +1,61 @@
+# Decision Registry Template for Agent-2.2
+# Copy this file to each run directory as decision_registry.yaml
+
+run_id: "RUN-ID-PLACEHOLDER"
+task_id: "TASK-ID-PLACEHOLDER"
+created_at: "TIMESTAMP-PLACEHOLDER"
+
+# Registry metadata
+registry:
+  total_decisions: 0
+  reversible_decisions: 0
+  irreversible_decisions: 0
+  pending_verification: 0
+  verified_decisions: 0
+  rolled_back_decisions: 0
+
+# Decisions will be added here during execution
+decisions: []
+
+# Example decision structure (for reference):
+# decisions:
+#   - id: "DEC-{run_num}-{seq}"
+#     timestamp: "2026-01-30T10:15:00Z"
+#     phase: "PLAN"
+#     context: "Description of the decision context"
+#
+#     options_considered:
+#       - id: "OPT-001"
+#         description: "Option 1 description"
+#         pros: ["Advantage 1", "Advantage 2"]
+#         cons: ["Disadvantage 1", "Disadvantage 2"]
+#       - id: "OPT-002"
+#         description: "Option 2 description"
+#         pros: ["Advantage 1"]
+#         cons: ["Disadvantage 1", "Disadvantage 2"]
+#
+#     selected_option: "OPT-001"
+#     rationale: "Why this option was chosen"
+#
+#     assumptions:
+#       - id: "ASM-001"
+#         statement: "Assumption being made"
+#         risk_level: "LOW|MEDIUM|HIGH"
+#         verification_method: "How to verify"
+#         status: "PENDING_VERIFICATION|VERIFIED|FAILED"
+#
+#     reversibility: "LOW|MEDIUM|HIGH"
+#     rollback_complexity: "Description of rollback effort"
+#     rollback_steps:
+#       - "Step 1 to rollback"
+#       - "Step 2 to rollback"
+#
+#     verification:
+#       required: true|false
+#       verified_by: "Agent name or null"
+#       verified_at: "Timestamp or null"
+#       criteria:
+#         - "Criterion 1"
+#         - "Criterion 2"
+#
+#     status: "PROPOSED|DECIDED|VERIFIED|ROLLED_BACK"

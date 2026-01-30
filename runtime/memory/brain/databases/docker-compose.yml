@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # PostgreSQL with pgvector
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: blackbox4-brain-postgres
+    environment:
+      POSTGRES_DB: blackbox4_brain
+      POSTGRES_USER: blackbox4
+      POSTGRES_PASSWORD: blackbox4_brain_pass
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U blackbox4"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - brain-network
+    restart: unless-stopped
+
+  # Neo4j (optional, for Phase 3)
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: blackbox4-brain-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/blackbox4_brain_pass
+      NEO4J_dbms_memory_heap_initial__size: 512m
+      NEO4J_dbms_memory_heap_max__size: 1G
+      NEO4J_dbms_memory_pagecache_size: 512m
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - brain-network
+    restart: unless-stopped
+    profiles:
+      - neo4j  # Only start with --profile neo4j
+
+  # pgAdmin (optional, for management)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: blackbox4-brain-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@blackbox4.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - brain-network
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    profiles:
+      - admin  # Only start with --profile admin
+
+volumes:
+  postgres_data:
+    driver: local
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  brain-network:
+    driver: bridge

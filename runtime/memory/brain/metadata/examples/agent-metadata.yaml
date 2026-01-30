@@ -1,0 +1,91 @@
+# Example Agent Metadata
+# Artifact: Orchestrator Agent
+# Type: agent
+# Category: specialist
+
+id: "orchestrator-agent-v1"
+type: "agent"
+name: "Orchestrator Agent"
+category: "specialist"
+version: "1.0.0"
+
+# Location
+path: "1-agents/4-specialists/orchestrator.md"
+created: "2026-01-15"
+modified: "2026-01-15"
+
+# Content
+description: |
+  Main orchestrator agent for coordinating other agents and managing complex workflows.
+  Handles agent selection, task delegation, and result aggregation. This is the central
+  coordination point for multi-agent operations in Blackbox4.
+
+  Key capabilities:
+  - Agent selection and handoff
+  - Task decomposition and delegation
+  - Result aggregation and synthesis
+  - Error handling and retry logic
+  - Workflow orchestration
+
+tags:
+  - "orchestration"
+  - "coordination"
+  - "agent-handoff"
+  - "multi-agent"
+  - "workflow"
+  - "delegation"
+
+keywords:
+  - "orchestrate"
+  - "coordinate"
+  - "delegate"
+  - "manage"
+  - "dispatch"
+  - "coordinate"
+
+# Relationships
+depends_on:
+  - id: "deep-research-skill"
+    type: "skill"
+  - id: "agent-handoff-script"
+    type: "script"
+    version: ">=1.0.0"
+
+used_by:
+  - id: "ralph-agent"
+    type: "agent"
+
+relates_to:
+  - id: "ralph-runtime"
+    type: "library"
+    relationship: "uses"
+  - id: "planning-module"
+    type: "module"
+    relationship: "uses"
+
+# Classification
+phase: 4
+layer: "intelligence"
+
+# AI/Discovery
+# embedding_id: "emb-orchestrator-123"  # Assigned during ingestion
+
+# Status
+status: "active"
+stability: "high"
+
+# Ownership
+owner: "core-team"
+maintainer: "ai-system"
+
+# Documentation
+docs:
+  primary: ".docs/2-reference/agents.md#orchestrator"
+  examples: "1-agents/4-specialists/orchestrator-examples/"
+  api: ".docs/2-reference/agents-api.md"
+  guide: ".docs/5-workflows/orchestrator-workflow.md"
+
+# Metrics
+usage_count: 150
+last_used: "2026-01-15"
+success_rate: 0.95

@@ -1,0 +1,80 @@
+# Workflow: Validate Architecture
+# Validate Architecture
+
+name: validate-architecture
+command: VA
+description: Validate Architecture
+skill: bmad-architect
+agent: Winston
+complexity: complex
+steps:
+- name: load-architecture
+  title: Load Architecture
+  description: Load and parse architecture document
+  actions:
+  - Read architecture doc
+  - Understand design
+  - Identify scope
+- name: check-coverage
+  title: Check Coverage
+  description: Verify architecture covers all requirements
+  actions:
+  - Functional coverage
+  - NFR coverage
+  - Edge cases
+- name: check-feasibility
+  title: Check Feasibility
+  description: Verify design is implementable
+  actions:
+  - Technical feasibility
+  - Resource requirements
+  - Timeline realism
+- name: check-consistency
+  title: Check Consistency
+  description: Verify design is internally consistent
+  actions:
+  - Interface consistency
+  - Data flow consistency
+  - Pattern consistency
+- name: generate-report
+  title: Generate Report
+  description: Create validation report
+  actions:
+  - List issues
+  - Provide recommendations
+  - Rate completeness
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: va-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/validate-architecture-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
+- Components defined
+- Interfaces specified
+- Data model designed
+- NFRs addressed
+party_mode_agents:
+- bmad-architect
+- bmad-dev
+- bmad-qa

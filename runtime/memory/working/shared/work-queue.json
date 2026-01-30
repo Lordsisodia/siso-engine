@@ -1,0 +1,784 @@
+[
+  {
+    "id": "siso_2026_01",
+    "title": "SISO Internal - January 2026 Tasks",
+    "description": "Complete SISO internal improvements and prepare for GitHub testing",
+    "priority": "high",
+    "status": "in_progress",
+    "created_at": "2026-01-15T10:00:00Z",
+    "subtasks": [
+      {
+        "id": "sub_001",
+        "title": "Refine domain boundaries based on real issue clusters",
+        "phase": "planning",
+        "status": "pending",
+        "domain": "architecture",
+        "checklist": [
+          "[ ] Review existing domains/ structure",
+          "[ ] Analyze feedback batch patterns",
+          "[ ] Identify domain overlap issues",
+          "[ ] Create domain boundary proposals",
+          "[ ] Get approval on new boundaries",
+          "[ ] Update domain documentation",
+          "[ ] Migrate content to new structure"
+        ]
+      },
+      {
+        "id": "sub_002",
+        "title": "Decide and implement status tracking system",
+        "phase": "design",
+        "status": "pending",
+        "domain": "process",
+        "checklist": [
+          "[ ] Evaluate per-issue file vs run.yaml approaches",
+          "[ ] Test status tracking with sample data",
+          "[ ] Decide on final approach",
+          "[ ] Update documentation",
+          "[ ] Migrate existing status data",
+          "[ ] Train team on new system"
+        ]
+      },
+      {
+        "id": "sub_003",
+        "title": "Create promotion checklist for domain knowledge",
+        "phase": "planning",
+        "status": "pending",
+        "domain": "process",
+        "checklist": [
+          "[ ] Define promotion criteria",
+          "[ ] Create checklist template",
+          "[ ] Test with sample knowledge",
+          "[ ] Document promotion workflow",
+          "[ ] Train team on process"
+        ]
+      },
+      {
+        "id": "sub_004",
+        "title": "Add domains/ui/navigation.md for navigation patterns",
+        "phase": "research",
+        "status": "pending",
+        "domain": "ui",
+        "checklist": [
+          "[ ] Review navigation-related issues",
+          "[ ] Document navigation patterns",
+          "[ ] Create navigation.md",
+          "[ ] Add best practices",
+          "[ ] Link related issues"
+        ]
+      },
+      {
+        "id": "sub_005",
+        "title": "Add Supabase RLS troubleshooting playbook",
+        "phase": "documentation",
+        "status": "pending",
+        "domain": "supabase",
+        "checklist": [
+          "[ ] Collect real RLS troubleshooting examples",
+          "[ ] Document common issues",
+          "[ ] Create troubleshooting flow",
+          "[ ] Add debug commands",
+          "[ ] Test playbook with sample issues"
+        ]
+      },
+      {
+        "id": "sub_006",
+        "title": "Create release run template for coordinated releases",
+        "phase": "design",
+        "status": "pending",
+        "domain": "process",
+        "checklist": [
+          "[ ] Analyze past release patterns",
+          "[ ] Design release template structure",
+          "[ ] Create template",
+          "[ ] Test with sample release",
+          "[ ] Document release workflow"
+        ]
+      },
+      {
+        "id": "sub_007",
+        "title": "Set up Blackbox4 system",
+        "phase": "setup",
+        "status": "in_progress",
+        "domain": "infrastructure",
+        "checklist": [
+          "[x] Clone blackbox4 from GitHub",
+          "[x] Migrate existing data from docs/.blackbox",
+          "[x] Set up memory system structure",
+          "[ ] Configure MCP servers",
+          "[ ] Set up agent behavior protocol",
+          "[ ] Test autonomous execution",
+          "[ ] Create documentation"
+        ]
+      },
+      {
+        "id": "sub_008",
+        "title": "Prepare SISO for GitHub testing",
+        "phase": "testing",
+        "status": "pending",
+        "domain": "release",
+        "checklist": [
+          "[ ] Review all pending changes",
+          "[ ] Run test suite",
+          "[ ] Fix critical bugs",
+          "[ ] Update documentation",
+          "[ ] Create release notes",
+          "[ ] Push to GitHub",
+          "[ ] Deploy to test environment"
+        ]
+      }
+    ],
+    "context": {
+      "conversation_history": [],
+      "decisions_made": [
+        "Use Blackbox4 for task management",
+        "Migrate docs/.blackbox to root .blackbox",
+        "Focus on January 2026 deliverables"
+      ],
+      "artifacts_created": [
+        ".blackbox/.memory/working/shared/timeline.md",
+        ".blackbox/.memory/working/shared/work-queue.json"
+      ],
+      "blocking_issues": []
+    }
+  },
+  {
+    "id": "feedback_batch_001",
+    "title": "Feedback Batch 001 - UI/UX Improvements (17 items)",
+    "description": "Daily view feedback items from 4-1-26 batch",
+    "priority": "medium",
+    "status": "pending",
+    "created_at": "2026-01-05T00:00:00Z",
+    "subtasks": [
+      {
+        "id": "feedback_001",
+        "title": "Daily gating: block new day until nightly checkout completed",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "lifelock",
+        "issue_id": "ISSUE-20260105-0001",
+        "checklist": [
+          "[ ] Add nightly checkout completion flag",
+          "[ ] Implement day blocking logic",
+          "[ ] Add user guidance message",
+          "[ ] Test gating behavior",
+          "[ ] Update documentation"
+        ]
+      },
+      {
+        "id": "feedback_002",
+        "title": "Daily gating: require morning routine completion before other sections",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "lifelock",
+        "issue_id": "ISSUE-20260105-0002",
+        "checklist": [
+          "[ ] Define morning routine checklist",
+          "[ ] Add routine completion tracking",
+          "[ ] Implement section gating",
+          "[ ] Add progress indicators",
+          "[ ] Test user flow"
+        ]
+      },
+      {
+        "id": "feedback_003",
+        "title": "Weekly view entry point: move out of top header",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0003",
+        "checklist": [
+          "[ ] Design new entry point location",
+          "[ ] Update navigation structure",
+          "[ ] Implement new entry point",
+          "[ ] Remove from header",
+          "[ ] Test navigation flow"
+        ]
+      },
+      {
+        "id": "feedback_004",
+        "title": "Daily bottom nav: fix spacing/padding and reorder tabs",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0004",
+        "checklist": [
+          "[ ] Review current spacing issues",
+          "[ ] Design new tab order",
+          "[ ] Fix padding/spacing",
+          "[ ] Reorder tabs",
+          "[ ] Test on mobile"
+        ]
+      },
+      {
+        "id": "feedback_005",
+        "title": "Date navigation: add swipe animation between days",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0005",
+        "checklist": [
+          "[ ] Add swipe gesture detection",
+          "[ ] Implement animation",
+          "[ ] Add day boundaries",
+          "[ ] Test swipe sensitivity",
+          "[ ] Add haptic feedback"
+        ]
+      },
+      {
+        "id": "feedback_006",
+        "title": "Tasks: consolidated page with deep/light + client/agency filters",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "tasks",
+        "issue_id": "ISSUE-20260105-0006",
+        "checklist": [
+          "[ ] Design consolidated task page",
+          "[ ] Add filter components",
+          "[ ] Implement deep/light filter",
+          "[ ] Implement client/agency filter",
+          "[ ] Test filtering logic"
+        ]
+      },
+      {
+        "id": "feedback_007",
+        "title": "Timebox + Today's tasks: unify with segmented control",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0007",
+        "checklist": [
+          "[ ] Design unified interface",
+          "[ ] Add segmented control",
+          "[ ] Merge task views",
+          "[ ] Sync state between views",
+          "[ ] Test user workflow"
+        ]
+      },
+      {
+        "id": "feedback_008",
+        "title": "Today's tasks card: UI refresh + due-today links + ordering + time allocation",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0008",
+        "checklist": [
+          "[ ] Refresh card UI design",
+          "[ ] Add due-today links",
+          "[ ] Implement ordering options",
+          "[ ] Add time allocation display",
+          "[ ] Test card interactions"
+        ]
+      },
+      {
+        "id": "feedback_009",
+        "title": "Deep work: persistent timer and multi-task timers",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "lifelock",
+        "issue_id": "ISSUE-20260105-0009",
+        "checklist": [
+          "[ ] Design persistent timer UI",
+          "[ ] Implement background timer",
+          "[ ] Add multi-task support",
+          "[ ] Add timer controls",
+          "[ ] Test timer persistence"
+        ]
+      },
+      {
+        "id": "feedback_010",
+        "title": "Light work: match deep work metadata (due dates, time taken)",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "lifelock",
+        "issue_id": "ISSUE-20260105-0010",
+        "checklist": [
+          "[ ] Add due date field",
+          "[ ] Add time taken tracking",
+          "[ ] Update data model",
+          "[ ] Update UI components",
+          "[ ] Test data consistency"
+        ]
+      },
+      {
+        "id": "feedback_011",
+        "title": "Timebox: full-screen add-task + availability planning UI",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0011",
+        "checklist": [
+          "[ ] Design full-screen add task",
+          "[ ] Design availability planner",
+          "[ ] Implement full-screen modal",
+          "[ ] Add availability visualization",
+          "[ ] Test task creation flow"
+        ]
+      },
+      {
+        "id": "feedback_012",
+        "title": "Health: water tracker UI simplification + Supabase + XP + weekly goal",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "health",
+        "issue_id": "ISSUE-20260105-0012",
+        "checklist": [
+          "[ ] Simplify water tracker UI",
+          "[ ] Add Supabase integration",
+          "[ ] Add XP rewards",
+          "[ ] Add weekly goals",
+          "[ ] Test tracking workflow"
+        ]
+      },
+      {
+        "id": "feedback_013",
+        "title": "Health: home workout UI polish + Supabase + XP + charts",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "health",
+        "issue_id": "ISSUE-20260105-0013",
+        "checklist": [
+          "[ ] Polish workout UI",
+          "[ ] Add Supabase integration",
+          "[ ] Add XP rewards",
+          "[ ] Add progress charts",
+          "[ ] Test workout logging"
+        ]
+      },
+      {
+        "id": "feedback_014",
+        "title": "AI calorie tracker: restore working model + API key path",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "integrations",
+        "issue_id": "ISSUE-20260105-0014",
+        "checklist": [
+          "[ ] Locate working model version",
+          "[ ] Add API key configuration",
+          "[ ] Restore tracking functionality",
+          "[ ] Test API integration",
+          "[ ] Update documentation"
+        ]
+      },
+      {
+        "id": "feedback_015",
+        "title": "Nightly checkout: AI feedback agent for tomorrow",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ai",
+        "issue_id": "ISSUE-20260105-0015",
+        "checklist": [
+          "[ ] Design checkout flow",
+          "[ ] Integrate AI agent",
+          "[ ] Add feedback generation",
+          "[ ] Test AI responses",
+          "[ ] Add user review step"
+        ]
+      },
+      {
+        "id": "feedback_016",
+        "title": "Side nav: ClickUp-style daily icons + more menu + toggle page",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0016",
+        "checklist": [
+          "[ ] Design side nav layout",
+          "[ ] Add daily icons",
+          "[ ] Implement more menu",
+          "[ ] Add page toggle",
+          "[ ] Test navigation"
+        ]
+      },
+      {
+        "id": "feedback_017",
+        "title": "Stats page: dedicated XP view + daily summary + AI insights",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "issue_id": "ISSUE-20260105-0017",
+        "checklist": [
+          "[ ] Design XP view layout",
+          "[ ] Add daily summary",
+          "[ ] Integrate AI insights",
+          "[ ] Add charts/visualizations",
+          "[ ] Test stats display"
+        ]
+      }
+    ],
+    "context": {
+      "source": "docs/knowledge/feedback/4-1-26/Daily View Feedback.md",
+      "total_items": 17,
+      "domains": [
+        "lifelock",
+        "ui",
+        "tasks",
+        "health",
+        "integrations",
+        "ai"
+      ],
+      "conversation_history": [],
+      "decisions_made": [],
+      "artifacts_created": [],
+      "blocking_issues": []
+    }
+  },
+  {
+    "id": "feature_001",
+    "title": "Feature: User Preferences System",
+    "description": "Add persistent user preferences (theme, notifications, display settings)",
+    "priority": "medium",
+    "status": "pending",
+    "domain": "features",
+    "phase": "planning",
+    "created_at": "2026-01-15T22:45:40.052597",
+    "subtasks": [
+      {
+        "id": "feature_001_sub_001",
+        "title": "Research user preference patterns",
+        "phase": "research",
+        "status": "pending",
+        "domain": "features",
+        "assigned_to": "analyst",
+        "checklist": [
+          "[ ] Research common preference patterns",
+          "[ ] Analyze competitor implementations",
+          "[ ] Document user stories for preferences",
+          "[ ] Create data model proposal",
+          "[ ] Identify storage solution (Supabase vs local)"
+        ]
+      },
+      {
+        "id": "feature_001_sub_002",
+        "title": "Design preferences data model",
+        "phase": "design",
+        "status": "pending",
+        "domain": "features",
+        "assigned_to": "architect",
+        "checklist": [
+          "[ ] Design database schema",
+          "[ ] Define preference keys and types",
+          "[ ] Plan migration strategy",
+          "[ ] Document API endpoints",
+          "[ ] Create validation rules"
+        ]
+      },
+      {
+        "id": "feature_001_sub_003",
+        "title": "Implement preferences UI",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Build settings page component",
+          "[ ] Add theme toggle (dark/light)",
+          "[ ] Add notification preferences",
+          "[ ] Add display density settings",
+          "[ ] Implement preference persistence"
+        ]
+      },
+      {
+        "id": "feature_001_sub_004",
+        "title": "Test preferences system",
+        "phase": "testing",
+        "status": "pending",
+        "domain": "qa",
+        "assigned_to": "qa",
+        "checklist": [
+          "[ ] Write unit tests for preferences",
+          "[ ] Test persistence across sessions",
+          "[ ] Test preference validation",
+          "[ ] Test UI interactions",
+          "[ ] Verify migration safety"
+        ]
+      }
+    ],
+    "context": {
+      "conversation_history": [],
+      "decisions_made": [],
+      "artifacts_created": [],
+      "blocking_issues": []
+    }
+  },
+  {
+    "id": "ui_001",
+    "title": "UI: Dark Mode Support",
+    "description": "Add system-wide dark mode with user preference and system detection",
+    "priority": "medium",
+    "status": "pending",
+    "domain": "ui",
+    "phase": "planning",
+    "created_at": "2026-01-15T22:45:40.052604",
+    "subtasks": [
+      {
+        "id": "ui_001_sub_001",
+        "title": "Design dark mode theme system",
+        "phase": "design",
+        "status": "pending",
+        "domain": "ui",
+        "assigned_to": "ux-designer",
+        "checklist": [
+          "[ ] Define color palette for dark mode",
+          "[ ] Design component variants",
+          "[ ] Create theme switching animation",
+          "[ ] Document design tokens",
+          "[ ] Test contrast ratios"
+        ]
+      },
+      {
+        "id": "ui_001_sub_002",
+        "title": "Implement theme provider",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Set up CSS-in-JS theme provider",
+          "[ ] Create theme context",
+          "[ ] Add system preference detection",
+          "[ ] Implement theme toggle",
+          "[ ] Add theme persistence"
+        ]
+      },
+      {
+        "id": "ui_001_sub_003",
+        "title": "Convert components to dark mode",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Update button components",
+          "[ ] Update card components",
+          "[ ] Update form components",
+          "[ ] Update navigation components",
+          "[ ] Test all component variants"
+        ]
+      }
+    ],
+    "context": {
+      "conversation_history": [],
+      "decisions_made": [],
+      "artifacts_created": [],
+      "blocking_issues": []
+    }
+  },
+  {
+    "id": "bg_001",
+    "title": "Background: Error Tracking Setup",
+    "description": "Set up Sentry for error tracking and monitoring",
+    "priority": "high",
+    "status": "pending",
+    "domain": "infrastructure",
+    "phase": "setup",
+    "created_at": "2026-01-15T22:45:40.052607",
+    "can_run_in_parallel": true,
+    "subtasks": [
+      {
+        "id": "bg_001_sub_001",
+        "title": "Set up Sentry account",
+        "phase": "setup",
+        "status": "pending",
+        "domain": "infrastructure",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Create Sentry project",
+          "[ ] Get DSN and auth tokens",
+          "[ ] Document environment variables",
+          "[ ] Set up source maps upload",
+          "[ ] Configure release tracking"
+        ]
+      },
+      {
+        "id": "bg_001_sub_002",
+        "title": "Integrate Sentry SDK",
+        "phase": "configuration",
+        "status": "pending",
+        "domain": "infrastructure",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Install Sentry SDK",
+          "[ ] Configure error boundaries",
+          "[ ] Add performance monitoring",
+          "[ ] Set up user tracking",
+          "[ ] Test error reporting"
+        ]
+      },
+      {
+        "id": "bg_001_sub_003",
+        "title": "Configure alerts and notifications",
+        "phase": "configuration",
+        "status": "pending",
+        "domain": "infrastructure",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Set up error alerts",
+          "[ ] Configure performance alerts",
+          "[ ] Add Slack/email notifications",
+          "[ ] Define alert thresholds",
+          "[ ] Test alert delivery"
+        ]
+      }
+    ],
+    "context": {
+      "conversation_history": [],
+      "decisions_made": [],
+      "artifacts_created": [],
+      "blocking_issues": []
+    }
+  },
+  {
+    "id": "research_001",
+    "title": "Research: Push Notification Provider Analysis",
+    "description": "Research and compare push notification providers (OneSignal, Firebase, Supabase)",
+    "priority": "low",
+    "status": "pending",
+    "domain": "research",
+    "phase": "research",
+    "created_at": "2026-01-15T22:45:40.052609",
+    "subtasks": [
+      {
+        "id": "research_001_sub_001",
+        "title": "Compare push notification providers",
+        "phase": "research",
+        "status": "pending",
+        "domain": "research",
+        "assigned_to": "analyst",
+        "checklist": [
+          "[ ] Research OneSignal capabilities",
+          "[ ] Research Firebase Cloud Messaging",
+          "[ ] Research Supabase push notifications",
+          "[ ] Compare pricing models",
+          "[ ] Compare feature sets",
+          "[ ] Evaluate integration complexity"
+        ]
+      },
+      {
+        "id": "research_001_sub_002",
+        "title": "Create comparison document",
+        "phase": "documentation",
+        "status": "pending",
+        "domain": "research",
+        "assigned_to": "analyst",
+        "checklist": [
+          "[ ] Document feature comparison",
+          "[ ] Create pricing comparison table",
+          "[ ] Add implementation estimates",
+          "[ ] Provide recommendation",
+          "[ ] Create migration guide"
+        ]
+      }
+    ],
+    "context": {
+      "conversation_history": [],
+      "decisions_made": [],
+      "artifacts_created": [],
+      "blocking_issues": []
+    }
+  },
+  {
+    "id": "feedback_20260115_001",
+    "title": "Fix: Life Lock Overview - Desktop View Broken",
+    "description": "Desktop view of life-lock-overview page is broken. Need to fix bottom navigation and redo UI to match screenshots.",
+    "source": "localhost:4249/admin/life-lock-overview",
+    "priority": "high",
+    "status": "in_progress",
+    "domain": "lifelock",
+    "phase": "implementation",
+    "created_at": "2026-01-16T02:16:38.144498",
+    "subtasks": [
+      {
+        "id": "feedback_20260115_001_sub_001",
+        "title": "Investigate current state and screenshot requirements",
+        "phase": "investigation",
+        "status": "completed",
+        "domain": "lifelock",
+        "assigned_to": "analyst",
+        "checklist": [
+          "[ ] Navigate to life-lock-overview page at localhost:4249/admin/life-lock-overview",
+          "[ ] Identify what's broken in desktop view",
+          "[ ] Locate reference screenshots",
+          "[ ] Document current vs expected state",
+          "[ ] Create issue list for all pages"
+        ],
+        "completed_at": "2026-01-16T02:45:00Z"
+      },
+      {
+        "id": "feedback_20260115_001_sub_002",
+        "title": "Fix bottom navigation component",
+        "phase": "implementation",
+        "status": "completed",
+        "domain": "ui",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Review bottom navigation in desktop view",
+          "[ ] Identify responsive breakpoint issues",
+          "[ ] Fix spacing/padding for desktop",
+          "[ ] Ensure proper tab order",
+          "[ ] Test navigation across all breakpoints"
+        ],
+        "completed_at": "2026-01-16T02:45:00Z"
+      },
+      {
+        "id": "feedback_20260115_001_sub_003",
+        "title": "Redo UI to match screenshots",
+        "phase": "implementation",
+        "status": "pending",
+        "domain": "ui",
+        "assigned_to": "ux-designer",
+        "checklist": [
+          "[ ] Analyze reference screenshots",
+          "[ ] Identify UI components to update",
+          "[ ] Update component styles",
+          "[ ] Adjust layout for desktop",
+          "[ ] Match visual design from screenshots"
+        ]
+      },
+      {
+        "id": "feedback_20260115_001_sub_004",
+        "title": "Verify all page functionality",
+        "phase": "testing",
+        "status": "pending",
+        "domain": "qa",
+        "assigned_to": "qa",
+        "checklist": [
+          "[ ] Test all interactive elements",
+          "[ ] Verify data display is correct",
+          "[ ] Test filters and search",
+          "[ ] Verify pagination works",
+          "[ ] Test all user flows"
+        ]
+      },
+      {
+        "id": "feedback_20260115_001_sub_005",
+        "title": "Human iteration and refinement",
+        "phase": "refinement",
+        "status": "in_progress",
+        "domain": "lifelock",
+        "assigned_to": "dev",
+        "checklist": [
+          "[ ] Review with stakeholders",
+          "[ ] Gather feedback on changes",
+          "[ ] Make iterative adjustments",
+          "[ ] Final polish and cleanup",
+          "[ ] Document any deviations from screenshots"
+        ]
+      }
+    ],
+    "context": {
+      "url": "localhost:4249/admin/life-lock-overview",
+      "issue_type": "desktop_view_broken",
+      "affected_pages": [
+        "life-lock-overview"
+      ],
+      "severity": "high",
+      "conversation_history": [],
+      "decisions_made": [],
+      "artifacts_created": [],
+      "blocking_issues": [],
+      "notes": "Most functionality is present but requires human iteration to get right"
+    },
+    "current_agent": "claude-opus",
+    "current_phase": "refinement"
+  }
+]

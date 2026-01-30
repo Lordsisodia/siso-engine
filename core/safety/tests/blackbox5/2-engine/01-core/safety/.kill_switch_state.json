@@ -1,0 +1,9 @@
+{
+  "state": "active",
+  "trigger_time": null,
+  "trigger_reason": null,
+  "trigger_message": null,
+  "trigger_count": 16,
+  "recovery_count": 2,
+  "last_updated": "2026-01-20T02:25:57.486612"
+}

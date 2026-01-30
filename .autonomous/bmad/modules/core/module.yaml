@@ -1,0 +1,72 @@
+# BMAD Core Module for Blackbox5
+
+module:
+  name: "bmad-core"
+  version: "1.0.0"
+  description: "Core BMAD workflows - Quick Flow and Full Method"
+  type: "core"
+
+workflows:
+  quick_flow:
+    description: "3-phase execution for simple tasks"
+    phases:
+      - name: "spec"
+        file: "workflows/quick-flow/01-spec.md"
+        description: "Rapid technical specification"
+      - name: "dev"
+        file: "workflows/quick-flow/02-dev.md"
+        description: "Implementation with atomic commits"
+      - name: "review"
+        file: "workflows/quick-flow/03-review.md"
+        description: "Self-review and validation"
+
+  full_method:
+    description: "6-phase execution for complex tasks"
+    phases:
+      - name: "brief"
+        file: "workflows/full-method/01-brief.md"
+        description: "Product brief and problem definition"
+      - name: "prd"
+        file: "workflows/full-method/02-prd.md"
+        description: "Requirements document"
+      - name: "arch"
+        file: "workflows/full-method/03-arch.md"
+        description: "Architecture design"
+      - name: "epics"
+        file: "workflows/full-method/04-epics.md"
+        description: "Epic and story breakdown"
+      - name: "sprint"
+        file: "workflows/full-method/05-sprint.md"
+        description: "Sprint planning"
+      - name: "story"
+        file: "workflows/full-method/06-story.md"
+        description: "Story implementation"
+
+agents:
+  required:
+    - "agents/developer.md"
+    - "agents/qa-engineer.md"
+  optional:
+    - "agents/product-manager.md"
+    - "agents/architect.md"
+
+paths:
+  selection:
+    quick_flow:
+      when:
+        - "bug fix"
+        - "small feature"
+        - "clear scope"
+        - "estimated < 2 hours"
+    full_method:
+      when:
+        - "product"
+        - "platform"
+        - "complex feature"
+        - "estimated > 2 hours"
+        - "cross-cutting concerns"
+
+telemetry:
+  log_phases: true
+  log_decisions: true
+  log_outcomes: true

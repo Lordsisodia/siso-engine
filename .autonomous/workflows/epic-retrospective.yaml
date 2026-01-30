@@ -1,0 +1,56 @@
+# Workflow: Epic Retrospective
+# Epic Retrospective
+
+name: epic-retrospective
+command: ER
+description: Epic Retrospective
+skill: bmad-sm
+agent: Bob
+complexity: medium
+steps:
+- name: start
+  title: Start
+  description: Start Epic Retrospective
+  actions:
+  - Initialize workflow
+  - Create WIP file
+- name: execute
+  title: Execute
+  description: Execute Epic Retrospective
+  actions:
+  - Perform main workflow
+  - Track progress
+- name: complete
+  title: Complete
+  description: Complete Epic Retrospective
+  actions:
+  - Finalize
+  - Update WIP
+  - Archive
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: er-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/epic-retrospective-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated

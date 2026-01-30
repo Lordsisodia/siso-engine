@@ -1,0 +1,25 @@
+# Blackbox4 Brain - Phase 3: Neo4j Dependencies
+# Python packages for Neo4j graph database integration
+
+# Neo4j Python driver
+neo4j>=5.15.0
+
+# Async support
+asyncpg>=0.29.0
+
+# API framework (for brain_api.py)
+fastapi>=0.109.0
+uvicorn>=0.27.0
+pydantic>=2.5.0
+
+# YAML parsing
+pyyaml>=6.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+
+# CLI utilities
+click>=8.1.0
+rich>=13.7.0

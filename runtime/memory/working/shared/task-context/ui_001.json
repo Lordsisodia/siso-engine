@@ -1,0 +1,61 @@
+{
+  "task_id": "ui_001",
+  "title": "UI: Dark Mode Support",
+  "description": "Add system-wide dark mode with user preference and system detection",
+  "requirements": {
+    "user_stories": [],
+    "constraints": [],
+    "acceptance_criteria": []
+  },
+  "conversation_history": [],
+  "decisions_made": [],
+  "artifacts_created": [],
+  "checklist": [],
+  "subtasks": [
+    {
+      "id": "ui_001_sub_001",
+      "title": "Design dark mode theme system",
+      "phase": "design",
+      "status": "pending",
+      "domain": "ui",
+      "assigned_to": "ux-designer",
+      "checklist": [
+        "[ ] Define color palette for dark mode",
+        "[ ] Design component variants",
+        "[ ] Create theme switching animation",
+        "[ ] Document design tokens",
+        "[ ] Test contrast ratios"
+      ]
+    },
+    {
+      "id": "ui_001_sub_002",
+      "title": "Implement theme provider",
+      "phase": "implementation",
+      "status": "pending",
+      "domain": "ui",
+      "assigned_to": "dev",
+      "checklist": [
+        "[ ] Set up CSS-in-JS theme provider",
+        "[ ] Create theme context",
+        "[ ] Add system preference detection",
+        "[ ] Implement theme toggle",
+        "[ ] Add theme persistence"
+      ]
+    },
+    {
+      "id": "ui_001_sub_003",
+      "title": "Convert components to dark mode",
+      "phase": "implementation",
+      "status": "pending",
+      "domain": "ui",
+      "assigned_to": "dev",
+      "checklist": [
+        "[ ] Update button components",
+        "[ ] Update card components",
+        "[ ] Update form components",
+        "[ ] Update navigation components",
+        "[ ] Test all component variants"
+      ]
+    }
+  ]
+}

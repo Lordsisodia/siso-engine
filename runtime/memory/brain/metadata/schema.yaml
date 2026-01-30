@@ -1,0 +1,534 @@
+# Blackbox4 Brain v2.0 - Metadata Schema Specification
+# Version: 1.0.0
+# Last Updated: 2026-01-15
+#
+# This schema defines the complete structure for metadata.yaml files
+# that MUST be present in every Blackbox4 artifact.
+
+# ============================================================================
+# SCHEMA VERSION
+# ============================================================================
+
+$schema: "blackbox4-brain-1.0.0"
+schema_version: "1.0.0"
+
+# ============================================================================
+# FIELD DEFINITIONS
+# ============================================================================
+
+fields:
+  # -------------------------------------------------------------------------
+  # CORE IDENTIFICATION (REQUIRED)
+  # -------------------------------------------------------------------------
+  - name: id
+    type: string
+    required: true
+    unique: true
+    description: "Unique identifier for this artifact (e.g., 'orchestrator-agent-v1')"
+    pattern: "^[a-z0-9-]+$"
+    examples:
+      - "orchestrator-agent-v1"
+      - "deep-research-skill"
+      - "context-variables-lib"
+      - "bmad-planner"
+
+  - name: type
+    type: enum
+    required: true
+    description: "Type of artifact"
+    allowed_values:
+      - agent           # AI agent definition
+      - skill           # Reusable workflow/framework skill
+      - plan            # Project plan with tasks
+      - library         # Reusable code library
+      - script          # Executable script
+      - template        # Template/pattern
+      - document        # Documentation
+      - test            # Test code
+      - config          # Configuration file
+      - module          # Functional module
+      - framework       # Framework pattern
+      - tool            # Maintenance/utility tool
+      - workspace       # Workspace/project
+      - example         # Example code/usage
+    examples:
+      - "agent"
+      - "library"
+      - "skill"
+
+  - name: name
+    type: string
+    required: true
+    description: "Human-readable name of the artifact"
+    examples:
+      - "Orchestrator Agent"
+      - "Deep Research Skill"
+      - "Context Variables Library"
+
+  - name: category
+    type: string
+    required: true
+    description: "Category within the type (varies by type)"
+    depends_on: type
+    categories:
+      agent: [core, bmad, research, specialist, enhanced]
+      skill: [core, mcp, workflow]
+      library: [context-variables, hierarchical-tasks, task-breakdown, spec-creation, ralph-runtime, circuit-breaker, response-analyzer]
+      script: [agents, planning, testing, integration, validation]
+      template: [documents, plans, code, specs]
+      document: [getting-started, architecture, components, frameworks, workflows, reference]
+      test: [unit, integration, phase, e2e]
+      module: [context, planning, research, kanban]
+      framework: [bmad, speckit, metagpt, swarm]
+      tool: [maintenance, migration, validation]
+    examples:
+      - "specialist"
+      - "context-variables"
+      - "getting-started"
+
+  - name: version
+    type: string
+    required: false
+    description: "Semantic version of the artifact"
+    pattern: "^\\d+\\.\\d+\\.\\d+$"
+    examples:
+      - "1.0.0"
+      - "2.1.3"
+
+  # -------------------------------------------------------------------------
+  # LOCATION (REQUIRED)
+  # -------------------------------------------------------------------------
+  - name: path
+    type: string
+    required: true
+    unique: true
+    description: "Relative path from Blackbox4 root"
+    examples:
+      - "1-agents/4-specialists/orchestrator.md"
+      - "4-scripts/lib/context-variables/"
+      - ".docs/1-getting-started/README.md"
+
+  - name: created
+    type: date
+    required: true
+    description: "Creation date (YYYY-MM-DD)"
+    examples:
+      - "2026-01-15"
+
+  - name: modified
+    type: date
+    required: true
+    description: "Last modification date (YYYY-MM-DD)"
+    examples:
+      - "2026-01-15"
+
+  # -------------------------------------------------------------------------
+  # CONTENT (REQUIRED)
+  # -------------------------------------------------------------------------
+  - name: description
+    type: string
+    required: true
+    description: "Detailed description of what this artifact does"
+    min_length: 50
+    max_length: 1000
+    examples:
+      - "Main orchestrator agent for coordinating other agents and managing complex workflows"
+
+  - name: tags
+    type: array
+    required: true
+    description: "Tags for categorization and discovery"
+    item_type: string
+    min_items: 1
+    examples:
+      - ["orchestration", "coordination", "agent-handoff", "multi-agent"]
+      - ["context", "variables", "state-management"]
+      - ["testing", "validation", "quality-assurance"]
+
+  - name: keywords
+    type: array
+    required: false
+    description: "Keywords for search (synonyms, alternative terms)"
+    item_type: string
+    examples:
+      - ["orchestrate", "coordinate", "delegate", "manage"]
+      - ["ctx", "vars", "state", "memory"]
+
+  # -------------------------------------------------------------------------
+  # RELATIONSHIPS (OPTIONAL)
+  # -------------------------------------------------------------------------
+  - name: depends_on
+    type: array
+    required: false
+    description: "Artifacts this one depends on"
+    item_type: object
+    properties:
+      - id: string
+        description: "ID of the dependency"
+      - type: string
+        description: "Type of the dependency"
+      - version: string
+        description: "Version constraint (optional)"
+    examples:
+      - - id: "deep-research-skill"
+          type: "skill"
+        - id: "agent-handoff-script"
+          type: "script"
+          version: ">=1.0.0"
+
+  - name: used_by
+    type: array
+    required: false
+    description: "Artifacts that use this one"
+    item_type: object
+    properties:
+      - id: string
+        description: "ID of the dependent artifact"
+      - type: string
+        description: "Type of the dependent artifact"
+    examples:
+      - - id: "ralph-agent"
+          type: "agent"
+        - id: "orchestrator"
+          type: "agent"
+
+  - name: relates_to
+    type: array
+    required: false
+    description: "Related artifacts with relationship type"
+    item_type: object
+    properties:
+      - id: string
+        description: "ID of the related artifact"
+      - type: string
+        description: "Type of the related artifact"
+      - relationship: enum
+        description: "Type of relationship"
+        allowed_values: [implements, documents, tests, uses, parallel, extends, refines, deprecates]
+    examples:
+      - - id: "ralph-runtime"
+          type: "library"
+          relationship: "uses"
+        - id: "orchestrator-v1"
+          type: "agent"
+          relationship: "extends"
+
+  # -------------------------------------------------------------------------
+  # CLASSIFICATION (OPTIONAL)
+  # -------------------------------------------------------------------------
+  - name: phase
+    type: integer
+    required: false
+    description: "Phase 1-4 if part of phased implementation"
+    range: [1, 4]
+    examples:
+      - 1
+      - 2
+      - 3
+      - 4
+
+  - name: layer
+    type: enum
+    required: false
+    description: "System layer this artifact belongs to"
+    allowed_values:
+      - intelligence    # Agents, skills, AI
+      - execution       # Scripts, libraries, tools
+      - testing         # Tests, validation
+      - documentation   # Docs, guides
+      - system          # Config, runtime, memory
+      - planning        # Plans, templates
+      - workspace       # Projects, artifacts
+    examples:
+      - "intelligence"
+      - "execution"
+
+  # -------------------------------------------------------------------------
+  # AI/DISCOVERY (OPTIONAL)
+  # -------------------------------------------------------------------------
+  - name: embedding_id
+    type: string
+    required: false
+    description: "Reference to embedding vector in database"
+    examples:
+      - "emb-orchestrator-123"
+
+  - name: search_vector
+    type: array
+    required: false
+    description: "Optional inline embedding vector (1536 dimensions for OpenAI)"
+    item_type: float
+    # Typically not used inline, stored in database
+
+  # -------------------------------------------------------------------------
+  # STATUS (REQUIRED)
+  # -------------------------------------------------------------------------
+  - name: status
+    type: enum
+    required: true
+    description: "Current status of the artifact"
+    allowed_values:
+      - active          # In active use
+      - deprecated      # Deprecated, still works
+      - archived        # No longer maintained
+      - experimental    # Experimental/alpha
+      - beta            # Beta testing
+      - development     # Under development
+    default: "development"
+    examples:
+      - "active"
+      - "experimental"
+
+  - name: stability
+    type: enum
+    required: true
+    description: "Stability level of the artifact"
+    allowed_values:
+      - high            # Stable, production-ready
+      - medium          # Mostly stable, some changes
+      - low             # Volatile, frequent changes
+    default: "medium"
+    examples:
+      - "high"
+      - "medium"
+      - "low"
+
+  # -------------------------------------------------------------------------
+  # OWNERSHIP (REQUIRED)
+  # -------------------------------------------------------------------------
+  - name: owner
+    type: string
+    required: true
+    description: "Team or individual responsible for this artifact"
+    examples:
+      - "core-team"
+      - "ai-system"
+      - "research-team"
+
+  - name: maintainer
+    type: string
+    required: false
+    description: "Primary maintainer (if different from owner)"
+    examples:
+      - "ai-system"
+      - "shaan-sisodia"
+
+  # -------------------------------------------------------------------------
+  # DOCUMENTATION (OPTIONAL)
+  # -------------------------------------------------------------------------
+  - name: docs
+    type: object
+    required: false
+    description: "Links to documentation"
+    properties:
+      - primary: string
+        description: "Primary documentation link"
+      - examples: string
+        description: "Link to examples"
+      - api: string
+        description: "API documentation link"
+      - guide: string
+        description: "Usage guide link"
+    examples:
+      primary: ".docs/2-reference/agents.md#orchestrator"
+      examples: "1-agents/4-specialists/orchestrator-examples/"
+      api: ".docs/2-reference/agents-api.md"
+
+  # -------------------------------------------------------------------------
+  # METRICS (OPTIONAL)
+  # -------------------------------------------------------------------------
+  - name: usage_count
+    type: integer
+    required: false
+    description: "Number of times this artifact has been used"
+    min: 0
+    default: 0
+    examples:
+      - 150
+      - 0
+
+  - name: last_used
+    type: date
+    required: false
+    description: "Last date this artifact was used"
+    examples:
+      - "2026-01-15"
+
+  - name: success_rate
+    type: float
+    required: false
+    description: "Success rate (0.0 to 1.0)"
+    range: [0.0, 1.0]
+    examples:
+      - 0.95
+      - 0.87
+
+# ============================================================================
+# VALIDATION RULES
+# ============================================================================
+
+validation_rules:
+  - rule: "Unique ID"
+    description: "ID must be unique across all artifacts"
+    check: "id not in existing_ids"
+
+  - rule: "Valid Path"
+    description: "Path must exist and be accessible"
+    check: "file_exists(path)"
+
+  - rule: "Type-Category Consistency"
+    description: "Category must be valid for the given type"
+    check: "category in allowed_categories[type]"
+
+  - rule: "Dependency Existence"
+    description: "All dependencies must exist in the system"
+    check: "dep.id in existing_ids for dep in depends_on"
+
+  - rule: "Date Consistency"
+    description: "Modified date must be >= created date"
+    check: "modified >= created"
+
+  - rule: "Required Fields"
+    description: "All required fields must be present"
+    check: "all(field in data for field in required_fields)"
+
+# ============================================================================
+# EXAMPLES
+# ============================================================================
+
+examples:
+  # -------------------------------------------------------------------------
+  # AGENT EXAMPLE
+  # -------------------------------------------------------------------------
+  - name: "Orchestrator Agent"
+    metadata:
+      id: "orchestrator-agent-v1"
+      type: "agent"
+      name: "Orchestrator Agent"
+      category: "specialist"
+      version: "1.0.0"
+      path: "1-agents/4-specialists/orchestrator.md"
+      created: "2026-01-15"
+      modified: "2026-01-15"
+      description: "Main orchestrator agent for coordinating other agents and managing complex workflows. Handles agent selection, task delegation, and result aggregation."
+      tags: ["orchestration", "coordination", "agent-handoff", "multi-agent", "workflow"]
+      keywords: ["orchestrate", "coordinate", "delegate", "manage", "dispatch"]
+      depends_on:
+        - id: "deep-research-skill"
+          type: "skill"
+        - id: "agent-handoff-script"
+          type: "script"
+          version: ">=1.0.0"
+      used_by:
+        - id: "ralph-agent"
+          type: "agent"
+      relates_to:
+        - id: "ralph-runtime"
+          type: "library"
+          relationship: "uses"
+      phase: 4
+      layer: "intelligence"
+      status: "active"
+      stability: "high"
+      owner: "core-team"
+      maintainer: "ai-system"
+      docs:
+        primary: ".docs/2-reference/agents.md#orchestrator"
+        examples: "1-agents/4-specialists/orchestrator-examples/"
+        api: ".docs/2-reference/agents-api.md"
+      usage_count: 150
+      last_used: "2026-01-15"
+      success_rate: 0.95
+
+  # -------------------------------------------------------------------------
+  # SKILL EXAMPLE
+  # -------------------------------------------------------------------------
+  - name: "Deep Research Skill"
+    metadata:
+      id: "deep-research-skill"
+      type: "skill"
+      name: "Deep Research Skill"
+      category: "core"
+      version: "2.0.0"
+      path: "1-agents/.skills/1-core/deep-research.md"
+      created: "2026-01-10"
+      modified: "2026-01-15"
+      description: "Core skill for performing deep research on any topic. Uses multiple sources, web search, and synthesis to provide comprehensive research results."
+      tags: ["research", "web-search", "synthesis", "investigation"]
+      keywords: ["research", "investigate", "explore", "discover", "analyze"]
+      used_by:
+        - id: "orchestrator-agent-v1"
+          type: "agent"
+        - id: "feature-research-agent"
+          type: "agent"
+      layer: "intelligence"
+      status: "active"
+      stability: "high"
+      owner: "core-team"
+      docs:
+        primary: "1-agents/.skills/1-core/deep-research.md"
+        examples: "1-agents/.skills/1-core/examples/"
+      usage_count: 320
+      last_used: "2026-01-15"
+      success_rate: 0.92
+
+  # -------------------------------------------------------------------------
+  # LIBRARY EXAMPLE
+  # -------------------------------------------------------------------------
+  - name: "Context Variables Library"
+    metadata:
+      id: "context-variables-lib"
+      type: "library"
+      name: "Context Variables Library"
+      category: "context-variables"
+      version: "1.0.0"
+      path: "4-scripts/lib/context-variables/"
+      created: "2026-01-05"
+      modified: "2026-01-15"
+      description: "Python library for managing context variables in AI agent workflows. Provides typed context storage, validation, and hierarchical context management."
+      tags: ["context", "variables", "state-management", "phase1"]
+      keywords: ["ctx", "vars", "state", "memory", "storage"]
+      used_by:
+        - id: "ralph-agent"
+          type: "agent"
+        - id: "orchestrator-agent-v1"
+          type: "agent"
+      phase: 1
+      layer: "execution"
+      status: "active"
+      stability: "high"
+      owner: "core-team"
+      docs:
+        primary: ".docs/phase1/context-variables.md"
+        examples: "1-agents/4-specialists/context-examples/"
+      usage_count: 450
+      last_used: "2026-01-15"
+      success_rate: 0.98
+
+  # -------------------------------------------------------------------------
+  # PLAN EXAMPLE
+  # -------------------------------------------------------------------------
+  - name: "Example Project Plan"
+    metadata:
+      id: "example-project-plan"
+      type: "plan"
+      name: "Example Project Plan"
+      category: "active"
+      path: ".plans/active/2026-01-15_example-project/"
+      created: "2026-01-15"
+      modified: "2026-01-15"
+      description: "Example project plan demonstrating the Blackbox4 planning system. Includes task breakdown, status tracking, and completion criteria."
+      tags: ["planning", "example", "demo"]
+      keywords: ["plan", "project", "tasks", "checklist"]
+      layer: "planning"
+      status: "active"
+      stability: "medium"
+      owner: "core-team"
+      docs:
+        primary: ".plans/active/2026-01-15_example-project/README.md"
+      usage_count: 5
+      last_used: "2026-01-15"
+
+# ============================================================================
+# END OF SCHEMA
+# ============================================================================

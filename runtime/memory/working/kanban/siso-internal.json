@@ -1,0 +1,267 @@
+{
+  "board_name": "siso-internal",
+  "columns": {
+    "backlog": {
+      "id": "backlog",
+      "name": "Backlog",
+      "position": 0,
+      "card_ids": []
+    },
+    "todo": {
+      "id": "todo",
+      "name": "Todo",
+      "position": 1,
+      "card_ids": [
+        "2a6b476f"
+      ]
+    },
+    "in_progress": {
+      "id": "in_progress",
+      "name": "In Progress",
+      "position": 2,
+      "card_ids": [
+        "4702c25b"
+      ]
+    },
+    "in_review": {
+      "id": "in_review",
+      "name": "In Review",
+      "position": 3,
+      "card_ids": []
+    },
+    "done": {
+      "id": "done",
+      "name": "Done",
+      "position": 4,
+      "card_ids": []
+    }
+  },
+  "cards": {
+    "4702c25b": {
+      "id": "4702c25b",
+      "title": "SISO Internal - January 2026 Tasks",
+      "description": "Complete SISO internal improvements and prepare for GitHub testing",
+      "column_id": "in_progress",
+      "priority": "high",
+      "assignee": null,
+      "due_date": null,
+      "labels": [],
+      "checklist": [
+        {
+          "id": "030f8517",
+          "text": "[architecture] Refine domain boundaries based on real issue clusters",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.355493"
+        },
+        {
+          "id": "5f407ba9",
+          "text": "[process] Decide and implement status tracking system",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.355665"
+        },
+        {
+          "id": "2709428c",
+          "text": "[process] Create promotion checklist for domain knowledge",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.355848"
+        },
+        {
+          "id": "0dac7386",
+          "text": "[ui] Add domains/ui/navigation.md for navigation patterns",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.356019"
+        },
+        {
+          "id": "b72b8dad",
+          "text": "[supabase] Add Supabase RLS troubleshooting playbook",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.356176"
+        },
+        {
+          "id": "d59081ea",
+          "text": "[process] Create release run template for coordinated releases",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.356331"
+        },
+        {
+          "id": "981693a8",
+          "text": "[infrastructure] Set up Blackbox4 system",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.356484"
+        },
+        {
+          "id": "5348072e",
+          "text": "[release] Prepare SISO for GitHub testing",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.356626"
+        }
+      ],
+      "attachments": [],
+      "watchers": [],
+      "created_at": "2026-01-15T15:31:40.355076",
+      "updated_at": "2026-01-15T15:31:40.356793",
+      "position": 0,
+      "metadata": {}
+    },
+    "2a6b476f": {
+      "id": "2a6b476f",
+      "title": "Feedback Batch 001 - UI/UX Improvements (17 items)",
+      "description": "Daily view feedback items from 4-1-26 batch",
+      "column_id": "todo",
+      "priority": "medium",
+      "assignee": null,
+      "due_date": null,
+      "labels": [],
+      "checklist": [
+        {
+          "id": "4fec7303",
+          "text": "[lifelock] Daily gating: block new day until nightly checkout completed",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.357233"
+        },
+        {
+          "id": "b49c2b49",
+          "text": "[lifelock] Daily gating: require morning routine completion before other sections",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.357454"
+        },
+        {
+          "id": "1c9cd2cb",
+          "text": "[ui] Weekly view entry point: move out of top header",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.357722"
+        },
+        {
+          "id": "16af73f1",
+          "text": "[ui] Daily bottom nav: fix spacing/padding and reorder tabs",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.357936"
+        },
+        {
+          "id": "214d777a",
+          "text": "[ui] Date navigation: add swipe animation between days",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.358144"
+        },
+        {
+          "id": "9ec63781",
+          "text": "[tasks] Tasks: consolidated page with deep/light + client/agency filters",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.358388"
+        },
+        {
+          "id": "23a501cd",
+          "text": "[ui] Timebox + Today's tasks: unify with segmented control",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.358634"
+        },
+        {
+          "id": "bb33e0c2",
+          "text": "[ui] Today's tasks card: UI refresh + due-today links + ordering + time allocation",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.358870"
+        },
+        {
+          "id": "54725bb4",
+          "text": "[lifelock] Deep work: persistent timer and multi-task timers",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.359100"
+        },
+        {
+          "id": "8d41fa9a",
+          "text": "[lifelock] Light work: match deep work metadata (due dates, time taken)",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.359330"
+        },
+        {
+          "id": "a17393f4",
+          "text": "[ui] Timebox: full-screen add-task + availability planning UI",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.359575"
+        },
+        {
+          "id": "7fd2c416",
+          "text": "[health] Health: water tracker UI simplification + Supabase + XP + weekly goal",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.359813"
+        },
+        {
+          "id": "e5047edd",
+          "text": "[health] Health: home workout UI polish + Supabase + XP + charts",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.360060"
+        },
+        {
+          "id": "e8b50053",
+          "text": "[integrations] AI calorie tracker: restore working model + API key path",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.360310"
+        },
+        {
+          "id": "e4163284",
+          "text": "[ai] Nightly checkout: AI feedback agent for tomorrow",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.360744"
+        },
+        {
+          "id": "d6da3955",
+          "text": "[ui] Side nav: ClickUp-style daily icons + more menu + toggle page",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.361007"
+        },
+        {
+          "id": "cb646c48",
+          "text": "[ui] Stats page: dedicated XP view + daily summary + AI insights",
+          "completed": false,
+          "created_at": "2026-01-15T15:31:40.361263"
+        }
+      ],
+      "attachments": [],
+      "watchers": [],
+      "created_at": "2026-01-15T15:31:40.356966",
+      "updated_at": "2026-01-15T15:31:40.361526",
+      "position": 0,
+      "metadata": {}
+    }
+  },
+  "wip_limits": {},
+  "activity_log": [
+    {
+      "timestamp": "2026-01-15T15:31:40.355254",
+      "action": "card_created",
+      "details": {
+        "card_id": "4702c25b",
+        "title": "SISO Internal - January 2026 Tasks",
+        "column": "backlog"
+      }
+    },
+    {
+      "timestamp": "2026-01-15T15:31:40.356795",
+      "action": "card_moved",
+      "details": {
+        "card_id": "4702c25b",
+        "from": "backlog",
+        "to": "in_progress"
+      }
+    },
+    {
+      "timestamp": "2026-01-15T15:31:40.356970",
+      "action": "card_created",
+      "details": {
+        "card_id": "2a6b476f",
+        "title": "Feedback Batch 001 - UI/UX Improvements (17 items)",
+        "column": "backlog"
+      }
+    },
+    {
+      "timestamp": "2026-01-15T15:31:40.361528",
+      "action": "card_moved",
+      "details": {
+        "card_id": "2a6b476f",
+        "from": "backlog",
+        "to": "todo"
+      }
+    }
+  ],
+  "last_updated": "2026-01-15T15:31:40.361795"
+}

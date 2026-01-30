@@ -1,0 +1,12 @@
+#!/bin/bash
+# BlackBox5 CLI wrapper script
+# Usage: ./bb5 [args] or source this file to get 'bb5' function
+
+# Directory where this script is located
+BLACKBOX5_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Python script path
+BB5_PY="$BLACKBOX5_DIR/bb5.py"
+
+# Run the CLI
+python3 "$BB5_PY" "$@"

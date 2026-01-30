@@ -1,0 +1,66 @@
+# Example Plan Metadata
+# Artifact: Example Project Plan
+# Type: plan
+# Category: active
+
+id: "example-project-plan"
+type: "plan"
+name: "Example Project Plan"
+category: "active"
+
+# Location
+path: ".plans/active/2026-01-15_example-project/"
+created: "2026-01-15"
+modified: "2026-01-15"
+
+# Content
+description: |
+  Example project plan demonstrating the Blackbox4 planning system.
+  Includes task breakdown, status tracking, and completion criteria.
+
+  This plan serves as both an example and a template for creating
+  new project plans in Blackbox4.
+
+tags:
+  - "planning"
+  - "example"
+  - "demo"
+  - "template"
+
+keywords:
+  - "plan"
+  - "project"
+  - "tasks"
+  - "checklist"
+  - "roadmap"
+
+# Relationships
+relates_to:
+  - id: "planning-module"
+    type: "module"
+    relationship: "uses"
+  - id: "plan-template"
+    type: "template"
+    relationship: "extends"
+
+# Classification
+layer: "planning"
+
+# AI/Discovery
+# embedding_id: "emb-example-plan-101"  # Assigned during ingestion
+
+# Status
+status: "active"
+stability: "medium"
+
+# Ownership
+owner: "core-team"
+
+# Documentation
+docs:
+  primary: ".plans/active/2026-01-15_example-project/README.md"
+  guide: ".docs/1-getting-started/planning.md"
+
+# Metrics
+usage_count: 5
+last_used: "2026-01-15"

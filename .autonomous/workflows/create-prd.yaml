@@ -1,0 +1,107 @@
+# Workflow: Create Prd
+# Create PRD
+
+name: create-prd
+command: CP
+description: Create PRD
+skill: bmad-pm
+agent: John
+complexity: complex
+steps:
+- name: discovery
+  title: Discovery
+  description: Understand product idea, users, market, and constraints
+  actions:
+  - Interview user about problem and solution ideas
+  - Define target users and user segments
+  - Identify market context and competition
+  - Document constraints and assumptions
+- name: success-criteria
+  title: Success Criteria
+  description: Define user, business, and technical success metrics
+  actions:
+  - Define user success metrics
+  - Define business success metrics
+  - Define technical success metrics
+  - Document how success will be measured
+- name: user-journeys
+  title: User Journeys
+  description: Map narrative journeys for all user types
+  actions:
+  - Map user personas and their goals
+  - Define primary user flows
+  - Document edge cases and error scenarios
+  - Identify user pain points to address
+- name: domain-requirements
+  title: Domain Requirements
+  description: Capture domain-specific needs and constraints
+  actions:
+  - Identify domain-specific constraints
+  - Document regulatory or compliance requirements
+  - Define domain terminology and vocabulary
+- name: functional-requirements
+  title: Functional Requirements
+  description: Define THE CAPABILITY CONTRACT
+  actions:
+  - List all functional capabilities needed
+  - Group related capabilities into feature areas
+  - Prioritize requirements by value and dependency
+- name: non-functional-requirements
+  title: Non-Functional Requirements
+  description: Define performance, security, and reliability requirements
+  actions:
+  - Define performance requirements
+  - Define security requirements
+  - Define reliability requirements
+  - Define scalability requirements
+- name: polish
+  title: Polish
+  description: Optimize document for flow and readability
+  actions:
+  - Review document for clarity and consistency
+  - Check for redundancy and contradictions
+  - Ensure professional presentation
+- name: complete
+  title: Complete
+  description: Finalize PRD and suggest next steps
+  actions:
+  - Final review of complete PRD
+  - Update WIP status to completed
+  - Archive WIP file
+  - Output final PRD
+  - Suggest next steps
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: cp-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/create-prd-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
+- Problem statement clear
+- Requirements complete
+- User journeys documented
+- Success criteria measurable
+party_mode_agents:
+- bmad-pm
+- bmad-analyst
+- bmad-architect

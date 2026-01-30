@@ -1,0 +1,82 @@
+# Example Skill Metadata
+# Artifact: Deep Research Skill
+# Type: skill
+# Category: core
+
+id: "deep-research-skill"
+type: "skill"
+name: "Deep Research Skill"
+category: "core"
+version: "2.0.0"
+
+# Location
+path: "1-agents/.skills/1-core/deep-research.md"
+created: "2026-01-10"
+modified: "2026-01-15"
+
+# Content
+description: |
+  Core skill for performing deep research on any topic. Uses multiple sources,
+  web search, and synthesis to provide comprehensive research results.
+
+  Key capabilities:
+  - Multi-source web research
+  - Information synthesis and validation
+  - Source citation and verification
+  - Research methodology framework
+  - Competitive analysis
+  - Market research
+
+tags:
+  - "research"
+  - "web-search"
+  - "synthesis"
+  - "investigation"
+  - "analysis"
+  - "competitive-intelligence"
+
+keywords:
+  - "research"
+  - "investigate"
+  - "explore"
+  - "discover"
+  - "analyze"
+  - "deep-dive"
+
+# Relationships
+used_by:
+  - id: "orchestrator-agent-v1"
+    type: "agent"
+  - id: "feature-research-agent"
+    type: "agent"
+  - id: "oss-discovery-agent"
+    type: "agent"
+
+relates_to:
+  - id: "web-search-mcp"
+    type: "tool"
+    relationship: "uses"
+
+# Classification
+layer: "intelligence"
+
+# AI/Discovery
+# embedding_id: "emb-deep-research-456"  # Assigned during ingestion
+
+# Status
+status: "active"
+stability: "high"
+
+# Ownership
+owner: "core-team"
+
+# Documentation
+docs:
+  primary: "1-agents/.skills/1-core/deep-research.md"
+  examples: "1-agents/.skills/1-core/examples/"
+  guide: ".docs/5-workflows/research-workflow.md"
+
+# Metrics
+usage_count: 320
+last_used: "2026-01-15"
+success_rate: 0.92

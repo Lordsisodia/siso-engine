@@ -1,0 +1,127 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-supabase"
+      ],
+      "description": "Supabase database operations, migrations, and edge functions",
+      "capabilities": [
+        "database_operations",
+        "migrations",
+        "edge_functions",
+        "auth_management",
+        "storage_operations"
+      ],
+      "enabled": true
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/shaansisodia/DEV/AI-HUB"
+      ],
+      "description": "Advanced filesystem operations",
+      "capabilities": [
+        "file_operations",
+        "directory_operations",
+        "search",
+        "watch"
+      ],
+      "enabled": true
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ],
+      "description": "Browser automation and testing",
+      "capabilities": [
+        "browser_automation",
+        "web_scraping",
+        "testing",
+        "screenshot"
+      ],
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "description": "Chain-of-thought reasoning",
+      "capabilities": [
+        "reasoning",
+        "thought_chains",
+        "logical_progression"
+      ],
+      "enabled": true
+    },
+    "fetch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ],
+      "description": "HTTP request handling",
+      "capabilities": [
+        "http_requests",
+        "web_fetching",
+        "api_calls"
+      ],
+      "enabled": true
+    },
+    "code-parser": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@boxabirds/mcp-code-parser"
+      ],
+      "description": "Code parsing with Tree-sitter - understand code structure, find definitions, references",
+      "capabilities": [
+        "code_parsing",
+        "ast_analysis",
+        "code_structure",
+        "definition_search",
+        "reference_search"
+      ],
+      "enabled": true
+    },
+    "auto-claude": {
+      "command": "python",
+      "args": [
+        "08-integrations/auto-claude/mcp-server.py"
+      ],
+      "description": "Auto-Claude autonomous coding - create specs, run builds, QA validation, merge code",
+      "capabilities": [
+        "spec_creation",
+        "build_automation",
+        "qa_validation",
+        "git_operations",
+        "task_management"
+      ],
+      "enabled": true
+    }
+  },
+  "settings": {
+    "autoStart": false,
+    "timeout": 60000,
+    "retryAttempts": 3,
+    "maxInstances": 2,
+    "maxAgeSeconds": 7200,
+    "maxCpuPercent": 80,
+    "maxMemoryMb": 500,
+    "healthCheckInterval": 60,
+    "enableAutoCleanup": true
+  },
+  "resourceLimits": {
+    "maxTotalServers": 10,
+    "maxConcurrentServers": 6,
+    "restartOnCrash": true,
+    "gracefulShutdown": true
+  }
+}

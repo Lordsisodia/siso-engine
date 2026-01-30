@@ -1,0 +1,11 @@
+# Autonomous System Requirements
+
+# Redis coordination
+redis>=5.0.0
+
+# Data handling
+# (built-in: json, sqlite3)
+
+# Optional: For advanced features
+# pyyaml>=6.0
+# psutil>=5.9.0  # For system monitoring

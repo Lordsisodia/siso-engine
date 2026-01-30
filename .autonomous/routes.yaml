@@ -1,0 +1,134 @@
+# RALF Engine Routes Configuration
+# Central routing for BMAD commands, skills, and workflows
+
+engine:
+  version: "2.0.0"
+  path: "."
+
+# BMAD Command System (2-Letter Triggers)
+bmad:
+  enabled: true
+  skill_level: intermediate  # beginner/intermediate/expert
+
+  # Command routing to skills
+  commands:
+    # Product Manager (John)
+    CP: { skill: bmad-pm, workflow: create-prd, description: "Create PRD" }
+    VP: { skill: bmad-pm, workflow: validate-prd, description: "Validate PRD" }
+    EP: { skill: bmad-pm, workflow: edit-prd, description: "Edit PRD" }
+    CE: { skill: bmad-pm, workflow: create-epics, description: "Create Epics" }
+
+    # Architect (Winston)
+    CA: { skill: bmad-architect, workflow: create-architecture, description: "Create Architecture" }
+    VA: { skill: bmad-architect, workflow: validate-architecture, description: "Validate Architecture" }
+    EA: { skill: bmad-architect, workflow: edit-architecture, description: "Edit Architecture" }
+
+    # Analyst (Mary)
+    BP: { skill: bmad-analyst, workflow: brainstorm-project, description: "Brainstorm Project" }
+    RS: { skill: bmad-analyst, workflow: research, description: "Research" }
+    CB: { skill: bmad-analyst, workflow: create-brief, description: "Create Brief" }
+    DP: { skill: bmad-analyst, workflow: document-project, description: "Document Project" }
+
+    # Scrum Master (Bob)
+    SP: { skill: bmad-sm, workflow: sprint-planning, description: "Sprint Planning" }
+    CS: { skill: bmad-sm, workflow: create-story, description: "Create Story" }
+    ER: { skill: bmad-sm, workflow: epic-retrospective, description: "Epic Retrospective" }
+
+    # UX Designer (Sally)
+    CU: { skill: bmad-ux, workflow: create-ux, description: "Create UX" }
+    VU: { skill: bmad-ux, workflow: validate-ux, description: "Validate UX" }
+    EU: { skill: bmad-ux, workflow: edit-ux, description: "Edit UX" }
+
+    # Developer (Amelia)
+    DS: { skill: bmad-dev, workflow: dev-story, description: "Dev Story" }
+    CR: { skill: bmad-dev, workflow: code-review, description: "Code Review" }
+
+    # QA Engineer (Quinn)
+    QA: { skill: bmad-qa, workflow: automate-tests, description: "Automate Tests" }
+    VT: { skill: bmad-qa, workflow: validate-tests, description: "Validate Tests" }
+    RT: { skill: bmad-qa, workflow: run-tests, description: "Run Tests" }
+
+    # Test Architect (TEA)
+    TA: { skill: bmad-tea, workflow: test-architecture, description: "Test Architecture" }
+    TT: { skill: bmad-tea, workflow: test-plan, description: "Test Plan" }
+    TV: { skill: bmad-tea, workflow: validate-test-coverage, description: "Validate Test Coverage" }
+    TR: { skill: bmad-tea, workflow: test-review, description: "Test Review" }
+
+    # Quick Flow (Barry) - Simple tasks
+    TS: { skill: bmad-quick-flow, workflow: tech-spec, description: "Tech Spec" }
+    QD: { skill: bmad-quick-flow, workflow: quick-dev, description: "Quick Dev" }
+
+    # Shared commands
+    IR: { skill: bmad-pm, workflow: implementation-readiness, description: "Implementation Readiness" }
+    CC: { skill: bmad-sm, workflow: course-correction, description: "Course Correction" }
+
+  # Artifact paths for BMAD outputs
+  artifact_paths:
+    planning: "./planning"
+    implementation: "./implementation"
+    architecture: "./architecture"
+    research: "./research"
+    ux: "./ux"
+
+# Skill registry
+skills:
+  path: "./skills"
+  auto_load: true
+  pattern: "*.md"
+
+# Workflow patterns
+workflows:
+  # A/P/C Menu pattern configuration
+  apc_menu:
+    enabled: true
+    options:
+      A: { label: "Advanced", description: "Full workflow with all steps" }
+      P: { label: "Party", description: "Multi-agent collaborative mode" }
+      C: { label: "Continue", description: "Resume from last checkpoint" }
+
+  # WIP file tracking
+  wip_tracking:
+    enabled: true
+    directory: "./wip"
+    frontmatter_required: true
+    steps_field: "stepsCompleted"
+    status_field: "status"
+
+  # Step-by-step execution
+  step_execution:
+    sequential: true
+    allow_skip: false
+    checkpoint_interval: 1
+
+# Routes to project memories
+routes:
+  engine: "."
+  skills: "./skills"
+  workflows: "./workflows"
+  shell: "./shell"
+  lib: "./lib"
+  prompts: "./prompts"
+  schemas: "./schemas"
+
+# Run configuration
+runs:
+  path: "../../../5-project-memory/ralf-core/.autonomous/runs"
+  naming: "run-{timestamp}"
+  files:
+    - THOUGHTS.md
+    - DECISIONS.md
+    - PROGRESS.md
+    - NEXT_STEPS.md
+
+# GitHub integration
+github:
+  auto_branch: true
+  branch_prefix: "bmad/"
+  commit_format: "bmad: [{command}] {description}"
+
+# Telemetry
+telemetry:
+  enabled: true
+  track_commands: true
+  track_skills: true
+  track_workflows: true

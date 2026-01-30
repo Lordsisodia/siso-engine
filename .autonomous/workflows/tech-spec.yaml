@@ -1,0 +1,80 @@
+# Workflow: Tech Spec
+# Tech Spec
+
+name: tech-spec
+command: TS
+description: Tech Spec
+skill: bmad-quick-flow
+agent: Barry
+complexity: simple
+steps:
+- name: read-task
+  title: Read Task
+  description: Read and understand task requirements
+  actions:
+  - Read task description
+  - Clarify requirements
+  - Identify scope
+- name: analyze-codebase
+  title: Analyze Codebase
+  description: Analyze relevant code
+  actions:
+  - Find relevant files
+  - Understand patterns
+  - Identify integration points
+- name: design-solution
+  title: Design Solution
+  description: Design implementation approach
+  actions:
+  - Define approach
+  - Identify files to modify
+  - Plan changes
+- name: identify-tests
+  title: Identify Tests
+  description: Identify tests needed
+  actions:
+  - Find existing tests
+  - Plan new tests
+  - Identify edge cases
+- name: assess-risk
+  title: Assess Risk
+  description: Assess implementation risk
+  actions:
+  - Identify risks
+  - Plan mitigation
+  - Assess rollback strategy
+- name: write-spec
+  title: Write Spec
+  description: Write technical specification
+  actions:
+  - Document approach
+  - List files
+  - Specify tests
+  - Note risks
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: ts-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/tech-spec-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
