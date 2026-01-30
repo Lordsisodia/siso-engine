@@ -224,4 +224,200 @@ A curated list of resources about Ralph (aka Ralph Wiggum), the AI coding techni
 
 ---
 
+### 10. [OpenHands](https://github.com/All-Hands-AI/OpenHands)
+**Location:** [`.docs/github/OpenHands/`](./.docs/github/OpenHands/)
+**Stars:** 49.2k | **Forks:** 5.4k
+**Language:** Python (88.5%), TypeScript (9.8%)
+
+Open-source autonomous AI software engineer (formerly OpenDevin). A comprehensive platform for autonomous coding with sandboxed execution, web UI, and multi-agent support.
+
+**Key Capabilities:**
+- **Sandboxed Environment**: Safe code execution in containerized runtime
+- **Multi-Agent Support**: Claude, GPT-4, Gemini, and local models
+- **Web-Based UI**: Browser interface for interaction and monitoring
+- **Multi-Step Task Execution**: Complex planning and execution workflows
+- **GitHub Integration**: Work with issues, PRs, and repositories
+- **Extensible Architecture**: Plugin system for custom tools and agents
+- **Evaluation Framework**: SWE-bench and other coding benchmarks
+
+**Latest Version:** v0.28.0
+
+---
+
+### 11. [Aider](https://github.com/paul-gauthier/aider)
+**Location:** [`.docs/github/aider/`](./.docs/github/aider/)
+**Stars:** 31.8k | **Forks:** 2.8k
+**Language:** Python (98.2%)
+
+AI pair programming in your terminal. Aider lets you pair program with LLMs to edit code in your local git repository with full multi-file editing support.
+
+**Key Capabilities:**
+- **Multi-File Editing**: AI can edit multiple files in a single request
+- **Git Integration**: Works seamlessly with local git repositories
+- **Multiple LLM Support**: GPT-4, Claude, Gemini, local models via Ollama
+- **Code Analysis**: Repository map for better context understanding
+- **Voice-to-Code**: Speak to code with voice input support
+- **Test-Driven Development**: Run tests and iterate automatically
+- **Commit Messages**: AI-generated meaningful commit messages
+- **Architect Mode**: Plan changes before implementing
+
+**Latest Version:** Continuous releases
+
+---
+
+### 12. [SWE-agent](https://github.com/princeton-nlp/SWE-agent)
+**Location:** [`.docs/github/SWE-agent/`](./.docs/github/SWE-agent/)
+**Stars:** 15.6k | **Forks:** 1.5k
+**Language:** Python (98.8%)
+
+Agent-Computer Interfaces Enable Automated Software Engineering. Princeton NLP's research project that achieves state-of-the-art performance on SWE-bench.
+
+**Key Capabilities:**
+- **Agent-Computer Interface (ACI)**: Specialized tools for LM-codebase interaction
+- **SWE-bench Performance**: State-of-the-art on real GitHub issues
+- **Multi-Phase Execution**: Read → Explore → Edit → Test workflow
+- **Configurable Agents**: Custom agent configurations for different tasks
+- **Batch Mode**: Process multiple issues in parallel
+- **Academic Research**: Published at NeurIPS 2024
+- **Web UI**: Browser interface for monitoring and interaction
+
+**Latest Version:** v1.0.0
+
+---
+
+### 13. [Devika](https://github.com/stitionai/devika)
+**Location:** [`.docs/github/devika/`](./.docs/github/devika/)
+**Stars:** 19.1k | **Forks:** 2.3k
+**Language:** Python (85.4%), TypeScript (12.1%)
+
+AI Software Engineer Agent - Open-source alternative to Devin. An autonomous coding agent with planning, web browsing, and multi-language support.
+
+**Key Capabilities:**
+- **Autonomous Planning**: Breaks down complex tasks into manageable steps
+- **Web Browsing**: Searches and researches information online
+- **Multi-Language Support**: Works with various programming languages
+- **Code Execution**: Runs and tests code in sandboxed environment
+- **Self-Correction**: Identifies and fixes its own mistakes
+- **Project Management**: Organizes work into tasks and milestones
+- **Browser Automation**: Interacts with web UIs for testing
+
+**Latest Version:** v1.0.0
+
+---
+
+### 14. [how-to-ralph-wiggum](https://github.com/ghuntley/how-to-ralph-wiggum)
+**Location:** [`.docs/github/how-to-ralph-wiggum/`](./.docs/github/how-to-ralph-wiggum/)
+**Stars:** 2.8k | **Forks:** 312
+**Language:** Shell (100%)
+
+The Ralph Wiggum Technique by Geoffrey Huntley - the AI development methodology that reduces software costs through autonomous iteration loops.
+
+**Key Capabilities:**
+- **Core Ralph Loop**: `loop.sh` - the fundamental iteration script
+- **Build Mode**: `PROMPT_build.md` for implementation
+- **Plan Mode**: `PROMPT_plan.md` for requirements gathering
+- **Agent Operations**: `AGENTS.md` loaded each iteration
+- **Implementation Plan**: `IMPLEMENTATION_PLAN.md` for task tracking
+- **Spec Directory**: `specs/` for requirement specifications
+- **Fresh Context**: Each iteration starts with clean state
+- **Git-Based Memory**: State persists through commits and files
+
+**Latest Version:** N/A (methodology/template)
+
+---
+
+### 15. [ralph (snarktank)](https://github.com/snarktank/ralph)
+**Location:** [`.docs/github/ralph/`](./.docs/github/ralph/)
+**Stars:** 89 | **Forks:** 12
+**Language:** Shell (100%)
+
+Autonomous AI agent loop that runs repeatedly. A practical implementation of the Ralph Wiggum technique with PRD-based workflow.
+
+**Key Capabilities:**
+- **PRD-Based Workflow**: Works with Product Requirements Documents
+- **Progress Tracking**: `prd.json` and `progress.txt` for state management
+- **Customizable Prompts**: `prompt.md` for Amp, `CLAUDE.md` for Claude Code
+- **Auto-Archiving**: Archives previous runs when starting new features
+- **Debug Mode**: Check state via progress files
+- **Cross-Model Support**: Works with Amp and Claude Code
+- **Reference Implementation**: Based on Geoffrey Huntley's Ralph article
+
+**Latest Version:** N/A
+
+---
+
+### 16. [ralph-claude-code](https://github.com/frankbria/ralph-claude-code)
+**Location:** [`.docs/github/ralph-claude-code/`](./.docs/github/ralph-claude-code/)
+**Stars:** 156 | **Forks:** 23
+**Language:** Shell (100%)
+
+Autonomous AI development loop for Claude Code. Purpose-built for Anthropic's Claude Code with fresh context per iteration.
+
+**Key Capabilities:**
+- **Claude Code Optimized**: Purpose-built for Anthropic's Claude Code
+- **Fresh Context Per Iteration**: Solves context accumulation problems
+- **Automatic Commits**: Git-based state persistence
+- **Quality Gates**: Built-in testing and validation
+- **Error Recovery**: Handles failures gracefully
+- **Simple Setup**: Minimal configuration required
+- **Cross-Platform**: Works on macOS and Linux
+
+**Latest Version:** N/A
+
+---
+
+### 17. [opencode-ralph-wiggum](https://github.com/Th0rgal/opencode-ralph-wiggum)
+**Location:** [`.docs/github/opencode-ralph-wiggum/`](./.docs/github/opencode-ralph-wiggum/)
+**Stars:** 67 | **Forks:** 8
+**Language:** Python (100%)
+
+Type `ralph "prompt"` to start OpenCode in a Ralph loop. Simple CLI wrapper for OpenCode, Claude Code, and Codex.
+
+**Key Capabilities:**
+- **OpenCode Integration**: Works with SaaS Inc's OpenCode
+- **Prompt File Support**: Load prompts from files
+- **Status Checking**: Monitor loop progress
+- **Simple CLI**: `ralph "your prompt here"` syntax
+- **Claude Code Support**: Also works with Claude Code
+- **Codex Support**: Compatible with OpenAI Codex CLI
+- **Lightweight**: Minimal dependencies
+
+**Latest Version:** N/A
+
+---
+
+### 18. [harrymunro-ralph-wiggum](https://github.com/harrymunro/ralph-wiggum)
+**Location:** [`.docs/github/harrymunro-ralph-wiggum/`](./.docs/github/harrymunro-ralph-wiggum/)
+**Stars:** 45 | **Forks:** 6
+**Language:** Shell (100%)
+
+A Claude Code specific implementation of the Ralph Wiggum loop. Tailored for Claude Code's capabilities.
+
+**Key Capabilities:**
+- **Claude Code Specific**: Tailored for Claude Code's capabilities
+- **Simple Loop**: Minimal, focused implementation
+- **Easy Setup**: Get started quickly
+- **Customizable**: Adapt to your workflow
+
+**Latest Version:** N/A
+
+---
+
+### 19. [ralph-wiggum-extension](https://github.com/AsyncFuncAI/ralph-wiggum-extension)
+**Location:** [`.docs/github/ralph-wiggum-extension/`](./.docs/github/ralph-wiggum-extension/)
+**Stars:** 34 | **Forks:** 4
+**Language:** TypeScript (78%), JavaScript (22%)
+
+Ralph Wiggum Gemini CLI Extension. Browser extension for web integration with Gemini CLI.
+
+**Key Capabilities:**
+- **Gemini CLI Integration**: Works with Google's Gemini CLI
+- **Browser Extension**: Chrome/Edge extension for web integration
+- **Loop Automation**: Automates the Ralph Wiggum pattern
+- **Multi-Backend**: Can work with other CLIs too
+
+**Latest Version:** N/A
+
+---
+
 See [`.docs/github/`](./.docs/github/) for the actual cloned repositories.
