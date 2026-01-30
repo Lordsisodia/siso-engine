@@ -65,9 +65,13 @@ fi
 PROMPT_FILE="$ENGINE_DIR/prompts/ralf.md"
 LOG_DIR="$PROJECT_AUTONOMOUS/LOGS"
 TELEMETRY_SCRIPT="$ENGINE_DIR/shell/telemetry.sh"
+PHASE_GATES_SCRIPT="$ENGINE_DIR/lib/phase_gates.py"
+DECISION_REGISTRY_SCRIPT="$ENGINE_DIR/lib/decision_registry.py"
+CONTEXT_BUDGET_SCRIPT="$ENGINE_DIR/lib/context_budget.py"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 SESSION_LOG="$LOG_DIR/ralf-session-$TIMESTAMP.log"
 TELEMETRY_FILE=""
+RUN_DIR=""
 
 # Colors
 RED='\033[0;31m'
@@ -139,12 +143,30 @@ init_run() {
         dry_run_echo "Initialize telemetry"
         dry_run_echo "Would call: $TELEMETRY_SCRIPT init $PROJECT_AUTONOMOUS"
         TELEMETRY_FILE="$PROJECT_AUTONOMOUS/telemetry/dry-run-$TIMESTAMP.json"
+        RUN_DIR="$PROJECT_AUTONOMOUS/runs/dry-run-$TIMESTAMP"
         return 0
     fi
 
     if [ -x "$TELEMETRY_SCRIPT" ]; then
         TELEMETRY_FILE=$("$TELEMETRY_SCRIPT" init "$PROJECT_AUTONOMOUS")
         log "Telemetry initialized: $(basename "$TELEMETRY_FILE")"
+    fi
+
+    # Create run directory for phase gates and decision registry
+    RUN_DIR="$PROJECT_AUTONOMOUS/runs/run-$TIMESTAMP"
+    mkdir -p "$RUN_DIR"
+    log "Run directory: $RUN_DIR"
+
+    # Initialize decision registry
+    if [ -f "$DECISION_REGISTRY_SCRIPT" ]; then
+        python3 "$DECISION_REGISTRY_SCRIPT" init --run-dir "$RUN_DIR" 2>/dev/null || true
+        log "Decision registry initialized"
+    fi
+
+    # Initialize context budget
+    if [ -f "$CONTEXT_BUDGET_SCRIPT" ]; then
+        python3 "$CONTEXT_BUDGET_SCRIPT" init --run-dir "$RUN_DIR" 2>/dev/null || true
+        log "Context budget initialized"
     fi
 }
 
@@ -159,6 +181,82 @@ check_branch() {
     fi
 
     log "Running on branch: $CURRENT_BRANCH"
+}
+
+# Check phase gate
+# Usage: check_phase_gate <phase_name>
+check_phase_gate() {
+    local phase="$1"
+
+    if dry_run_is_active; then
+        dry_run_echo "Would check phase gate: $phase"
+        return 0
+    fi
+
+    if [ -z "$RUN_DIR" ] || [ ! -d "$RUN_DIR" ]; then
+        log_warning "Run directory not set, skipping phase gate check"
+        return 0
+    fi
+
+    if [ -f "$PHASE_GATES_SCRIPT" ]; then
+        log "Checking phase gate: $phase"
+        if python3 "$PHASE_GATES_SCRIPT" check --phase "$phase" --run-dir "$RUN_DIR" 2>/dev/null; then
+            log "✓ Phase gate '$phase' passed"
+            return 0
+        else
+            log_warning "Phase gate '$phase' not yet complete"
+            return 1
+        fi
+    fi
+    return 0
+}
+
+# Mark phase gate as passed
+# Usage: mark_phase_gate <phase_name>
+mark_phase_gate() {
+    local phase="$1"
+
+    if dry_run_is_active; then
+        dry_run_echo "Would mark phase gate complete: $phase"
+        return 0
+    fi
+
+    if [ -z "$RUN_DIR" ] || [ ! -d "$RUN_DIR" ]; then
+        return 0
+    fi
+
+    if [ -f "$PHASE_GATES_SCRIPT" ]; then
+        python3 "$PHASE_GATES_SCRIPT" mark --phase "$phase" --run-dir "$RUN_DIR" 2>/dev/null || true
+    fi
+}
+
+# Check context budget
+# Usage: check_context_budget <current_tokens>
+check_context_budget() {
+    local current_tokens="${1:-0}"
+
+    if dry_run_is_active; then
+        dry_run_echo "Would check context budget: $current_tokens tokens"
+        return 0
+    fi
+
+    if [ -z "$RUN_DIR" ] || [ ! -d "$RUN_DIR" ]; then
+        return 0
+    fi
+
+    if [ -f "$CONTEXT_BUDGET_SCRIPT" ]; then
+        local budget_result
+        budget_result=$(python3 "$CONTEXT_BUDGET_SCRIPT" check --tokens "$current_tokens" --run-dir "$RUN_DIR" 2>/dev/null)
+        local exit_code=$?
+
+        if [ $exit_code -eq 2 ]; then
+            log_warning "Context budget critical - consider spawning sub-agent"
+        elif [ $exit_code -eq 3 ]; then
+            log_error "Context budget exceeded - forcing checkpoint"
+            return 1
+        fi
+    fi
+    return 0
 }
 
 # Check prerequisites
@@ -192,6 +290,20 @@ check_prerequisites() {
         log_warning "jq not found - telemetry will be limited"
     fi
 
+    # Check phase gates script
+    if [ -f "$PHASE_GATES_SCRIPT" ]; then
+        log "✓ Phase gates system available"
+    else
+        log_warning "Phase gates script not found"
+    fi
+
+    # Check decision registry script
+    if [ -f "$DECISION_REGISTRY_SCRIPT" ]; then
+        log "✓ Decision registry system available"
+    else
+        log_warning "Decision registry script not found"
+    fi
+
     if [ -n "$TELEMETRY_FILE" ] && ! dry_run_is_active; then
         "$TELEMETRY_SCRIPT" phase prerequisites "complete" "$TELEMETRY_FILE" 2>/dev/null || true
     fi
@@ -208,8 +320,12 @@ show_summary() {
     log "Engine: $ENGINE_DIR"
     if dry_run_is_active; then
         log "Session log: $SESSION_LOG (would be created)"
+        log "Run directory: $RUN_DIR (would be created)"
     else
         log "Session log: $SESSION_LOG"
+        if [ -n "$RUN_DIR" ]; then
+            log "Run directory: $RUN_DIR"
+        fi
     fi
     if [ -n "$TELEMETRY_FILE" ]; then
         if dry_run_is_active; then
@@ -265,6 +381,7 @@ main() {
     fi
 
     LOOP_COUNT=0
+    CURRENT_PHASE="execution"
 
     while true; do
         LOOP_COUNT=$((LOOP_COUNT + 1))
@@ -274,7 +391,18 @@ main() {
         log "Time: $(date)"
         log "════════════════════════════════════════════════════════════"
 
+        # Check context budget before execution
+        check_context_budget $((LOOP_COUNT * 5000)) || {
+            log_error "Context budget exceeded - checkpointing and exiting"
+            if [ -n "$TELEMETRY_FILE" ]; then
+                "$TELEMETRY_SCRIPT" complete "partial" "$TELEMETRY_FILE" 2>/dev/null || true
+            fi
+            show_summary
+            exit 0
+        }
+
         log_phase "execution"
+        CURRENT_PHASE="execution"
 
         # Run RALF with full blackbox5 context
         log "Executing: cat ralf.md | claude -p --dangerously-skip-permissions"
@@ -287,6 +415,7 @@ main() {
         export RALF_PROJECT_DIR="$PROJECT_DIR"
         export RALF_ENGINE_DIR="$ENGINE_DIR"
         export RALF_BLACKBOX5_DIR="$BLACKBOX5_DIR"
+        export RALF_RUN_DIR="$RUN_DIR"
 
         if ! cat "$PROMPT_FILE" | claude -p --dangerously-skip-permissions 2>&1 | tee -a "$SESSION_LOG"; then
             EXIT_CODE=${PIPESTATUS[0]}
@@ -319,6 +448,9 @@ main() {
         if echo "$RESULT" | grep -q "<promise>COMPLETE</promise>"; then
             log_success "All tasks complete!"
             log "RALF is done. Exiting loop."
+
+            # Mark execution phase as complete
+            mark_phase_gate "execution"
 
             if [ -n "$TELEMETRY_FILE" ]; then
                 "$TELEMETRY_SCRIPT" complete "success" "$TELEMETRY_FILE" 2>/dev/null || true
