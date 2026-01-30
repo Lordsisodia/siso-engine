@@ -12,6 +12,7 @@ This skill enables a managerial agent to:
 
 import requests
 import json
+import socket
 from typing import Optional, Dict, List, Any, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -118,24 +119,29 @@ class VibeKanbanManager:
     - Track progress and status
     - Coordinate merges and reviews
     - Manage dependencies
+
+    The manager automatically detects the Vibe Kanban server port if not specified.
     """
 
     def __init__(
         self,
-        base_url: str = "http://127.0.0.1:57276",
+        base_url: Optional[str] = None,
         project_id: str = "48ec7737-b706-4817-b86c-5786163a0139",
         repo_id: str = "b5b86bc2-fbfb-4276-b15e-01496d647a81",
-        repo_path: str = "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5"
+        repo_path: str = "/Users/shaansisodia/.blackbox5"
     ):
         """
         Initialize Vibe Kanban Manager
 
         Args:
-            base_url: Vibe Kanban API URL
+            base_url: Vibe Kanban API URL (auto-detected if None)
             project_id: Project UUID
             repo_id: Default repository UUID
             repo_path: Local path to repository
         """
+        if base_url is None:
+            base_url = self._detect_vibe_kanban_url()
+
         self.base_url = base_url.rstrip('/')
         self.api_base = f"{self.base_url}/api"
         self.project_id = project_id
@@ -650,6 +656,63 @@ class VibeKanbanManager:
     # =========================================================================
     # HELPER METHODS
     # =========================================================================
+
+    @staticmethod
+    def _detect_vibe_kanban_url() -> str:
+        """
+        Auto-detect Vibe Kanban server URL by finding the listening port.
+
+        Vibe Kanban uses a random port on each start. This method finds the
+        process and determines its listening port.
+
+        Returns:
+            URL like "http://127.0.0.1:58842"
+
+        Raises:
+            RuntimeError: If Vibe Kanban server is not running
+        """
+        # Method 1: Use lsof to find vibe-kanban listening port
+        try:
+            result = subprocess.run(
+                ['lsof', '-nP', '-iTCP', '-sTCP:LISTEN'],
+                capture_output=True,
+                text=True,
+                timeout=5
+            )
+            for line in result.stdout.splitlines():
+                if 'vibe-kanb' in line.lower():
+                    parts = line.split()
+                    for i, part in enumerate(parts):
+                        if 'TCP' in part:
+                            # Format: 127.0.0.1:58842 (LISTEN)
+                            port = parts[i+1].split(':')[-1].split(' ')[0]
+                            return f"http://127.0.0.1:{port}"
+        except (subprocess.TimeoutExpired, FileNotFoundError):
+            pass
+
+        # Method 2: Check common port range for Vibe Kanban
+        for port in range(3000, 3010):
+            try:
+                test_url = f"http://127.0.0.1:{port}/api/projects"
+                r = requests.get(test_url, timeout=1)
+                if r.status_code == 200:
+                    return f"http://127.0.0.1:{port}"
+            except requests.RequestException:
+                continue
+
+        # Method 3: Check wider port range (Vibe Kanban sometimes uses higher ports)
+        for port in range(58000, 59000):
+            try:
+                test_url = f"http://127.0.0.1:{port}/api/projects"
+                r = requests.get(test_url, timeout=0.2)
+                if r.status_code == 200:
+                    return f"http://127.0.0.1:{port}"
+            except requests.RequestException:
+                continue
+
+        raise RuntimeError(
+            "Vibe Kanban server not found. Please start it with: vibe-kanban start"
+        )
 
     def _api_call(self, method: str, endpoint: str, **kwargs) -> Dict[str, Any]:
         """Make API call"""
