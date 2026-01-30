@@ -1,23 +1,23 @@
 # Branch Safety Protocol
 
-CRITICAL: All work MUST stay on `dev` branch.
+RALF can run on `main` branch or feature branches.
 
 ---
 
 ## Allowed Branches
 
-- `dev` (primary)
-- `develop`
+- `main` (primary development branch)
 - `feature/*`
+- `ralf/*`
 - `bugfix/*`
-- `ralph/*`
+- `dev`
+- `develop`
 
 ## Forbidden Branches (NEVER)
 
-- `main`
-- `master`
+- `master` (legacy - use main instead)
 - `production`
-- `release/*`
+- `release/*` (use feature branches instead)
 
 ---
 
