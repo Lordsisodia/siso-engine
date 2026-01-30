@@ -1,0 +1,66 @@
+{
+  "run_id": "20260131_035654",
+  "start_time": "2026-01-30T20:56:54Z",
+  "status": "starting",
+  "events": [
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Telemetry"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Run"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Decision"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Context"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Starting"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Project:"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Engine:"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "info",
+      "message": "Logs:"
+    },
+    {
+      "time": "2026-01-30T20:56:54Z",
+      "type": "error",
+      "message": "CRITICAL:"
+    }
+  ],
+  "metrics": {
+    "files_read": 0,
+    "files_written": 0,
+    "commands_executed": 0,
+    "errors": 1,
+    "warnings": 0
+  },
+  "phases": {
+    "initialization": "pending",
+    "task_selection": "pending",
+    "execution": "pending",
+    "documentation": "pending",
+    "completion": "pending"
+  }
+}
