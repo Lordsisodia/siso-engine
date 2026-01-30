@@ -21,11 +21,34 @@ engine_root = Path(__file__).parent.parent
 import sys
 sys.path.insert(0, str(engine_root))
 
-from infrastructure.kernel import kernel, SystemStatus, RunLevel
-from infrastructure.config import ConfigManager
-from infrastructure.health import HealthMonitor
-from infrastructure.registry import ServiceRegistry
-from infrastructure.lifecycle import LifecycleManager
+# TODO: These infrastructure modules do not exist yet (2026-01-31)
+# When implementing, create the infrastructure/ module or update these imports
+# from infrastructure.kernel import kernel, SystemStatus, RunLevel
+# from infrastructure.config import ConfigManager
+# from infrastructure.health import HealthMonitor
+# from infrastructure.registry import ServiceRegistry
+# from infrastructure.lifecycle import LifecycleManager
+
+# Stub implementations for type hints and basic functionality
+class SystemStatus:
+    READY = "ready"
+
+class RunLevel:
+    name = "unknown"
+
+class StubKernel:
+    def __init__(self):
+        self.status = SystemStatus()
+        self.status.value = "initializing"
+        self.run_level = RunLevel()
+        self.services = {}
+        self._startup_time = None
+
+kernel = StubKernel()
+ConfigManager = None
+HealthMonitor = None
+ServiceRegistry = None
+LifecycleManager = None
 
 
 logger = logging.getLogger("APIServer")
@@ -43,6 +66,9 @@ async def lifespan(app: FastAPI):
     Lifespan event handler for FastAPI.
 
     Manages service startup and shutdown with proper cleanup.
+
+    NOTE: Full infrastructure integration is pending implementation.
+    This is a simplified version that allows the server to start.
     """
     global health_monitor, service_registry, lifecycle
 
@@ -50,24 +76,14 @@ async def lifespan(app: FastAPI):
 
     # Startup
     try:
-        # Load configuration
-        config = ConfigManager.load()
+        # TODO: Initialize core systems when infrastructure module exists
+        # from infrastructure.boot_enhanced import initialize_core_systems, start_engine
 
-        # Initialize core systems
-        from infrastructure.boot_enhanced import initialize_core_systems, start_engine
-        boot_config = await initialize_core_systems(config)
-
-        health_monitor = boot_config.health_monitor
-        service_registry = boot_config.registry
-        lifecycle = boot_config.lifecycle
-
-        # Start engine
-        await start_engine(boot_config)
-
-        logger.info("✅ API Server startup complete")
+        # Simplified startup - just log and continue
+        logger.info("✅ API Server startup complete (simplified mode)")
 
         # Signal ready
-        kernel._status = SystemStatus.READY
+        kernel.status.value = "ready"
 
         yield  # Server is now running
 
@@ -79,20 +95,7 @@ async def lifespan(app: FastAPI):
     logger.info("🛑 API Server shutting down...")
 
     try:
-        # Shutdown engine
-        if lifecycle:
-            from core.boot_enhanced import shutdown_engine
-
-            boot_config = type('BootConfig', (), {
-                'lifecycle': lifecycle,
-                'health_monitor': health_monitor,
-                'registry': service_registry,
-                'config': config,
-                'kernel': kernel
-            })()
-
-            await shutdown_engine(boot_config)
-
+        # TODO: Shutdown engine when infrastructure module exists
         logger.info("✅ API Server shutdown complete")
 
     except Exception as e:
@@ -167,34 +170,49 @@ async def get_status(knl=Depends(get_kernel)):
 
 
 @app.get("/health")
-async def health_check(hm=Depends(get_health_monitor)):
+async def health_check():
     """Basic health check"""
-    health = hm.get_current_health()
+    # TODO: Implement actual health monitoring when infrastructure module exists
     return JSONResponse(
-        status_code=200 if health["status"] == "healthy" else 503,
-        content=health
+        status_code=200,
+        content={
+            "status": "healthy",
+            "message": "API server is running (simplified mode)",
+            "note": "Full health monitoring pending infrastructure implementation"
+        }
     )
 
 
 @app.get("/health/detailed")
-async def detailed_health_check(hm=Depends(get_health_monitor)):
+async def detailed_health_check():
     """Detailed health check with service status"""
-    return hm.get_current_health()
+    # TODO: Implement detailed health check when infrastructure module exists
+    return {
+        "status": "healthy",
+        "message": "API server is running (simplified mode)",
+        "services": {},
+        "note": "Detailed health monitoring pending infrastructure implementation"
+    }
 
 
 @app.get("/health/history")
-async def health_history(
-    hm=Depends(get_health_monitor),
-    limit: int = 100
-):
+async def health_history(limit: int = 100):
     """Get health check history"""
-    return hm.get_health_history(limit=limit)
+    # TODO: Implement health history when infrastructure module exists
+    return {
+        "history": [],
+        "note": "Health history tracking pending infrastructure implementation"
+    }
 
 
 @app.get("/health/uptime")
-async def uptime_stats(hm=Depends(get_health_monitor)):
+async def uptime_stats():
     """Get uptime statistics"""
-    return hm.get_uptime()
+    # TODO: Implement uptime stats when infrastructure module exists
+    return {
+        "uptime_seconds": 0,
+        "note": "Uptime tracking pending infrastructure implementation"
+    }
 
 
 # ============================================================================
@@ -202,23 +220,23 @@ async def uptime_stats(hm=Depends(get_health_monitor)):
 # ============================================================================
 
 @app.get("/services")
-async def list_services(registry=Depends(get_service_registry)):
+async def list_services():
     """List all registered services"""
-    return registry.health_status()
+    # TODO: Implement service registry when infrastructure module exists
+    return {
+        "services": [],
+        "note": "Service registry pending infrastructure implementation"
+    }
 
 
 @app.get("/services/{service_name}")
-async def get_service_status(
-    service_name: str,
-    registry=Depends(get_service_registry)
-):
+async def get_service_status(service_name: str):
     """Get status of a specific service"""
-    status = registry.health_status(service_name)
-
-    if status.get("status") == "not_found":
-        raise HTTPException(status_code=404, detail=f"Service not found: {service_name}")
-
-    return status
+    # TODO: Implement service status when infrastructure module exists
+    raise HTTPException(
+        status_code=501,
+        detail=f"Service registry not implemented. Service lookup for '{service_name}' is pending infrastructure implementation."
+    )
 
 
 # ============================================================================
@@ -228,28 +246,20 @@ async def get_service_status(
 @app.get("/config")
 async def get_config():
     """Get current configuration"""
-    try:
-        config = ConfigManager.load()
-        return {
-            "source": config.source,
-            "validated": config.validated,
-            "data": config.data
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to load config: {str(e)}")
+    # TODO: Implement config management when infrastructure module exists
+    return {
+        "note": "Configuration management pending infrastructure implementation",
+        "status": "not_implemented"
+    }
 
 
 @app.post("/config/reload")
 async def reload_config():
     """Reload configuration"""
-    try:
-        config = ConfigManager.reload()
-        return {
-            "message": "Configuration reloaded",
-            "source": config.source
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to reload config: {str(e)}")
+    raise HTTPException(
+        status_code=501,
+        detail="Configuration management not implemented. Pending infrastructure implementation."
+    )
 
 
 # ============================================================================
@@ -257,14 +267,13 @@ async def reload_config():
 # ============================================================================
 
 @app.post("/engine/shutdown")
-async def shutdown_engine():
+async def shutdown_engine_endpoint():
     """Initiate graceful shutdown"""
-    if lifecycle:
-        # Trigger shutdown event
-        lifecycle._shutdown_event.set()
-        return {"message": "Shutdown initiated"}
-    else:
-        raise HTTPException(status_code=503, detail="Lifecycle manager not available")
+    # TODO: Implement graceful shutdown when infrastructure module exists
+    raise HTTPException(
+        status_code=501,
+        detail="Engine shutdown not implemented. Pending infrastructure implementation."
+    )
 
 
 # ============================================================================
