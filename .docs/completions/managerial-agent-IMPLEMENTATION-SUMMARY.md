@@ -253,7 +253,7 @@ Default settings (can be overridden):
 - Vibe Kanban URL: `http://127.0.0.1:57276`
 - Project ID: `48ec7737-b706-4817-b86c-5786163a0139`
 - Repository ID: `b5b86bc2-fbfb-4276-b15e-01496d647a81`
-- Repository Path: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5`
+- Repository Path: `~/.blackbox5`
 
 ## Event Types Tracked
 

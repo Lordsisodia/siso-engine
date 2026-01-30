@@ -10,20 +10,20 @@ Execute ONE assigned task using framework-best-practices: git worktree isolation
 
 ## Environment (Full Paths)
 
-**Working Directory:** `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/`
+**Working Directory:** `~/.blackbox5/`
 
 **RALF Engine:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/ralf-loop.sh`
+- `~/.blackbox5/2-engine/.autonomous/`
+- `~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh`
+- `~/.blackbox5/2-engine/.autonomous/shell/ralf-loop.sh`
 
 **RALF-CORE Project Memory:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
 
 **GitHub Configuration (from routes.yaml):**
 - Repo: `https://github.com/Lordsisodia/blackbox5`
@@ -37,10 +37,10 @@ Execute ONE assigned task using framework-best-practices: git worktree isolation
 
 ```bash
 # Read routes.yaml for configuration
-cat /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml
+cat ~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml
 
 # Validate critical paths exist
-if [ ! -d "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/" ]; then
+if [ ! -d "~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/" ]; then
     echo "Status: BLOCKED - Critical path missing: tasks/active/"
     exit 1
 fi
@@ -50,17 +50,17 @@ fi
 
 ```bash
 # Initialize telemetry logging
-TELEMETRY_FILE=$(/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
+TELEMETRY_FILE=$(~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
 echo "Telemetry: $TELEMETRY_FILE"
 
 # Log agent version
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event info "Agent-1.2 starting" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event info "Agent-1.2 starting" "$TELEMETRY_FILE"
 ```
 
 ### Step 2: Git Safety & Worktree Setup (Ralphy Pattern)
 
 ```bash
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 
 # Get current branch
 CURRENT_BRANCH=$(git branch --show-current)
@@ -69,7 +69,7 @@ CURRENT_BRANCH=$(git branch --show-current)
 if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
     echo "ERROR: Cannot execute on $CURRENT_BRANCH branch"
     echo "Status: BLOCKED - Wrong branch"
-    /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event error "Blocked: on main/master" "$TELEMETRY_FILE"
+    ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event error "Blocked: on main/master" "$TELEMETRY_FILE"
     exit 1
 fi
 
@@ -103,7 +103,7 @@ Every task follows this SOP:
 
 1. List active tasks:
    ```bash
-   ls -la /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
+   ls -la ~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
    ```
 
 2. Read highest priority task file
@@ -133,8 +133,8 @@ Every task follows this SOP:
 
 6. Log to telemetry:
    ```bash
-   /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh phase task_selection "in_progress" "$TELEMETRY_FILE"
-   /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event info "Task [ID] loaded" "$TELEMETRY_FILE"
+   ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh phase task_selection "in_progress" "$TELEMETRY_FILE"
+   ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event info "Task [ID] loaded" "$TELEMETRY_FILE"
    ```
 
 ---
@@ -146,12 +146,12 @@ Every task follows this SOP:
 **Checklist (ALL must pass):**
 - [ ] **Search existing tests:**
   ```bash
-  find /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5 -name "*test*" -type f | grep -i [component] | head -10
+  find ~/.blackbox5 -name "*test*" -type f | grep -i [component] | head -10
   ```
 - [ ] **Verify target files exist** (or create if needed)
 - [ ] **Check git context:**
   ```bash
-  cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5 && git log --oneline -10
+  cd ~/.blackbox5 && git log --oneline -10
   ```
 - [ ] **Confirm no duplicate work** in recent commits
 - [ ] **Context window check:** If >40% (80k of 200k tokens), spawn sub-agents
@@ -159,7 +159,7 @@ Every task follows this SOP:
 
 **Create Plan Document:**
 ```bash
-PLAN_DIR="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/plan-$TASK_ID"
+PLAN_DIR="~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/plan-$TASK_ID"
 mkdir -p "$PLAN_DIR"
 
 cat > "$PLAN_DIR/PLAN.md" << 'EOF'
@@ -191,7 +191,7 @@ EOF
 
 **Log to telemetry:**
 ```bash
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh phase prerequisites "complete" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh phase prerequisites "complete" "$TELEMETRY_FILE"
 ```
 
 ---
@@ -210,7 +210,7 @@ EOF
 # Before using any tool, verify it exists
 if ! command -v [tool] &> /dev/null; then
     echo "ERROR: Tool '[tool]' not found - cannot hallucinate tools"
-    /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event error "Tool not found: [tool]" "$TELEMETRY_FILE"
+    ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event error "Tool not found: [tool]" "$TELEMETRY_FILE"
     exit 1
 fi
 ```
@@ -249,7 +249,7 @@ Task tool with:
 
 **Log progress:**
 ```bash
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh phase execution "in_progress" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh phase execution "in_progress" "$TELEMETRY_FILE"
 ```
 
 ---
@@ -271,14 +271,14 @@ if [ validation_fails ]; then
     echo "Status: BLOCKED - Validation failed"
 
     # Rollback (Ralphy pattern)
-    cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+    cd ~/.blackbox5
     git reset --soft HEAD~[N]  # N = number of commits to undo
     git stash
 
     # Cleanup worktree
     git worktree remove "$WORKTREE_DIR" 2>/dev/null || true
 
-    /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event error "Validation failed - rolled back" "$TELEMETRY_FILE"
+    ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event error "Validation failed - rolled back" "$TELEMETRY_FILE"
     exit 1
 fi
 ```
@@ -291,8 +291,8 @@ fi
 
 **Create Run Folder:**
 ```bash
-RUN_NUM=$(ls /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/ 2>/dev/null | grep -c "run-" || echo "0")
-RUN_DIR="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-$(printf "%04d" $((RUN_NUM + 1)))"
+RUN_NUM=$(ls ~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/ 2>/dev/null | grep -c "run-" || echo "0")
+RUN_DIR="~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-$(printf "%04d" $((RUN_NUM + 1)))"
 mkdir -p "$RUN_DIR"
 ```
 
@@ -306,7 +306,7 @@ mkdir -p "$RUN_DIR"
 
 **Update Task File:**
 ```bash
-TASK_FILE="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md"
+TASK_FILE="~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md"
 
 # Update status
 sed -i '' 's/Status: in_progress/Status: completed/' "$TASK_FILE"
@@ -325,7 +325,7 @@ EOF
 
 **Move to Completed:**
 ```bash
-mv "$TASK_FILE" "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/"
+mv "$TASK_FILE" "~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/"
 ```
 
 ---
@@ -335,7 +335,7 @@ mv "$TASK_FILE" "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/
 ### Final Commit & Push
 
 ```bash
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 
 # Stage all changes
 git add -A
@@ -352,10 +352,10 @@ Co-authored-by: Agent-1.2 <ralf@blackbox5.local>"
 # Push to origin
 if git push origin "$CURRENT_BRANCH"; then
     echo "Push successful"
-    /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event success "Push complete" "$TELEMETRY_FILE"
+    ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event success "Push complete" "$TELEMETRY_FILE"
 else
     echo "Push failed - will retry next loop"
-    /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event warning "Push failed" "$TELEMETRY_FILE"
+    ~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event warning "Push failed" "$TELEMETRY_FILE"
 fi
 ```
 
@@ -366,13 +366,13 @@ fi
 git worktree remove "$WORKTREE_DIR" 2>/dev/null || true
 git branch -D "ralf/task-$TASK_ID" 2>/dev/null || true
 
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event info "Worktree cleaned up" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event info "Worktree cleaned up" "$TELEMETRY_FILE"
 ```
 
 ### Complete Telemetry
 
 ```bash
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh complete "success" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh complete "success" "$TELEMETRY_FILE"
 ```
 
 ### Output Completion
@@ -403,7 +403,7 @@ SOP: ALIGN → PLAN → EXECUTE → VALIDATE → WRAP ✓
 ### Missing Task File
 ```
 Status: BLOCKED
-Reason: No task files found in /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
+Reason: No task files found in ~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
 Action: Perform first-principles analysis → Create new task → Execute
 Telemetry: Log event error "No tasks available"
 ```
@@ -482,16 +482,16 @@ Telemetry: Log event warning "Push failed"
 
 ```bash
 # Initialize
-TELEMETRY_FILE=$(/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
+TELEMETRY_FILE=$(~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
 
 # Log phase
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh phase [phase_name] [status] "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh phase [phase_name] [status] "$TELEMETRY_FILE"
 
 # Log event
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh event [info|warning|error|success] "message" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh event [info|warning|error|success] "message" "$TELEMETRY_FILE"
 
 # Complete
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh complete [success|failed] "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh complete [success|failed] "$TELEMETRY_FILE"
 ```
 
 **Phases:** initialization, prerequisites, task_selection, execution, validation, documentation, completion

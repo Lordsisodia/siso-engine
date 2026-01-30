@@ -61,8 +61,8 @@ Add explicit status update procedure with field names.
 **Test:** Does Agent-1 know where to move completed tasks?
 
 **Expected:**
-- Source: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/<task-id>.md`
-- Destination: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/<task-id>.md`
+- Source: `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/<task-id>.md`
+- Destination: `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/<task-id>.md`
 
 **Actual:**
 - Full paths provided correctly
@@ -77,7 +77,7 @@ Add explicit `mv` command example.
 **Test:** Does Agent-1 create run folders correctly?
 
 **Expected:**
-- Path: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`
+- Path: `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`
 - NNNN is sequential number
 - Contains THOUGHTS.md, DECISIONS.md, ASSUMPTIONS.md, LEARNINGS.md
 
@@ -126,7 +126,7 @@ Add branch safety check to Phase 2.
 **Test:** Does Agent-1 read routes configuration?
 
 **Expected:**
-- Read `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
+- Read `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
 - Use routes for path resolution
 - Respect route constraints
 

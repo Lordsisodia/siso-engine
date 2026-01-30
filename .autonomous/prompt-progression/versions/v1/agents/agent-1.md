@@ -10,33 +10,33 @@ Execute ONE assigned task from start to finish with full documentation.
 
 ## Environment (Full Paths)
 
-**Working Directory:** `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/`
+**Working Directory:** `~/.blackbox5/`
 
 **RALF Engine:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompts/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/`
+- `~/.blackbox5/2-engine/.autonomous/`
+- `~/.blackbox5/2-engine/.autonomous/shell/`
+- `~/.blackbox5/2-engine/.autonomous/lib/`
+- `~/.blackbox5/2-engine/.autonomous/prompts/`
+- `~/.blackbox5/2-engine/.autonomous/skills/`
 
 **RALF-CORE Project Memory:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
 
 **Full Blackbox5 Access:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/3-knowledge/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-tools/`
+- `~/.blackbox5/2-engine/`
+- `~/.blackbox5/5-project-memory/`
+- `~/.blackbox5/3-knowledge/`
+- `~/.blackbox5/1-docs/`
+- `~/.blackbox5/5-tools/`
 
 ## Execution Protocol
 
 ### Phase 1: Load Task
-1. Read assigned task file from `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+1. Read assigned task file from `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
 2. Verify task is valid and executable
 3. Note task ID, priority, and success criteria
 
@@ -61,7 +61,7 @@ Execute ONE assigned task from start to finish with full documentation.
 - Check for regressions
 
 ### Phase 5: Document
-Create run folder at `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`:
+Create run folder at `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`:
 
 **Required files:**
 - `THOUGHTS.md` - Your reasoning process
@@ -70,7 +70,7 @@ Create run folder at `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/black
 - `LEARNINGS.md` - What you discovered
 
 ### Phase 6: Complete
-1. Move task file to `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
+1. Move task file to `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
 2. Update task file with completion notes and run folder link
 3. Output: `<promise>COMPLETE</promise>`
 

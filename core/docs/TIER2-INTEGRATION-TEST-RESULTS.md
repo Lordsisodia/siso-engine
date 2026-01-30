@@ -384,7 +384,7 @@ The Tier 2 Agent Skills Standard integration with Black Box 5 agents is **comple
 
 ```bash
 # Run integration test
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/01-core/agents/core
+cd ~/.blackbox5/2-engine/01-core/agents/core
 python3 test_skills_with_agents.py
 
 # Run individual tests

@@ -14,7 +14,7 @@ Rapid technical specification for small tasks. 5-10 minutes of planning before i
 
 ## Input
 
-Task file from `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+Task file from `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
 
 ## Output
 
@@ -97,4 +97,4 @@ What's in scope? What's out?
 
 ## Next Phase
 
-Proceed to `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/bmad/workflows/quick-flow/02-dev.md`
+Proceed to `~/.blackbox5/2-engine/.autonomous/bmad/workflows/quick-flow/02-dev.md`

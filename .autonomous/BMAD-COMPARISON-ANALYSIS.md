@@ -160,7 +160,7 @@ Execute → Test → Learn → Improve → Repeat
 ### 3. **Full Path Explicitness** ⭐⭐⭐⭐
 
 ```
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/...
+~/.blackbox5/5-project-memory/ralf-core/...
 ```
 
 **Why it's good:**
@@ -186,7 +186,7 @@ Status: BLOCKED
 ### 5. **Telemetry Integration** ⭐⭐⭐⭐
 
 ```bash
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh
 ```
 
 **Why it's good:**

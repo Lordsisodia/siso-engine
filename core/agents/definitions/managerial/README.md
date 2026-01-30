@@ -352,7 +352,7 @@ VibeKanbanManager(
     base_url="http://127.0.0.1:57276",
     project_id="48ec7737-b706-4817-b86c-5786163a0139",
     repo_id="b5b86bc2-fbfb-4276-b15e-01496d647a81",
-    repo_path="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5"
+    repo_path="~/.blackbox5"
 )
 
 ManagementMemory(

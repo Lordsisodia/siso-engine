@@ -146,7 +146,7 @@ class ManagementMemory:
 
     def __init__(
         self,
-        memory_path: str = "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/management"
+        memory_path: str = "~/.blackbox5/5-project-memory/management"
     ):
         """
         Initialize management memory

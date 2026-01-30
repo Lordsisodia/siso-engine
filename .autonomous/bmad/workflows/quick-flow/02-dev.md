@@ -25,7 +25,7 @@ Implemented feature with tests
 ls [file paths from spec]
 
 # Check existing tests
-find /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5 -name "*test*" | grep [component]
+find ~/.blackbox5 -name "*test*" | grep [component]
 
 # Check recent commits
 git log --oneline -5
@@ -109,4 +109,4 @@ For each file:
 
 ## Next Phase
 
-Proceed to `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/bmad/workflows/quick-flow/03-review.md`
+Proceed to `~/.blackbox5/2-engine/.autonomous/bmad/workflows/quick-flow/03-review.md`

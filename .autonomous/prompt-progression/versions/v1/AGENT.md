@@ -10,33 +10,33 @@ Execute → Test → Learn → Improve → Repeat
 
 ## Environment (Full Paths)
 
-**Working Directory:** `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/`
+**Working Directory:** `~/.blackbox5/`
 
 **Critical Paths:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/ralf.md` - Main prompt file
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/` - RALF engine
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/` - Shell scripts
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/` - Libraries
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompts/` - Prompts
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/` - Skills
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/schemas/` - Schemas
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/` - This progression system
+- `~/.blackbox5/ralf.md` - Main prompt file
+- `~/.blackbox5/2-engine/.autonomous/` - RALF engine
+- `~/.blackbox5/2-engine/.autonomous/shell/` - Shell scripts
+- `~/.blackbox5/2-engine/.autonomous/lib/` - Libraries
+- `~/.blackbox5/2-engine/.autonomous/prompts/` - Prompts
+- `~/.blackbox5/2-engine/.autonomous/skills/` - Skills
+- `~/.blackbox5/2-engine/.autonomous/schemas/` - Schemas
+- `~/.blackbox5/2-engine/.autonomous/prompt-progression/` - This progression system
 
 **Project Memory (RALF-CORE):**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/` - Project root
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml` - Route configuration
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/` - Pending tasks
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/` - Completed tasks
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/` - Execution history
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/` - Learnings
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/feedback/incoming/` - Feedback queue
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/` - Project root
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml` - Route configuration
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/` - Pending tasks
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/` - Completed tasks
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/` - Execution history
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/` - Learnings
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/feedback/incoming/` - Feedback queue
 
 **Full Blackbox5 Access:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/` - Engine
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/` - All projects
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/3-knowledge/` - Knowledge base
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/` - Documentation
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-tools/` - Tools
+- `~/.blackbox5/2-engine/` - Engine
+- `~/.blackbox5/5-project-memory/` - All projects
+- `~/.blackbox5/3-knowledge/` - Knowledge base
+- `~/.blackbox5/1-docs/` - Documentation
+- `~/.blackbox5/5-tools/` - Tools
 
 ## Execution Model: ONE TASK PER LOOP
 
@@ -45,9 +45,9 @@ Execute → Test → Learn → Improve → Repeat
 ## Workflow
 
 ### Step 1: Load Context
-1. Read `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
-2. List `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
-3. Read recent insights from `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
+1. Read `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
+2. List `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+3. Read recent insights from `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
 
 ### Step 2: Select ONE Task
 - If tasks exist: Pick highest priority, read full task file
@@ -65,14 +65,14 @@ Execute → Test → Learn → Improve → Repeat
 - Use Task tool for parallel exploration
 
 ### Step 5: Document
-Create run folder at `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`:
+Create run folder at `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`:
 - `THOUGHTS.md` - Reasoning
 - `DECISIONS.md` - Choices made
 - `ASSUMPTIONS.md` - Verified vs assumed
 - `LEARNINGS.md` - Discoveries
 
 ### Step 6: Update Task
-- Move task to `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
+- Move task to `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
 - Add completion notes
 
 ### Step 7: Commit

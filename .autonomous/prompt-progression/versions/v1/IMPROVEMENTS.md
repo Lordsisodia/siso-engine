@@ -133,7 +133,7 @@
 
 ### Research to Integrate
 
-From `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/research/`:
+From `~/.blackbox5/2-engine/.autonomous/prompt-progression/research/`:
 
 - `openai-swarm-ANALYSIS.md` - Multi-agent patterns
 - `google-adk-python-ANALYSIS.md` - Tool use patterns

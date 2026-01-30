@@ -9,7 +9,7 @@ import sys
 import os
 
 # Add path
-sys.path.insert(0, '/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/01-core')
+sys.path.insert(0, '~/.blackbox5/2-engine/01-core')
 
 from agents.managerial import (
     VibeKanbanManager,

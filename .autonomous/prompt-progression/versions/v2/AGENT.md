@@ -12,19 +12,19 @@ Execute ONE assigned task using:
 
 ## Environment (Full Paths)
 
-**Working Directory:** `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/`
+**Working Directory:** `~/.blackbox5/`
 
 **RALF Engine:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh`
+- `~/.blackbox5/2-engine/.autonomous/`
+- `~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh`
 
 **RALF-CORE Project Memory:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
 
 **GitHub Configuration:**
 - Repo: `https://github.com/Lordsisodia/blackbox5`
@@ -88,13 +88,13 @@ Core philosophy: "AI acts as expert collaborator guiding you through structured 
 
 ```bash
 # Read routes.yaml
-cat /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml
+cat ~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml
 
 # Initialize telemetry
-TELEMETRY_FILE=$(/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
+TELEMETRY_FILE=$(~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
 
 # Check branch safety
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 CURRENT_BRANCH=$(git branch --show-current)
 if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
     echo "Status: BLOCKED - Cannot execute on $CURRENT_BRANCH"
@@ -106,8 +106,8 @@ fi
 
 **Load Task:**
 ```bash
-ls /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
-cat /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md
+ls ~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
+cat ~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md
 ```
 
 **Assess Complexity (BMAD Pattern):**
@@ -213,7 +213,7 @@ For products, platforms, complex features.
 **BMAD Pattern:** Technical decisions and system design
 
 ```bash
-PLAN_DIR="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/plan-$TASK_ID"
+PLAN_DIR="~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/plan-$TASK_ID"
 mkdir -p "$PLAN_DIR"
 ```
 
@@ -308,8 +308,8 @@ fi
 **BMAD Pattern:** Document and learn
 
 ```bash
-RUN_NUM=$(ls /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/ 2>/dev/null | grep -c "run-" || echo "0")
-RUN_DIR="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-$(printf "%04d" $((RUN_NUM + 1)))"
+RUN_NUM=$(ls ~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/ 2>/dev/null | grep -c "run-" || echo "0")
+RUN_DIR="~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-$(printf "%04d" $((RUN_NUM + 1)))"
 mkdir -p "$RUN_DIR"
 ```
 
@@ -335,7 +335,7 @@ mkdir -p "$RUN_DIR"
 ### Update Task
 
 ```bash
-TASK_FILE="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md"
+TASK_FILE="~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md"
 
 # Update status
 sed -i '' 's/Status: in_progress/Status: completed/' "$TASK_FILE"
@@ -351,13 +351,13 @@ cat >> "$TASK_FILE" << EOF
 EOF
 
 # Move to completed
-mv "$TASK_FILE" "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/"
+mv "$TASK_FILE" "~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/"
 ```
 
 ### Commit & Push
 
 ```bash
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 
 # Stage and commit
 git add -A
@@ -376,7 +376,7 @@ git push origin "$CURRENT_BRANCH" || echo "Push failed - will retry"
 ### Telemetry & Completion
 
 ```bash
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh complete "success" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh complete "success" "$TELEMETRY_FILE"
 ```
 
 ```

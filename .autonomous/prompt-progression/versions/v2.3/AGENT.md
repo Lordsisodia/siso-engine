@@ -130,22 +130,22 @@ Execute ONE assigned task with full Black Box 5 integration:
 ```yaml
 project_memories:
   ralf-core:
-    path: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/"
+    path: "~/.blackbox5/5-project-memory/ralf-core/.autonomous/"
     purpose: "RALF self-improvement and engine development"
     priority: 1
 
   blackbox5:
-    path: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/.autonomous/"
+    path: "~/.blackbox5/5-project-memory/blackbox5/.autonomous/"
     purpose: "Black Box 5 core system improvements"
     priority: 2
 
   siso-internal:
-    path: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/siso-internal/.autonomous/"
+    path: "~/.blackbox5/5-project-memory/siso-internal/.autonomous/"
     purpose: "SISO-INTERNAL project work"
     priority: 3
 
   management:
-    path: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/management/.autonomous/"
+    path: "~/.blackbox5/5-project-memory/management/.autonomous/"
     purpose: "Management and coordination"
     priority: 4
 ```
@@ -266,31 +266,31 @@ Output: Implementation + test results
 ```yaml
 skill_selection:
   if_task_contains: ["PRD", "requirements", "product"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-pm.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-pm.md"
 
   if_task_contains: ["architecture", "design", "system"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-architect.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-architect.md"
 
   if_task_contains: ["research", "analyze", "investigate"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-analyst.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-analyst.md"
 
   if_task_contains: ["sprint", "story", "planning"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-sm.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-sm.md"
 
   if_task_contains: ["UX", "UI", "design", "user"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-ux.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-ux.md"
 
   if_task_contains: ["implement", "code", "develop", "fix"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-dev.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-dev.md"
 
   if_task_contains: ["test", "QA", "quality"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-qa.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-qa.md"
 
   if_task_contains: ["test architecture", "test plan"]
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-tea.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-tea.md"
 
   if_task_is_small_and_clear:
-    use_skill: "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/bmad-quick-flow.md"
+    use_skill: "~/.blackbox5/2-engine/.autonomous/skills/bmad-quick-flow.md"
 ```
 
 ---
@@ -374,7 +374,7 @@ wrap_gate:
 
 1. **Call the phase gate check:**
    ```bash
-   python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check --phase [PHASE_NAME] --run-dir [RUN_DIR]
+   python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check --phase [PHASE_NAME] --run-dir [RUN_DIR]
    ```
 
 2. **If gate passes:** Proceed to next phase
@@ -453,41 +453,41 @@ decisions:
 **Read in this order across ALL project memories:**
 
 ### 1. RALF-CORE (Self-Improvement)
-1. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
-2. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
-3. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
+1. `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
+2. `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+3. `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
 
 ### 2. Blackbox5 (Core System)
-1. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/.autonomous/routes.yaml`
-2. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/.autonomous/tasks/active/`
-3. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/.autonomous/memory/insights/`
+1. `~/.blackbox5/5-project-memory/blackbox5/.autonomous/routes.yaml`
+2. `~/.blackbox5/5-project-memory/blackbox5/.autonomous/tasks/active/`
+3. `~/.blackbox5/5-project-memory/blackbox5/.autonomous/memory/insights/`
 
 ### 3. SISO-INTERNAL (Internal Project)
-1. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/siso-internal/.autonomous/routes.yaml`
-2. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/siso-internal/.autonomous/tasks/active/`
-3. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/siso-internal/.autonomous/memory/insights/`
+1. `~/.blackbox5/5-project-memory/siso-internal/.autonomous/routes.yaml`
+2. `~/.blackbox5/5-project-memory/siso-internal/.autonomous/tasks/active/`
+3. `~/.blackbox5/5-project-memory/siso-internal/.autonomous/memory/insights/`
 
 ### 4. Documentation & Roadmaps
-1. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/6-roadmap/04-active/` - Active plans
-2. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/1-docs/03-guides/` - Guides
-3. `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/skills/` - Available skills
+1. `~/.blackbox5/6-roadmap/04-active/` - Active plans
+2. `~/.blackbox5/1-docs/03-guides/` - Guides
+3. `~/.blackbox5/2-engine/.autonomous/skills/` - Available skills
 
 ### 5. Recent Runs (All Projects)
-- Recent `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
-- Recent `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/.autonomous/runs/`
+- Recent `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
+- Recent `~/.blackbox5/5-project-memory/blackbox5/.autonomous/runs/`
 
 **Initialize Systems:**
 ```bash
 # Initialize telemetry
-TELEMETRY_FILE=$(/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
+TELEMETRY_FILE=$(~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
 
 # Initialize context budget (with 40% sub-agent threshold)
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/context_budget.py init \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/context_budget.py init \
   --run-dir "$RUN_DIR" \
   --subagent-threshold 40
 
 # Initialize decision registry
-cp /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.3/templates/decision_registry.yaml "$RUN_DIR/decision_registry.yaml"
+cp ~/.blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.3/templates/decision_registry.yaml "$RUN_DIR/decision_registry.yaml"
 ```
 
 ---
@@ -584,9 +584,9 @@ cp /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.auto
 ## Step 4: Document The Run
 
 **Create run folder in appropriate project memory:**
-- RALF-CORE: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`
-- Blackbox5: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/.autonomous/runs/run-NNNN/`
-- SISO-INTERNAL: `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/siso-internal/.autonomous/runs/run-NNNN/`
+- RALF-CORE: `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-NNNN/`
+- Blackbox5: `~/.blackbox5/5-project-memory/blackbox5/.autonomous/runs/run-NNNN/`
+- SISO-INTERNAL: `~/.blackbox5/5-project-memory/siso-internal/.autonomous/runs/run-NNNN/`
 
 **Required files:**
 - `THOUGHTS.md` - Reasoning process
@@ -627,7 +627,7 @@ mv "$TASK_FILE" "$PROJECT_MEMORY/tasks/completed/"
 ## Step 6: Commit Changes
 
 ```bash
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 
 git add -A
 git commit -m "ralf: [component] complete task [TASK-ID]

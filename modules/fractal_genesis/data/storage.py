@@ -6,7 +6,7 @@ from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, asdict
 
 # Constants
-MEMORY_ROOT = "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/blackbox5/tasks"
+MEMORY_ROOT = "~/.blackbox5/5-project-memory/blackbox5/tasks"
 
 @dataclass
 class SubTask:

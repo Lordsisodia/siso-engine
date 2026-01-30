@@ -63,6 +63,6 @@ Framework analyses from billion-dollar companies:
 ## Integration with Blackbox5
 
 This progression system integrates with:
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompts/` - Active prompts
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/` - RALF project memory
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/ralf.md` - Main entry point
+- `~/.blackbox5/2-engine/.autonomous/prompts/` - Active prompts
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/` - RALF project memory
+- `~/.blackbox5/ralf.md` - Main entry point

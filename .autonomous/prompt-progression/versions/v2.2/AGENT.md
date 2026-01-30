@@ -21,21 +21,21 @@ Execute ONE assigned task with **enforced** safety:
 
 ## Environment (Full Paths)
 
-**Working Directory:** `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/`
+**Working Directory:** `~/.blackbox5/`
 
 **RALF Engine:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py` **(NEW)**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/context_budget.py` **(NEW)**
+- `~/.blackbox5/2-engine/.autonomous/`
+- `~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh`
+- `~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py` **(NEW)**
+- `~/.blackbox5/2-engine/.autonomous/lib/context_budget.py` **(NEW)**
 
 **RALF-CORE Project Memory:**
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
-- `/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/`
+- `~/.blackbox5/5-project-memory/ralf-core/.autonomous/memory/insights/`
 
 **GitHub Configuration:**
 - Repo: `https://github.com/Lordsisodia/blackbox5`
@@ -179,7 +179,7 @@ wrap_gate:
 
 1. **Call the phase gate check:**
    ```bash
-   python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check --phase [PHASE_NAME] --run-dir [RUN_DIR]
+   python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check --phase [PHASE_NAME] --run-dir [RUN_DIR]
    ```
 
 2. **If gate passes:** Proceed to next phase
@@ -230,7 +230,7 @@ context_budget:
 
 ```bash
 # Check current context usage
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/context_budget.py check
+python3 ~/.blackbox5/2-engine/.autonomous/lib/context_budget.py check
 
 # Output:
 # Context Usage: 45,230 / 100,000 tokens (45%)
@@ -335,7 +335,7 @@ decisions:
 
 ```bash
 # Record a new decision
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/decision_registry.py add \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/decision_registry.py add \
   --run-dir [RUN_DIR] \
   --context "Description" \
   --options "opt1,opt2" \
@@ -343,13 +343,13 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
   --rationale "Reason"
 
 # Verify a decision
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/decision_registry.py verify \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/decision_registry.py verify \
   --decision-id "DEC-0017-001" \
   --verified-by "Agent-2.2" \
   --criteria-met true
 
 # Check reversibility
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/decision_registry.py check-reversibility \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/decision_registry.py check-reversibility \
   --run-dir [RUN_DIR]
 ```
 
@@ -376,19 +376,19 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
 
 ```bash
 # Read routes.yaml
-cat /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml
+cat ~/.blackbox5/5-project-memory/ralf-core/.autonomous/routes.yaml
 
 # Initialize telemetry
-TELEMETRY_FILE=$(/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
+TELEMETRY_FILE=$(~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh init)
 
 # Initialize context budget monitoring
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/context_budget.py init --run-dir "$RUN_DIR"
+python3 ~/.blackbox5/2-engine/.autonomous/lib/context_budget.py init --run-dir "$RUN_DIR"
 
 # Initialize decision registry
-cp /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.2/templates/decision_registry.yaml "$RUN_DIR/decision_registry.yaml"
+cp ~/.blackbox5/2-engine/.autonomous/prompt-progression/versions/v2.2/templates/decision_registry.yaml "$RUN_DIR/decision_registry.yaml"
 
 # Check branch safety
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 CURRENT_BRANCH=$(git branch --show-current)
 if [[ "$CURRENT_BRANCH" == "main" || "$CURRENT_BRANCH" == "master" ]]; then
     echo "Status: BLOCKED - Cannot execute on $CURRENT_BRANCH"
@@ -400,8 +400,8 @@ fi
 
 **Load Task:**
 ```bash
-ls /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
-cat /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md
+ls ~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/
+cat ~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md
 ```
 
 **Assess Complexity (BMAD Pattern):**
@@ -453,7 +453,7 @@ For bug fixes, small features, clear scope.
 
 **Phase Gate Check:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
   --phase quick_spec \
   --run-dir "$RUN_DIR"
 ```
@@ -470,7 +470,7 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
 
 **Phase Gate Check before Phase 3:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
   --phase dev_story \
   --run-dir "$RUN_DIR"
 ```
@@ -506,7 +506,7 @@ For products, platforms, complex features.
 
 **Phase Gate Check before Phase 2:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
   --phase align \
   --run-dir "$RUN_DIR"
 ```
@@ -514,7 +514,7 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
 **Phase 2: PLAN**
 
 ```bash
-PLAN_DIR="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/plan-$TASK_ID"
+PLAN_DIR="~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/plan-$TASK_ID"
 mkdir -p "$PLAN_DIR"
 ```
 
@@ -544,7 +544,7 @@ mkdir -p "$PLAN_DIR"
 
 **Record Architecture Decisions:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/decision_registry.py add \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/decision_registry.py add \
   --run-dir "$RUN_DIR" \
   --phase "PLAN" \
   --context "Architecture decision: [description]" \
@@ -553,7 +553,7 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
 
 **Phase Gate Check before Phase 3:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
   --phase plan \
   --run-dir "$RUN_DIR"
 ```
@@ -582,12 +582,12 @@ Task: "Review implementation plan for [feature]"
 
 **Check Context Budget:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/context_budget.py check
+python3 ~/.blackbox5/2-engine/.autonomous/lib/context_budget.py check
 ```
 
 **Phase Gate Check before Phase 4:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
   --phase execute \
   --run-dir "$RUN_DIR"
 ```
@@ -617,13 +617,13 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
 
 **Verify Decisions:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/decision_registry.py verify \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/decision_registry.py verify \
   --run-dir "$RUN_DIR"
 ```
 
 **Phase Gate Check before Phase 5:**
 ```bash
-python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
+python3 ~/.blackbox5/2-engine/.autonomous/lib/phase_gates.py check \
   --phase validate \
   --run-dir "$RUN_DIR"
 ```
@@ -631,8 +631,8 @@ python3 /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/
 **Phase 5: WRAP**
 
 ```bash
-RUN_NUM=$(ls /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/ 2>/dev/null | grep -c "run-" || echo "0")
-RUN_DIR="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-$(printf "%04d" $((RUN_NUM + 1)))"
+RUN_NUM=$(ls ~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/ 2>/dev/null | grep -c "run-" || echo "0")
+RUN_DIR="~/.blackbox5/5-project-memory/ralf-core/.autonomous/runs/run-$(printf "%04d" $((RUN_NUM + 1)))"
 mkdir -p "$RUN_DIR"
 ```
 
@@ -659,7 +659,7 @@ mkdir -p "$RUN_DIR"
 ### Update Task
 
 ```bash
-TASK_FILE="/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md"
+TASK_FILE="~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/active/[TASK-ID].md"
 
 # Update status
 sed -i '' 's/Status: in_progress/Status: completed/' "$TASK_FILE"
@@ -677,13 +677,13 @@ cat >> "$TASK_FILE" << EOF
 EOF
 
 # Move to completed
-mv "$TASK_FILE" "/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/"
+mv "$TASK_FILE" "~/.blackbox5/5-project-memory/ralf-core/.autonomous/tasks/completed/"
 ```
 
 ### Commit & Push
 
 ```bash
-cd /Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5
+cd ~/.blackbox5
 
 # Stage and commit
 git add -A
@@ -704,7 +704,7 @@ git push origin "$CURRENT_BRANCH" || echo "Push failed - will retry"
 ### Telemetry & Completion
 
 ```bash
-/Users/shaansisodia/DEV/SISO-ECOSYSTEM/SISO-INTERNAL/blackbox5/2-engine/.autonomous/shell/telemetry.sh complete "success" "$TELEMETRY_FILE"
+~/.blackbox5/2-engine/.autonomous/shell/telemetry.sh complete "success" "$TELEMETRY_FILE"
 ```
 
 ```
