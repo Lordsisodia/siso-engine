@@ -258,4 +258,44 @@ git clone https://github.com/snwfdhmp/awesome-ralph.git
 # This is a curated list - explore the README for all resources
 ```
 
+---
+
+### [Choo Choo Ralph](./choo-choo-ralph/)
+**Repository:** https://github.com/mj-meyer/choo-choo-ralph
+**Description:** Beads-powered 5-phase workflow with structured specs, verified implementations, and compounding knowledge
+**Language:** Shell (100%)
+**Stars:** 12 | **Forks:** 0
+**Latest:** v0.2.0
+
+**Key Features:**
+- **Beads Integration**: Uses Beads (git-native task tracker) for team-friendly workflow without API latency
+- **5-Phase Workflow**: Plan → Spec → Pour → Ralph → Harvest
+- **Verified, Not Vibes**: Health checks before implementing, tests after, browser verification when needed
+- **Team-Friendly**: Git-native sync, no API latency, works with how your team already collaborates
+- **Traceable**: Bead IDs link commits to tasks, learnings to work with full history
+- **Structured Phases**: Bearings → Implement → Verify → Commit (not just "do the thing")
+- **Bounded Context**: Each task carries its own history via Beads, no context window bloat
+- **Compounding Knowledge**: Agents capture learnings as they work; harvest them into skills and docs
+- **Customizable Workflows**: Formulas and scripts are yours to modify (local copies on install)
+- **Parallel Execution Support**: Run multiple tasks concurrently with coordinated workflows
+
+**Install:**
+```bash
+# Requires: Claude Code, Beads (bd command), jq
+/plugin marketplace add mj-meyer/choo-choo-ralph
+/plugin install choo-choo-ralph@choo-choo-ralph
+
+# Set up project
+/choo-choo-ralph:install
+
+# Generate spec from your plan
+/choo-choo-ralph:spec plans/my-feature.md
+
+# Review the spec, then pour into beads
+/choo-choo-ralph:pour
+
+# Start the loop
+./ralph.sh
+```
+
 <!-- More projects to be added -->

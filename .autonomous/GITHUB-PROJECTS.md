@@ -176,4 +176,52 @@ Manage Claude Code sessions better than ever - a web-based session manager for a
 
 ---
 
+### 8. [Awesome Ralph](https://github.com/snwfdhmp/awesome-ralph)
+**Location:** [`.docs/github/awesome-ralph/`](./.docs/github/awesome-ralph/)
+**Stars:** 610 | **Forks:** 43
+**Language:** Documentation/Curated List
+
+A curated list of resources about Ralph (aka Ralph Wiggum), the AI coding technique that runs AI coding agents in automated loops until specifications are fulfilled. The definitive resource collection for all things Ralph.
+
+**What it includes:**
+- **Official Resources**: Primary sources from Geoffrey Huntley (creator of Ralph) including "Ralph Wiggum as a Software Engineer", "Everything is a Ralph Loop", and "Don't Waste Your Back Pressure"
+- **Playbooks & Methodology**: Comprehensive implementation guides covering the "3 Phases, 2 Prompts, 1 Loop" workflow with diagrams and phase explanations
+- **Implementations**: Curated list of:
+  - Claude Code Plugins: ralph-claude-code, choo-choo-ralph
+  - Standalone: snartank/ralph, iannuttall/ralph, smart-ralph, ralph-wiggum-bdd, ralph-orchestrator, nitodeco/ralph
+  - Tool-Specific: ralph-wiggum-cursor, opencode-ralph-wiggum, ralph (GitHub Copilot), ralph-tui
+  - Multi-Agent: ralph-loop-agent, multi-agent-ralph-loop
+- **Tutorials & Guides**: Getting started guides, 11 tips for AI coding with Ralph, troubleshooting, and quickstart tutorials
+- **Articles & Blog Posts**: Coverage from VentureBeat, technical explainers, "How Ralph Wiggum Went from The Simpsons to the Biggest Name in AI"
+- **Videos & Podcasts**: Deep dives with Geoffrey Huntley, AI That Works Podcast, Dev Interrupted episodes
+- **Community**: Hacker News discussions, Reddit (r/ralphcoding), Discord
+- **Tools & Directories**: Related tooling and resource collections like Vibe Coding
+
+**Latest Version:** N/A (curated documentation)
+
+---
+
+### 9. [Choo Choo Ralph](https://github.com/mj-meyer/choo-choo-ralph)
+**Location:** [`.docs/github/choo-choo-ralph/`](./.docs/github/choo-choo-ralph/)
+**Stars:** 12 | **Forks:** 0
+**Language:** Shell (100%)
+
+"Relentless like a train. Persistent like Ralph Wiggum." A Claude Code plugin that adds structured, customizable workflow formulas to the Ralph loop. Built on Beads (git-native task tracker) for team-friendly autonomous coding.
+
+**Key Capabilities:**
+- **Beads Integration**: Uses Beads (git-native task tracker with molecules) for team-friendly workflow without API latency
+- **5-Phase Workflow**: Plan → Spec → Pour → Ralph → Harvest
+- **Verified, Not Vibes**: Health checks before implementing, tests after, browser verification when needed
+- **Team-Friendly**: Git-native sync, no API latency, works with how your team already collaborates
+- **Traceable**: Bead IDs link commits to tasks, learnings to work with full history
+- **Structured Phases**: Bearings → Implement → Verify → Commit (not just "do the thing")
+- **Bounded Context**: Each task carries its own history via Beads, no context window bloat
+- **Compounding Knowledge**: Agents capture learnings as they work; harvest them into skills and docs that make future sessions smarter
+- **Customizable Workflows**: Local copies of shell scripts, formulas, and config on install (yours to modify per-project)
+- **Parallel Execution**: Multiple tasks run concurrently with coordinated workflows
+
+**Latest Version:** v0.2.0
+
+---
+
 See [`.docs/github/`](./.docs/github/) for the actual cloned repositories.
