@@ -11,12 +11,14 @@ from typing import List, Optional
 from datetime import datetime
 from pathlib import Path
 
-from agents.core.base_agent import BaseAgent, AgentTask, AgentResult, AgentConfig
+from core.agents.definitions.core.base_agent import BaseAgent, AgentTask, AgentResult, AgentConfig
 
 # Import Claude Code execution mixin
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from client.ClaudeCodeAgentMixin import ClaudeCodeAgentMixin
+# Path is: 2-engine/core/agents/definitions/core/DeveloperAgent.py
+# We need to reach: 2-engine/ to import from core/interface/client/
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+from core.interface.client.ClaudeCodeAgentMixin import ClaudeCodeAgentMixin
 
 logger = logging.getLogger(__name__)
 

@@ -17,8 +17,10 @@ from .base_agent import BaseAgent, AgentConfig, AgentTask, AgentResult
 
 # Import Claude Code execution mixin for YAML agents
 import sys
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-from client.ClaudeCodeAgentMixin import ClaudeCodeAgentMixin
+# Path is: 2-engine/core/agents/definitions/core/agent_loader.py
+# We need to reach: 2-engine/ to import from core/interface/client/
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
+from core.interface.client.ClaudeCodeAgentMixin import ClaudeCodeAgentMixin
 
 logger = logging.getLogger(__name__)
 

@@ -17,7 +17,7 @@ import logging
 from typing import Optional, Dict, Any
 from pathlib import Path
 
-from client.ClaudeCodeClient import ClaudeCodeClient, ClaudeCodeResult
+from core.interface.client.ClaudeCodeClient import ClaudeCodeClient, ClaudeCodeResult
 
 logger = logging.getLogger(__name__)
 
