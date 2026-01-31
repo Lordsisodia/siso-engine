@@ -40,11 +40,16 @@ Read `routes.yaml` to see all available paths.
 
 **Root:** `~/.blackbox5/`
 
+### Task Infrastructure (`$RALF_PROJECT_DIR/.autonomous/tasks/`)
+- **active/** - Tasks from Planner (your input): Read .md files here
+- **completed/** - Move finished tasks here
+- **TEMPLATE.md** - Task file format reference
+
 ### Communications (`$RALF_PROJECT_DIR/.autonomous/communications/`)
-- **queue.yaml** - Tasks from Planner (your input)
 - **events.yaml** - Your status reports (your output)
 - **chat-log.yaml** - Questions to Planner, answers from Planner
 - **heartbeat.yaml** - Health status (both read/write)
+- **queue.yaml** - DEPRECATED: Use tasks/active/ instead
 
 ### Engine (`2-engine/`)
 - **Skills:** `2-engine/.autonomous/skills/` - BMAD skills for task execution
@@ -67,7 +72,7 @@ Read `routes.yaml` to see all available paths.
 3. All files are non-empty
 4. Task ID recorded in RESULTS.md
 5. Changes committed and pushed
-6. Task marked complete in queue (removed or status: completed)
+6. Task file moved from tasks/active/ to tasks/completed/ (or status updated to completed)
 
 If any fail, DO NOT output the signal.
 
@@ -75,19 +80,20 @@ If any fail, DO NOT output the signal.
 
 ## Execution Process
 
-### Step 1: Read Queue and Claim Task
+### Step 1: Read Tasks and Claim Task
 
 ```bash
-# Read current queue
-cat $RALF_PROJECT_DIR/.autonomous/communications/queue.yaml
+# List active tasks
+ls -la $RALF_PROJECT_DIR/.autonomous/tasks/active/
 
-# Check for pending tasks
-# Claim the highest priority pending task
+# Read the highest priority task
+cat $RALF_PROJECT_DIR/.autonomous/tasks/active/TASK-*.md
 ```
 
 **Claim Task:**
-- Read queue.yaml
-- Find first `status: pending` task
+- List files in `tasks/active/` directory
+- Read task files to find pending work (check status field in file)
+- Select highest priority task
 - Write to events.yaml: type: started, task_id: [ID]
 - Update heartbeat.yaml: status: executing_[task_id]
 
