@@ -106,10 +106,30 @@ This file persists across loops and builds institutional knowledge.
 - Create: `runs/planner/run-NNNN/`
 - Required docs: THOUGHTS.md, RESULTS.md, DECISIONS.md
 
+### Planner Tracking (`$RALF_PROJECT_DIR/.autonomous/planner-tracking/`)
+**CRITICAL: Every loop MUST write to these locations:**
+
+1. **loops/** - Loop-specific tracking
+   - Format: `loop-NNNN-metadata.yaml`
+   - Contains: loop number, timestamp, actions taken, discoveries, next steps
+
+2. **timeline/** - Chronological timeline
+   - Format: `YYYY-MM-DD.md` (append daily)
+   - Contains: all loops for the day, summary of work
+
+3. **assets/** - Related research and analysis
+   - Format: `research-[topic]-[timestamp].md`
+   - Contains: deep analysis, research findings, improvement proposals
+
+### Timeline (`$RALF_PROJECT_DIR/.autonomous/timeline/`)
+- Project-wide timeline entries
+- Cross-reference with planner-tracking/
+
 ### State Files
 - `$RALF_PROJECT_DIR/STATE.yaml` - Project state
 - `$RALF_PROJECT_DIR/goals.yaml` - Project goals
 - `~/.claude/ralf-state.json` - Loop counter
+- `$RALF_PROJECT_DIR/RALF-CONTEXT.md` - Persistent context
 
 ---
 
