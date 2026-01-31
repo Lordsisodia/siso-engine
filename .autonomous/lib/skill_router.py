@@ -37,6 +37,12 @@ class SkillRole(Enum):
     RALF_CLOUD = "ralf-cloud"  # RALF Cloud Control
     LEGACY_CLOUD = "legacy-cloud"  # Legacy Cloud Control
     GITHUB_CODESPACES = "github-codespaces"  # GitHub Codespaces Control
+    TRUTH_SEEKING = "truth-seeking"  # Truth-Seeking Protocol
+    GIT_COMMIT = "git-commit"  # Git Commit
+    TASK_SELECTION = "task-selection"  # Task Selection
+    STATE_MANAGEMENT = "state-management"  # State Management
+    SUPABASE_OPERATIONS = "supabase-operations"  # Supabase Operations
+    CODEBASE_NAVIGATION = "codebase-navigation"  # Codebase Navigation
 
 
 @dataclass
@@ -264,6 +270,66 @@ SKILL_MAP: Dict[SkillRole, Dict] = {
         "keywords": [
             "codespace", "github codespace", "cloud dev environment",
             "spawn codespace", "create codespace"
+        ],
+        "weight": 1.0
+    },
+    SkillRole.TRUTH_SEEKING: {
+        "name": "Truth-Seeking Protocol",
+        "agent": None,
+        "folder": "truth-seeking",
+        "keywords": [
+            "validate", "verify", "assumption", "fact check",
+            "truth", "confidence", "self-correct", "validation"
+        ],
+        "weight": 1.1
+    },
+    SkillRole.GIT_COMMIT: {
+        "name": "Git Commit",
+        "agent": None,
+        "folder": "git-commit",
+        "keywords": [
+            "commit", "git commit", "save work", "stage",
+            "push", "branch protection", "commit message"
+        ],
+        "weight": 1.0
+    },
+    SkillRole.TASK_SELECTION: {
+        "name": "Task Selection",
+        "agent": None,
+        "folder": "task-selection",
+        "keywords": [
+            "select task", "next task", "pick task", "task selection",
+            "what to work on", "choose task", "dependencies"
+        ],
+        "weight": 1.0
+    },
+    SkillRole.STATE_MANAGEMENT: {
+        "name": "State Management",
+        "agent": None,
+        "folder": "state-management",
+        "keywords": [
+            "update state", "mark complete", "state.yaml",
+            "task status", "completed", "metrics"
+        ],
+        "weight": 1.0
+    },
+    SkillRole.SUPABASE_OPERATIONS: {
+        "name": "Supabase Operations",
+        "agent": None,
+        "folder": "supabase-operations",
+        "keywords": [
+            "supabase", "database", "migration", "rls",
+            "postgres", "sql", "table", "policy"
+        ],
+        "weight": 1.0
+    },
+    SkillRole.CODEBASE_NAVIGATION: {
+        "name": "Codebase Navigation",
+        "agent": None,
+        "folder": "codebase-navigation",
+        "keywords": [
+            "find", "where is", "how does", "locate",
+            "search codebase", "find file", "find function"
         ],
         "weight": 1.0
     }

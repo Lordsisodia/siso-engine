@@ -44,6 +44,17 @@ skill-name/
 | Skill | Description |
 |-------|-------------|
 | [web-search](web-search/) | Web search via SearXNG |
+| [codebase-navigation](codebase-navigation/) | Navigate and understand codebases |
+| [supabase-operations](supabase-operations/) | Database operations for Supabase |
+
+### Core System Skills
+
+| Skill | Description |
+|-------|-------------|
+| [truth-seeking](truth-seeking/) | Validate assumptions and verify facts |
+| [git-commit](git-commit/) | Safely commit changes to git |
+| [task-selection](task-selection/) | Select next task from STATE.yaml |
+| [state-management](state-management/) | Update STATE.yaml with progress |
 
 ### Infrastructure Skills
 
