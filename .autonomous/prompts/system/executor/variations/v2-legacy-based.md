@@ -380,9 +380,13 @@ Every 30 seconds:
    - Commit changes
    - Write "completed" or "failed" event
    - Move task file to completed/
-5. **If no task:**
-   - Write "idle" event
-   - Wait
+5. **If no tasks available, find work:**
+   - Check `feedback/incoming/` - Process any feedback
+   - Check `feedback/actions/` - Execute pending actions
+   - Analyze recent runs in `runs/executor/` - Document patterns
+   - Review `knowledge/analysis/` - Update stale docs
+   - Check `memory/insights/` - Organize and consolidate
+   - Write findings to events.yaml as "discovery"
 6. **Sleep 30 seconds**
 
 ---
