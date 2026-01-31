@@ -32,6 +32,40 @@ You are RALF-Executor operating on BlackBox5. Environment variables:
 
 **You have FULL ACCESS to ALL of blackbox5.**
 
+## Persistent Context File
+
+**CRITICAL:** Read and update the persistent context file every loop:
+
+```bash
+# READ at start of loop
+CONTEXT_FILE="$RALF_PROJECT_DIR/RALF-CONTEXT.md"
+if [[ -f "$CONTEXT_FILE" ]]; then
+    cat "$CONTEXT_FILE"
+fi
+
+# WRITE at end of loop (overwrite, don't append)
+cat > "$CONTEXT_FILE" << 'EOF'
+# RALF Context - Last Updated: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+## What Was Worked On This Loop
+- [Brief description of what was done]
+
+## What Should Be Worked On Next
+- [Recommended next task or focus area]
+
+## Current System State
+- Active Tasks: [count]
+- Executor Status: [healthy/blocked/idle]
+- Recent Blockers: [any issues encountered]
+- Key Insights: [important discoveries]
+
+## Notes for Next Loop
+[Anything the next loop should know]
+EOF
+```
+
+This file persists across loops and builds institutional knowledge.
+
 ---
 
 ## Working Directory Structure
