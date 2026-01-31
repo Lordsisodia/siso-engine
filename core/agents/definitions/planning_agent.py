@@ -13,6 +13,7 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 from .core.base_agent import BaseAgent, AgentConfig, AgentTask, AgentResult
+from .bmad import BMADFramework
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,12 @@ class PlanningAgent(BaseAgent):
         super().__init__(config)
         self.vibe_kanban = None  # VibeKanbanManager (optional)
         self._bmad_enabled = config.metadata.get("bmad_enabled", True)
+
+        # Initialize BMAD framework
+        if self._bmad_enabled:
+            self.bmad = BMADFramework(config=config.metadata)
+        else:
+            self.bmad = None
 
     async def execute(self, task: AgentTask) -> AgentResult:
         """
@@ -91,6 +98,7 @@ class PlanningAgent(BaseAgent):
                     "tasks": tasks,
                     "assignments": assignments,
                     "kanban_results": kanban_results,
+                    "bmad_analysis": requirements.get("bmad_analysis"),  # BMAD results
                 },
                 thinking_steps=thinking_steps,
                 metadata={
@@ -99,6 +107,7 @@ class PlanningAgent(BaseAgent):
                     "task_type": task.type,
                     "epic_count": len(epics),
                     "task_count": len(tasks),
+                    "bmad_enabled": self.bmad is not None,
                 }
             )
 
@@ -144,8 +153,21 @@ class PlanningAgent(BaseAgent):
         Returns:
             Dictionary containing analyzed requirements
         """
-        # In a full implementation, this would use an LLM
-        # For now, provide structured placeholder
+        # Use BMAD framework if enabled
+        if self.bmad:
+            bmad_result = await self.bmad.analyze(request, context)
+
+            return {
+                "original_request": request,
+                "project_type": self._infer_project_type(request),
+                "complexity": self._infer_complexity(request),
+                "key_features": self._extract_features(request),
+                "constraints": context.get("constraints", []),
+                "success_criteria": context.get("success_criteria", []),
+                "bmad_analysis": bmad_result,  # Include full BMAD analysis
+            }
+
+        # Fallback to simple analysis
         return {
             "original_request": request,
             "project_type": self._infer_project_type(request),
