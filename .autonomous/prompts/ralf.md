@@ -61,7 +61,6 @@ Read these from the project:
 - **First principles** — Deconstruct, question, build, validate, document
 - **Never main/master** — Only run on dev, feature/*, or other non-production branches
 - **No placeholders** — Complete or exit PARTIAL
-- **Review every 5 runs** — First principles review of direction
 
 ---
 
@@ -90,17 +89,3 @@ $RALF_PROJECT_DIR/runs/run-NNNN/
 ├── ASSUMPTIONS.md   # What you verified
 └── LEARNINGS.md     # What you discovered
 ```
-
----
-
-## First Principles Review
-
-Every 5 runs:
-
-1. Read last 5 THOUGHTS.md files from `$RALF_PROJECT_DIR/runs/`
-2. Analyze decision patterns
-3. Question current approach
-4. Are we solving the right problems?
-5. Adjust course if needed
-
-Document review in `$RALF_PROJECT_DIR/timeline/reviews/`.
