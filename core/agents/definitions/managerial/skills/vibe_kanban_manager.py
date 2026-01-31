@@ -460,7 +460,7 @@ class VibeKanbanManager:
                 ["git", "diff", "main"],
                 text=True
             )
-        except:
+        except (subprocess.CalledProcessError, FileNotFoundError):
             pass
 
         # Get commits
@@ -470,7 +470,7 @@ class VibeKanbanManager:
                 text=True
             )
             result["commits"] = commit_output.strip().split('\n')
-        except:
+        except (subprocess.CalledProcessError, FileNotFoundError):
             pass
 
         return result
