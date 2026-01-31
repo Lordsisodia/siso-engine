@@ -458,7 +458,7 @@ Format as a bulleted list.
             else:
                 # If no loop or not running, run directly
                 return loop.run_until_complete(self.consolidate())
-        except:
+        except RuntimeError:
             # No event loop, run synchronously
             return asyncio.run(self.consolidate())
 
