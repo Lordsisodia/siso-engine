@@ -59,7 +59,8 @@ class VectorStore:
             try:
                 self.collection = self.client.get_collection(name=collection_name)
                 print(f"✓ Loaded existing collection: {collection_name}")
-            except:
+            except ValueError:
+                # Collection doesn't exist, create it
                 self.collection = self.client.create_collection(
                     name=collection_name,
                     metadata={"description": "Blackbox4 semantic memory index"}

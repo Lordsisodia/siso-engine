@@ -387,7 +387,7 @@ class AgentOutputBus:
             try:
                 deliverables = json.loads(row[0])
                 results.extend(deliverables)
-            except:
+            except (json.JSONDecodeError, TypeError, KeyError):
                 continue
 
         conn.close()
