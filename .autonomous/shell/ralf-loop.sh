@@ -475,10 +475,22 @@ main() {
             fi
         fi
 
+        # Run post-loop analysis hook
+        if [ -f "$ENGINE_DIR/lib/ralf_hooks.sh" ]; then
+            source "$ENGINE_DIR/lib/ralf_hooks.sh"
+            ralf_hook_post_loop "$LOOP_COUNT" "$SESSION_LOG" "$?"
+        fi
+
         # Brief pause between loops
         log "Waiting 10 seconds before next iteration..."
         sleep 10
     done
+
+    # Generate final recommendations
+    if [ -f "$ENGINE_DIR/lib/ralf_hooks.sh" ]; then
+        source "$ENGINE_DIR/lib/ralf_hooks.sh"
+        ralf_hook_generate_recommendations
+    fi
 }
 
 # Handle interrupts

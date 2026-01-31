@@ -62,6 +62,22 @@ Skills are modular capabilities that Legacy can invoke:
 | `git-commit` | Safe commit to dev branch | Active |
 | `context-management` | Preserve/restore context | Active |
 
+### Web Search & Research Skills
+
+| Skill | Purpose | Tool | Status |
+|-------|---------|------|--------|
+| `web-search` | Search the web via SearXNG | `bin/web-search` | Active |
+
+**Deployment:** See `deploy/searxng/` for Render/Railway deployment configs
+
+### Cloud & Infrastructure Skills
+
+| Skill | Purpose | Tool | Status |
+|-------|---------|------|--------|
+| `ralf-cloud-control` | Manage RALF agents in Kubernetes | `bin/ralf-cloud` | Active |
+
+**Infrastructure:** See `6-roadmap/01-research/infrastructure/ralf-k8s-simple/` for K8s deployment
+
 ---
 
 ## Skill Format

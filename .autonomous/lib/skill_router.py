@@ -26,6 +26,7 @@ class SkillRole(Enum):
     QA = "qa"                # QA Engineer (Quinn)
     TEA = "tea"              # Test Architect (TEA)
     QUICK_FLOW = "quick"     # Quick Flow (Barry)
+    SUPERINTELLIGENCE = "superintelligence"  # Superintelligence Protocol
 
 
 @dataclass
@@ -147,6 +148,18 @@ SKILL_MAP: Dict[SkillRole, Dict] = {
             "config change", "update readme", "comment", "formatting"
         ],
         "weight": 1.2  # Higher weight to catch simple tasks
+    },
+    SkillRole.SUPERINTELLIGENCE: {
+        "name": "Superintelligence Protocol",
+        "agent": "Protocol",
+        "file": "superintelligence-protocol.md",
+        "keywords": [
+            "protocol", "superintelligence", "deep analysis", "architecture decision",
+            "complex problem", "multi-dimensional", "system design", "redesign",
+            "optimize", "uncertain", "novel", "high impact", "cross-cutting",
+            "first principles", "expert analysis", "synthesize"
+        ],
+        "weight": 1.3  # Higher weight to catch complex tasks
     }
 }
 

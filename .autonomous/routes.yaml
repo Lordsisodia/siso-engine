@@ -58,6 +58,9 @@ bmad:
     TS: { skill: bmad-quick-flow, workflow: tech-spec, description: "Tech Spec" }
     QD: { skill: bmad-quick-flow, workflow: quick-dev, description: "Quick Dev" }
 
+    # Superintelligence Protocol
+    SI: { skill: superintelligence-protocol, workflow: activate-protocol, description: "Activate Superintelligence Protocol" }
+
     # Shared commands
     IR: { skill: bmad-pm, workflow: implementation-readiness, description: "Implementation Readiness" }
     CC: { skill: bmad-sm, workflow: course-correction, description: "Course Correction" }
