@@ -276,7 +276,7 @@ class TeamDashboard:
             )
             # Subtract 1 for main
             metrics.total_workspaces = max(0, len(result.strip().split('\n')) - 1)
-        except:
+        except (subprocess.CalledProcessError, FileNotFoundError, OSError, AttributeError):
             pass
 
         return metrics
