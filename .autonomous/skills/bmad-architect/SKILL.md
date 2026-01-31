@@ -1,9 +1,32 @@
-# Skill: BMAD Architect (Winston)
+---
+name: bmad-architect
+description: Technical architecture design and system decisions
+category: agent
+agent: Winston
+role: Architect
+trigger: Architecture needed, technical decisions required, system design
+inputs:
+  - name: requirements
+    type: document
+    description: PRD or requirements document
+  - name: constraints
+    type: string
+    description: Technical and business constraints
+  - name: technical_context
+    type: string
+    description: Existing systems and context
+outputs:
+  - name: architecture
+    type: document
+    description: Architecture Decision Records and system design
+commands:
+  - CA
+  - VA
+  - EA
+  - IR
+---
 
-**Purpose:** Technical architecture design and system decisions
-**Trigger:** Architecture needed, technical decisions required, system design
-**Input:** Requirements, constraints, technical context
-**Output:** Architecture Decision Records (ADRs), system design docs
+# BMAD Architect (Winston)
 
 ## Persona
 

@@ -1,9 +1,25 @@
-# Skill: Web Search
+---
+name: web-search
+description: Search the web for real-time information using SearXNG metasearch engine
+category: utility
+trigger: Need current information, research, fact-checking, or data not in training
+inputs:
+  - name: query
+    type: string
+    description: Search query
+  - name: count
+    type: integer
+    description: Number of results (default 5)
+  - name: format
+    type: string
+    description: Output format - text or json
+outputs:
+  - name: results
+    type: document
+    description: Structured search results with titles, URLs, and snippets
+---
 
-**Purpose:** Search the web for real-time information using SearXNG metasearch engine
-**Trigger:** Need current information, research, fact-checking, or data not in training
-**Input:** Search query (string), optional: number of results, safe search level
-**Output:** Structured search results with titles, URLs, and snippets
+# Web Search
 
 ## Overview
 

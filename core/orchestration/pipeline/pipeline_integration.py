@@ -94,10 +94,10 @@ class PipelineIntegration:
     def _init_agent_loader(self):
         """Initialize AgentLoader integration"""
         try:
-            from agents.core.AgentLoader import AgentLoader
+            from core.agents.definitions.core.agent_loader import AgentLoader
 
             self.agent_loader = AgentLoader(
-                agents_dir=self.blackbox_root / "engine" / "agents"
+                agents_path=self.blackbox_root / "2-engine" / "core" / "agents" / "definitions"
             )
             self.has_agent_loader = True
             print("✅ Pipeline: Connected to AgentLoader")
@@ -109,10 +109,10 @@ class PipelineIntegration:
     def _init_skill_manager(self):
         """Initialize SkillManager integration"""
         try:
-            from agents.core.SkillManager import SkillManager
+            from core.agents.definitions.core.skill_manager import SkillManager
 
             self.skill_manager = SkillManager(
-                skills_dir=self.blackbox_root / "engine" / "agents" / ".skills"
+                skills_dir=self.blackbox_root / "2-engine" / "core" / "agents" / ".skills"
             )
             self.has_skill_manager = True
             print("✅ Pipeline: Connected to SkillManager")

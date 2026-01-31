@@ -20,12 +20,12 @@ root = Path(__file__).resolve()
 while root.name != 'blackbox5' and root.parent != root:
     root = root.parent
 
-engine_path = root / '2-engine' / '01-core'
+engine_path = root / '2-engine'
 sys.path.insert(0, str(engine_path))
 
-from agents.core.skill_manager import SkillManager
-from agents.core.base_agent import AgentConfig
-from agents.DeveloperAgent import DeveloperAgent
+from core.agents.definitions.core.skill_manager import SkillManager
+from core.agents.definitions.core.base_agent import AgentConfig
+from core.agents.definitions.core.developer_agent import DeveloperAgent
 
 
 def print_section(title: str, char: str = "="):

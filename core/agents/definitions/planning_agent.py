@@ -279,17 +279,87 @@ class PlanningAgent(BaseAgent):
             context: Additional context
 
         Returns:
-            Kanban creation results
+            Kanban creation results with created card IDs and status
         """
         if not self.vibe_kanban:
             return {"status": "skipped", "reason": "Vibe Kanban not configured"}
 
-        # This would integrate with VibeKanbanManager
-        # For now, return placeholder
-        return {
-            "status": "not_implemented",
-            "message": "Vibe Kanban integration pending"
-        }
+        try:
+            created_cards = []
+            failed_cards = []
+
+            # Import Priority enum from VibeKanbanManager
+            from .managerial.skills.vibe_kanban_manager import Priority
+
+            for task in tasks:
+                try:
+                    # Map task priority to Vibe Kanban priority
+                    task_priority = task.get("priority", "normal").lower()
+                    priority_map = {
+                        "critical": Priority.CRITICAL,
+                        "high": Priority.HIGH,
+                        "medium": Priority.NORMAL,
+                        "normal": Priority.NORMAL,
+                        "low": Priority.LOW,
+                    }
+                    priority = priority_map.get(task_priority, Priority.NORMAL)
+
+                    # Build description with metadata
+                    description_parts = [
+                        f"**Task ID:** {task.get('id', 'N/A')}",
+                        f"**Epic:** {task.get('epic_id', 'N/A')}",
+                        f"**Type:** {task.get('type', 'general')}",
+                        "",
+                        task.get("description", ""),
+                    ]
+
+                    # Add assignment info if available
+                    assigned_agent = task.get("assigned_agent")
+                    if assigned_agent:
+                        description_parts.extend([
+                            "",
+                            f"**Assigned to:** {assigned_agent}",
+                        ])
+
+                    description = "\n".join(description_parts)
+
+                    # Create the task/card in Vibe Kanban
+                    card = self.vibe_kanban.create_task(
+                        title=task.get("title", "Untitled Task"),
+                        description=description,
+                        priority=priority,
+                        dependencies=task.get("dependencies", [])
+                    )
+
+                    created_cards.append({
+                        "task_id": task.get("id"),
+                        "kanban_id": card.id,
+                        "title": card.title,
+                        "status": card.status.value,
+                    })
+
+                except Exception as e:
+                    failed_cards.append({
+                        "task_id": task.get("id"),
+                        "error": str(e),
+                    })
+
+            return {
+                "status": "success",
+                "total_tasks": len(tasks),
+                "created": len(created_cards),
+                "failed": len(failed_cards),
+                "cards": created_cards,
+                "failures": failed_cards if failed_cards else None,
+            }
+
+        except Exception as e:
+            logger.error(f"Vibe Kanban integration failed: {e}")
+            return {
+                "status": "error",
+                "error": str(e),
+                "message": "Failed to create Kanban cards"
+            }
 
     async def _assign_agents(self, tasks: List[Dict[str, Any]], context: Dict[str, Any]) -> Dict[str, str]:
         """

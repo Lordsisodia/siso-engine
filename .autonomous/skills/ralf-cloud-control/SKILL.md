@@ -1,9 +1,22 @@
-# Skill: RALF Cloud Control
+---
+name: ralf-cloud-control
+description: Control RALF agents running in Kubernetes from local machine
+category: infrastructure
+trigger: Need to start, stop, monitor, or manage cloud RALF agents
+inputs:
+  - name: command
+    type: string
+    description: Command to execute (start/stop/logs/scale)
+  - name: agent_id
+    type: string
+    description: Optional agent ID for targeted commands
+outputs:
+  - name: status
+    type: document
+    description: Agent status, logs, or confirmation
+---
 
-**Purpose:** Control RALF agents running in Kubernetes from local machine
-**Trigger:** Need to start, stop, monitor, or manage cloud RALF agents
-**Input:** Command (start/stop/logs/scale), optional agent ID
-**Output:** Agent status, logs, or confirmation
+# RALF Cloud Control
 
 ## Overview
 
@@ -152,10 +165,6 @@ Hetzner Cloud (k3s Kubernetes)
 - Scaling up creates more parallel workers
 - Scaling down terminates pods gracefully
 
-## Future Enhancements
+## Related Files
 
-- Web UI for visual management
-- REST API for programmatic control
-- Task queue for distributing work
-- Metrics and monitoring dashboard
-- Auto-scaling based on queue depth
+- `bin/ralf-cloud` - CLI script for controlling RALF agents

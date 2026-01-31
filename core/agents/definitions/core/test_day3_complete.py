@@ -18,10 +18,10 @@ root = Path(__file__).resolve()
 while root.name != 'blackbox5' and root.parent != root:
     root = root.parent
 
-engine_path = root / '2-engine' / '01-core'
+engine_path = root / '2-engine'
 sys.path.insert(0, str(engine_path))
 
-from agents.core.skill_manager import SkillManager
+from core.agents.definitions.core.skill_manager import SkillManager
 
 
 async def test_day_3_complete():
