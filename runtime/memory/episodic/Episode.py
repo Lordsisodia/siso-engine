@@ -58,7 +58,8 @@ class Episode:
             start = datetime.fromisoformat(self.start_time)
             end = datetime.fromisoformat(self.end_time)
             return (end - start).total_seconds() / 3600
-        except:
+        except ValueError:
+            # Invalid ISO format string
             return 0.0
 
     def message_count(self) -> int:
@@ -84,7 +85,8 @@ class Episode:
                     self.start_time = message.timestamp
                 if msg_time > end:
                     self.end_time = message.timestamp
-            except:
+            except ValueError:
+                # Invalid timestamp format, skip updating bounds
                 pass
 
     def add_task(self, task_id: str) -> None:
@@ -157,7 +159,8 @@ class Episode:
                 try:
                     datetime.fromisoformat(msg.timestamp)
                     timestamps.append(msg.timestamp)
-                except:
+                except ValueError:
+                    # Invalid timestamp format, skip this message
                     pass
 
         if not timestamps:

@@ -263,7 +263,8 @@ class EpisodicMemory:
                 end_time = datetime.fromisoformat(episode.end_time)
                 if end_time >= cutoff:
                     recent.append(episode)
-            except:
+            except ValueError:
+                # Invalid ISO format, skip this episode
                 pass
 
         # Sort by end time (newest first)
@@ -382,7 +383,8 @@ class EpisodicMemory:
                 similarity += 0.2
             elif hours_diff < 24:  # Within 1 day
                 similarity += 0.1
-        except:
+        except ValueError:
+            # Invalid timestamp format, skip time proximity check
             pass
 
         return min(similarity, 1.0)
