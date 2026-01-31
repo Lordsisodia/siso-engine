@@ -248,29 +248,28 @@ class SemanticWorkingMemory(WorkingMemory):
         if task_id:
             all_messages = [m for m in all_messages if m.task_id == task_id]
 
-        # Apply importance filter if specified
-        if min_importance > 0:
-            filtered = []
-            for msg in all_messages:
+        # Consolidated single-pass filtering and scoring
+        scored_messages = []
+
+        for msg in all_messages:
+            # Early exit: check minimum importance filter first (cheap calculation)
+            if min_importance > 0:
                 importance = self._calculate_importance_score(msg)
-                if importance >= min_importance:
-                    filtered.append(msg)
-            all_messages = filtered
+                if importance < min_importance:
+                    continue
+            else:
+                importance = 0.0  # Placeholder, will calculate if needed
 
-        # Apply retrieval strategy
-        if strategy == "recent" or not query:
-            # Simple recency-based retrieval
-            messages = all_messages
-            if limit:
-                messages = messages[-limit:]
+            # Calculate scores based on strategy
+            if strategy == "recent" or not query:
+                # For recent strategy, no scoring needed - use natural order
+                continue
 
-        elif strategy == "semantic":
-            # Semantic relevance only
-            scored_messages = []
-            for msg in all_messages:
+            elif strategy == "semantic":
                 relevance = self._calculate_semantic_relevance(query, msg)
                 if relevance > 0.1:  # Minimum relevance threshold
-                    importance = self._calculate_importance_score(msg)
+                    if min_importance == 0.0:
+                        importance = self._calculate_importance_score(msg)
                     scored_messages.append(MemoryScore(
                         message=msg,
                         relevance_score=relevance,
@@ -279,22 +278,12 @@ class SemanticWorkingMemory(WorkingMemory):
                         combined_score=relevance
                     ))
 
-            # Sort by relevance and return top N
-            scored_messages.sort(key=lambda x: x.combined_score, reverse=True)
-            messages = [sm.message for sm in scored_messages[:limit]] if limit else [sm.message for sm in scored_messages]
-
-        elif strategy == "hybrid":
-            # Hybrid: 50% recent + 30% semantic + 20% importance
-            scored_messages = []
-
-            for msg in all_messages:
+            elif strategy == "hybrid":
                 recency = self._calculate_recency_score(msg)
                 relevance = self._calculate_semantic_relevance(query, msg)
-                importance = self._calculate_importance_score(msg)
-
-                # Combined score with importance factor
+                if min_importance == 0.0:
+                    importance = self._calculate_importance_score(msg)
                 combined = (0.5 * recency) + (0.3 * relevance) + (0.2 * importance)
-
                 scored_messages.append(MemoryScore(
                     message=msg,
                     relevance_score=relevance,
@@ -303,15 +292,9 @@ class SemanticWorkingMemory(WorkingMemory):
                     combined_score=combined
                 ))
 
-            # Sort by combined score
-            scored_messages.sort(key=lambda x: x.combined_score, reverse=True)
-            messages = [sm.message for sm in scored_messages[:limit]] if limit else [sm.message for sm in scored_messages]
-
-        elif strategy == "importance":
-            # Importance-based ranking
-            scored_messages = []
-            for msg in all_messages:
-                importance = self._calculate_importance_score(msg)
+            elif strategy == "importance":
+                if min_importance == 0.0:
+                    importance = self._calculate_importance_score(msg)
                 scored_messages.append(MemoryScore(
                     message=msg,
                     relevance_score=0.0,
@@ -320,15 +303,16 @@ class SemanticWorkingMemory(WorkingMemory):
                     combined_score=importance
                 ))
 
-            # Sort by importance and return top N
-            scored_messages.sort(key=lambda x: x.combined_score, reverse=True)
-            messages = [sm.message for sm in scored_messages[:limit]] if limit else [sm.message for sm in scored_messages]
-
-        else:
-            # Unknown strategy, fall back to recent
+        # Return results based on strategy
+        if strategy == "recent" or not query or strategy not in ["semantic", "hybrid", "importance"]:
+            # Return recent messages in natural order
             messages = all_messages
             if limit:
                 messages = messages[-limit:]
+        else:
+            # Sort by combined score and return top N
+            scored_messages.sort(key=lambda x: x.combined_score, reverse=True)
+            messages = [sm.message for sm in scored_messages[:limit]] if limit else [sm.message for sm in scored_messages]
 
         return messages
 
