@@ -473,7 +473,7 @@ class GitHubActionsManager:
                 return None
             raise
 
-    def wait_for_deployment(
+    async def wait_for_deployment(
         self,
         run_id: int,
         timeout: int = 1800,
