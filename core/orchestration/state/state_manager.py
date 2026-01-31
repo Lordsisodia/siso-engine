@@ -461,12 +461,12 @@ class StateManager:
                 if "Started:" in line:
                     try:
                         started_at = datetime.strptime(line.split("Started:")[1].strip(), '%Y-%m-%d %H:%M:%S')
-                    except:
+                    except (ValueError, IndexError):
                         pass
                 if "Updated:" in line:
                     try:
                         updated_at = datetime.strptime(line.split("Updated:")[1].strip(), '%Y-%m-%d %H:%M:%S')
-                    except:
+                    except (ValueError, IndexError):
                         pass
 
             # Parse notes
