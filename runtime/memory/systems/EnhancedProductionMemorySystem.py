@@ -144,7 +144,7 @@ class SemanticWorkingMemory(WorkingMemory):
             # Exponential decay: 1.0 at 0 hours, 0.5 at 1 hour, 0.1 at 3 hours
             score = 1.0 / (1.0 + hours_ago)
             return min(score, 1.0)
-        except:
+        except (ValueError, TypeError):
             return 0.5  # Default for unparseable timestamps
 
     def _calculate_keyword_relevance(
@@ -444,7 +444,7 @@ class EnhancedProductionMemorySystem(ProductionMemorySystem):
                 else:
                     # No loop running, skip async consolidation
                     pass
-            except:
+            except RuntimeError:
                 # No event loop, skip
                 pass
 
