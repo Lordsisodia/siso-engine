@@ -60,7 +60,7 @@ class FeatureTester:
                 import importlib
                 module = importlib.import_module(module_path)
                 return True
-            except:
+            except ImportError:
                 return False
 
     def test_file_exists(self, file_path: str) -> bool:

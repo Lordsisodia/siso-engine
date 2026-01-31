@@ -425,7 +425,7 @@ class TaskLifecycleManager:
             changes = self.vkb.get_workspace_changes(task_id)
             files_modified = len(changes.get("files_modified", []))
             files_created = len(changes.get("files_created", []))
-        except:
+        except (KeyError, OSError, ValueError):
             files_modified = 0
             files_created = 0
 

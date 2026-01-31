@@ -142,7 +142,7 @@ class ImportanceScorer:
                 decay = 1.0 - (hours_ago / self.config.recent_hours)
                 return self.config.recent_bonus * decay
             return 0.0
-        except:
+        except (ValueError, TypeError):
             return 0.0
 
     def _calculate_role_bonus(self, role: str) -> float:

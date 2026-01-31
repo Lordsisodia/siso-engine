@@ -54,7 +54,7 @@ class SemanticContextSearch:
                     last_update_dt = datetime.fromisoformat(last_updated)
                     if datetime.now() - last_update_dt < timedelta(hours=24):
                         return index
-                except:
+                except (ValueError, TypeError):
                     pass
 
         # Build new index
@@ -115,7 +115,7 @@ class SemanticContextSearch:
                         "content": str(context),
                         "keywords": self._extract_keywords(str(context))
                     })
-                except:
+                except (json.JSONDecodeError, IOError):
                     pass
 
         # Index Ralph work sessions

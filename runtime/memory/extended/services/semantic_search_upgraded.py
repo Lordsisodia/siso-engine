@@ -66,7 +66,7 @@ class SemanticContextSearch:
                     last_update_dt = datetime.fromisoformat(last_updated)
                     if datetime.now() - last_update_dt < timedelta(hours=24):
                         return index
-                except:
+                except (ValueError, TypeError):
                     pass
 
         # Build new index
@@ -310,7 +310,7 @@ class SemanticContextSearch:
                             **item["data"],
                             "relevance_score": similarity
                         })
-            except Exception as e:
+            except (ValueError, TypeError, RuntimeError) as e:
                 # Fallback to keyword matching for this item
                 pass
 
