@@ -224,7 +224,7 @@ class GitHubManager:
             try:
                 error_detail = response.json().get("message", "")
                 error_msg += f": {error_detail}"
-            except:
+            except (ValueError, KeyError, requests.exceptions.JSONDecodeError):
                 error_msg += f": {response.text}"
             logger.error(error_msg)
             response.raise_for_status()
