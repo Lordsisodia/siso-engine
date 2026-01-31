@@ -187,8 +187,9 @@ class Blackbox5:
         if self._skill_manager:
             try:
                 stats['skill_categories'] = len(self._skill_manager.list_categories())
-            except:
-                pass
+            except (AttributeError, TypeError) as e:
+                logger.warning(f"Could not get skill categories: {e}")
+                stats['skill_categories'] = 0
 
         return stats
 
