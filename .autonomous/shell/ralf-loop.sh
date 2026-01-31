@@ -300,6 +300,26 @@ check_prerequisites() {
         log_warning "Decision registry script not found"
     fi
 
+    # Run pre-execution verification
+    if [ -f "$BLACKBOX5_DIR/bin/verify-task" ]; then
+        log "Running pre-execution verification..."
+        if "$BLACKBOX5_DIR/bin/verify-task" --project-dir "$PROJECT_DIR"; then
+            log "✓ Verification passed"
+        else
+            VERIFY_EXIT=$?
+            if [ $VERIFY_EXIT -eq 1 ]; then
+                log_warning "Verification found warnings - proceeding with caution"
+            elif [ $VERIFY_EXIT -eq 2 ]; then
+                log_warning "Verification found errors - consider fixing before proceeding"
+            elif [ $VERIFY_EXIT -eq 3 ]; then
+                log_error "Verification found critical issues - cannot proceed"
+                exit 1
+            fi
+        fi
+    else
+        log_warning "verify-task script not found - skipping pre-execution checks"
+    fi
+
     if [ -n "$TELEMETRY_FILE" ] && ! dry_run_is_active; then
         "$TELEMETRY_SCRIPT" phase prerequisites "complete" "$TELEMETRY_FILE" 2>/dev/null || true
     fi
