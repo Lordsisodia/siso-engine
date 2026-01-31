@@ -1,18 +1,23 @@
 """
-Tests for {SERVICE_NAME} integration.
+Tests for SERVICE_NAME integration.
+
+TODO: Replace SERVICE_NAME with actual service name.
 """
 
 import pytest
 from unittest.mock import AsyncMock, MagicMock
 
-from integration.{SERVICE_LOWER} import {ServiceName}Manager
-from integration.{SERVICE_LOWER}.types import EntityType, EntityStatus
+# TODO: Update imports when implementing actual integration
+# from integration.service_name import TemplateManager
+# from integration.service_name.types import EntityType, EntityStatus
+
+from manager import TemplateManager
 
 
 @pytest.fixture
 def mock_manager():
     """Create a mock manager."""
-    manager = {ServiceName}Manager(token="test_token")
+    manager = TemplateManager(token="test_token")
     manager.client = AsyncMock()
     return manager
 
@@ -54,7 +59,7 @@ async def test_create_entity(mock_manager):
     }
     mock_manager.client.post.return_value = mock_response
 
-    from integration.{SERVICE_LOWER}.types import OperationSpec
+    from manager import OperationSpec
     spec = OperationSpec(param1="test")
 
     entity = await mock_manager.create_entity(spec)

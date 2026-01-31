@@ -1,16 +1,16 @@
 """
-{SERVICE_NAME} Manager for BlackBox5
+SERVICE_NAME Manager for BlackBox5
 ====================================
 
-Main integration class for {SERVICE_NAME} service.
+Main integration class for SERVICE_NAME service.
 
 Features:
-- {FEATURE_1}
-- {FEATURE_2}
-- {FEATURE_3}
+- FEATURE_1: # TODO: Add feature description
+- FEATURE_2: # TODO: Add feature description
+- FEATURE_3: # TODO: Add feature description
 
 Usage:
-    >>> manager = {ServiceName}Manager(token="your_token")
+    >>> manager = TemplateManager(token="your_token")
     >>> result = await manager.some_operation()
 """
 
@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class SomeEnum(str, Enum):
-    """Example enum for {SERVICE_NAME} options."""
+    """Example enum for SERVICE_NAME options."""
 
     OPTION_A = "option_a"
     OPTION_B = "option_b"
@@ -43,7 +43,7 @@ class SomeEnum(str, Enum):
 
 @dataclass
 class SomeDataType:
-    """Example data class for {SERVICE_NAME} entities."""
+    """Example data class for SERVICE_NAME entities."""
 
     id: str
     name: str
@@ -66,33 +66,34 @@ class OperationSpec:
 # =============================================================================
 
 
-class {ServiceName}Manager:
+# TODO: Replace ServiceName with actual service name (e.g., GitHub, Slack)
+class TemplateManager:
     """
-    Main manager class for {SERVICE_NAME} integration.
+    Main manager class for SERVICE_NAME integration.
 
     Authentication:
         Uses API token from environment variable or parameter.
 
     Rate Limits:
-        {RATE_LIMIT_INFO}
+        # TODO: Add rate limit info
 
     Example:
-        >>> manager = {ServiceName}Manager(token="your_token")
+        >>> manager = TemplateManager(token="your_token")
         >>> result = await manager.some_operation()
         >>> print(result)
     """
 
-    API_BASE = "https://api.{SERVICE_LOWER}.com"
+    API_BASE = "https://api.example.com"
     API_VERSION = "v1"
 
     def __init__(
         self,
         token: Optional[str] = None,
-        base_url: str = "https://api.{SERVICE_LOWER}.com",
+        base_url: str = "https://api.example.com",
         timeout: int = 30,
     ):
         """
-        Initialize {SERVICE_NAME} manager.
+        Initialize SERVICE_NAME manager.
 
         Args:
             token: API token (default: from {SERVICE_UPPER}_TOKEN env var)
@@ -101,10 +102,11 @@ class {ServiceName}Manager:
         """
         import os
 
-        self.token = token or os.environ.get("{SERVICE_UPPER}_TOKEN")
+        # TODO: Replace SERVICE_NAME_TOKEN with actual env var name
+        self.token = token or os.environ.get("SERVICE_NAME_TOKEN")
         if not self.token:
             raise ValueError(
-                "API token required. Set {SERVICE_UPPER}_TOKEN "
+                "API token required. Set SERVICE_NAME_TOKEN "
                 "environment variable or pass token parameter."
             )
 
@@ -122,7 +124,7 @@ class {ServiceName}Manager:
             timeout=timeout,
         )
 
-        logger.info(f"Initialized {ServiceName}Manager for {self.base_url}")
+        logger.info(f"Initialized TemplateManager for {self.base_url}")
 
     async def __aenter__(self):
         """Async context manager entry."""

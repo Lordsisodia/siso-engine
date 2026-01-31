@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-{SERVICE_NAME} Integration Demo
+SERVICE_NAME Integration Demo
 ==============================
 
-Demonstrates basic usage of the {SERVICE_NAME} integration.
+Demonstrates basic usage of the SERVICE_NAME integration.
+
+TODO: Replace SERVICE_NAME with actual service name.
 
 Usage:
     python demo.py
@@ -19,24 +21,25 @@ load_dotenv()
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
 
-from integration.{SERVICE_LOWER} import {ServiceName}Manager
+from manager import TemplateManager
 
 
 async def main():
     """Run demo."""
 
     # Check for token
-    token = os.environ.get("{SERVICE_UPPER}_TOKEN")
+    # TODO: Replace SERVICE_NAME_TOKEN with actual env var name
+    token = os.environ.get("SERVICE_NAME_TOKEN")
     if not token:
-        print("❌ Error: {SERVICE_UPPER}_TOKEN environment variable not set")
-        print("   Get your token at: {TOKEN_URL}")
+        print("❌ Error: SERVICE_NAME_TOKEN environment variable not set")
+        print("   Get your token at: https://example.com")
         return
 
-    print("🚀 {SERVICE_NAME} Integration Demo")
+    print("🚀 SERVICE_NAME Integration Demo")
     print("=" * 50)
 
     # Initialize manager
-    async with {ServiceName}Manager() as manager:
+    async with TemplateManager() as manager:
         # Check connection
         print("\n1. Checking connection...")
         if await manager.check_connection():
