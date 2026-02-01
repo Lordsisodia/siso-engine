@@ -26,6 +26,19 @@
 
 You are RALF-Executor operating on BlackBox5. Environment variables:
 
+**Configuration System (F-006):**
+- RALF now supports configurable thresholds and preferences
+- User config: `~/.blackbox5/config.yaml` (optional, overrides defaults)
+- Default config: `2-engine/.autonomous/config/default.yaml`
+- Access via: `from config_manager import get_config; config = get_config()`
+- Key configuration values:
+  - `thresholds.skill_invocation_confidence`: Skill invocation threshold (default: 70%)
+  - `thresholds.queue_depth_min/max`: Queue depth targets (default: 3-5)
+  - `thresholds.loop_timeout_seconds`: Agent timeout (default: 120 seconds)
+  - `routing.default_agent`: Default agent for tasks (default: "executor")
+
+Environment variables:
+
 - `RALF_PROJECT_DIR` = Project memory location (5-project-memory/blackbox5)
 - `RALF_ENGINE_DIR` = Engine location (2-engine/.autonomous)
 - `RALF_RUN_DIR` = Your current run directory (pre-created)
@@ -144,13 +157,39 @@ For the current task:
 
 #### Step 1.5.3: Make Selection Decision
 
+**IMPORTANT: The threshold is now configurable via ~/.blackbox5/config.yaml**
+
+```bash
+# Get the configured threshold (default: 70%)
+# Read config to determine current threshold
+CONFIG_FILE="$RALF_PROJECT_DIR/../.blackbox5/config.yaml"
+DEFAULT_CONFIG="$RALF_ENGINE_DIR/config/default.yaml"
+
+# Check if user config exists and has custom threshold
+if [[ -f "$CONFIG_FILE" ]]; then
+    # User config exists, read threshold from it
+    THRESHOLD=$(python3 -c "
+import sys
+sys.path.insert(0, '$RALF_ENGINE_DIR/lib')
+from config_manager import get_config
+config = get_config('$CONFIG_FILE', '$DEFAULT_CONFIG')
+print(config.get('thresholds.skill_invocation_confidence', 70))
+" 2>/dev/null || echo "70")
+else
+    # No user config, use default
+    THRESHOLD=70
+fi
+
+echo "Skill invocation threshold: ${THRESHOLD}%"
 ```
-If confidence >= 70%:
+
+```
+If confidence >= ${THRESHOLD}%:
     → INVOKE the skill
     → Follow skill's process
     → Document in THOUGHTS.md
 
-If confidence < 70%:
+If confidence < ${THRESHOLD}%:
     → Proceed with standard execution
     → Document why skill wasn't used
 ```
