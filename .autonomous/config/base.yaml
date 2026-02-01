@@ -1,0 +1,67 @@
+# RALF Base Configuration
+# =======================
+# This file contains the base configuration that all environments inherit from.
+# Environment-specific files (dev.yaml, staging.yaml, prod.yaml) override these values.
+
+version: "2.0.0"
+
+# System Configuration
+system:
+  name: "RALF"
+  environment: "base"
+  log_level: "INFO"
+  timezone: "UTC"
+
+# API Configuration
+api:
+  enabled: true
+  host: "localhost"
+  port: 8080
+  timeout: 30
+  rate_limit:
+    enabled: true
+    requests_per_minute: 100
+
+# Database Configuration
+database:
+  host: "localhost"
+  port: 5432
+  name: "ralf_db"
+  pool_size: 10
+  timeout: 30
+
+# Security Configuration
+security:
+  api_key_required: false
+  rate_limiting: true
+  encryption:
+    algorithm: "AES-256-GCM"
+    key_iterations: 100000
+
+# Feature Flags
+features:
+  automated_testing: true
+  github_integration: true
+  api_gateway: true
+  code_review: false
+  performance_monitoring: false
+
+# Task Execution
+execution:
+  max_concurrent_tasks: 3
+  task_timeout: 3600
+  retry_attempts: 3
+  retry_delay: 60
+
+# Monitoring
+monitoring:
+  enabled: false
+  metrics_port: 9090
+  health_check_interval: 60
+
+# Storage
+storage:
+  config_dir: "./config"
+  data_dir: "./data"
+  logs_dir: "./logs"
+  backup_dir: "./backups"
