@@ -108,7 +108,86 @@ Document findings in THOUGHTS.md under "## Pre-Execution Research":
 - Blockers: [none / list]
 ```
 
-**Research MUST be documented before proceeding to execution.**
+**Research MUST be documented before proceeding to skill selection.**
+
+---
+
+### Phase 1.5: Skill Selection Check (MANDATORY)
+
+**CRITICAL: You MUST check for applicable skills BEFORE starting execution.**
+
+The skill system only works if skills are actually invoked. Zero skill usage has been detected across multiple runs despite 23+ skills being available.
+
+#### Step 1.5.1: Check for Applicable Skills
+
+Read the skill documentation:
+
+```bash
+# Read skill-usage.yaml to see available skills
+cat $RALF_PROJECT_DIR/operations/skill-usage.yaml
+
+# Read skill-selection.yaml for selection guidance
+cat $RALF_PROJECT_DIR/operations/skill-selection.yaml
+```
+
+#### Step 1.5.2: Match Task to Skills
+
+For the current task:
+
+1. **Check task type** against domain mapping in skill-selection.yaml
+2. **Match keywords** from task against skill trigger_keywords
+3. **Calculate confidence** based on:
+   - Keyword overlap (40%)
+   - Task type alignment (30%)
+   - Complexity fit (20%)
+   - Historical success (10%)
+
+#### Step 1.5.3: Make Selection Decision
+
+```
+If confidence >= 80%:
+    → INVOKE the skill
+    → Follow skill's process
+    → Document in THOUGHTS.md
+
+If confidence < 80%:
+    → Proceed with standard execution
+    → Document why skill wasn't used
+```
+
+#### Step 1.5.4: Document Skill Usage
+
+Add to THOUGHTS.md under "## Skill Usage for This Task":
+
+```markdown
+## Skill Usage for This Task
+
+**Applicable skills:** [list skills considered]
+**Skill invoked:** [name or "None"]
+**Confidence:** [percentage if calculated]
+**Rationale:** [why skill was or wasn't used]
+```
+
+**Examples:**
+
+```markdown
+## Skill Usage for This Task
+
+**Applicable skills:** bmad-pm (PRD creation)
+**Skill invoked:** bmad-pm
+**Confidence:** 95%
+**Rationale:** Task explicitly requires PRD creation, perfect match
+```
+
+```markdown
+## Skill Usage for This Task
+
+**Applicable skills:** bmad-architect (considered)
+**Skill invoked:** None
+**Confidence:** 60%
+**Rationale:** While architecture-related, task is straightforward file editing
+that doesn't benefit from specialized skill
+```
 
 ---
 
@@ -268,6 +347,8 @@ Before `<promise>COMPLETE</promise>`:
 
 - [ ] Pre-execution research completed and documented
 - [ ] Duplicate check performed
+- [ ] **Skill selection check completed (Phase 1.5)**
+- [ ] **Skill usage documented in THOUGHTS.md**
 - [ ] All target files read before modification
 - [ ] Task executed from active/ (not just researched)
 - [ ] THOUGHTS.md exists and non-empty
@@ -278,6 +359,7 @@ Before `<promise>COMPLETE</promise>`:
 - [ ] Changes committed and pushed
 - [ ] Task file moved to tasks/completed/
 - [ ] Event written to events.yaml
+- [ ] **Skill metrics updated (if skill was used)**
 
 **Quick check:**
 ```bash
