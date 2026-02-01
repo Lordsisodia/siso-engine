@@ -145,12 +145,12 @@ For the current task:
 #### Step 1.5.3: Make Selection Decision
 
 ```
-If confidence >= 80%:
+If confidence >= 70%:
     → INVOKE the skill
     → Follow skill's process
     → Document in THOUGHTS.md
 
-If confidence < 80%:
+If confidence < 70%:
     → Proceed with standard execution
     → Document why skill wasn't used
 ```
