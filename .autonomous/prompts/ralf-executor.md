@@ -314,11 +314,16 @@ python3 $RALF_ENGINE_DIR/lib/roadmap_sync.py all \
   [RUN_NUMBER] \
   "success"
 
-# Step 2: Move task file to completed/
+# Step 2: Generate documentation (optional, async)
+# Generate feature documentation from task output
+export PYTHONPATH="$RALF_ENGINE_DIR/lib:$PYTHONPATH"
+python3 $RALF_ENGINE_DIR/lib/doc_generator.py feature "[TASK-ID]" 2>&1 || echo "Doc generation skipped (non-fatal)"
+
+# Step 3: Move task file to completed/
 mv $RALF_PROJECT_DIR/.autonomous/tasks/active/[TASK-FILE] \
    $RALF_PROJECT_DIR/.autonomous/tasks/completed/
 
-# Step 3: Commit changes
+# Step 4: Commit changes
 cd ~/.blackbox5
 git add -A
 git commit -m "executor: [$(date +%Y%m%d-%H%M%S)] [TASK-ID] - [brief description]"
