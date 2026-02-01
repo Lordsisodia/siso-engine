@@ -772,6 +772,101 @@ def sync_both_on_task_completion(
     return result
 
 
+def sync_all_on_task_completion(
+    task_id: str,
+    state_yaml_path: str,
+    improvement_backlog_path: str,
+    queue_path: str,
+    active_dir: str,
+    task_content: str = None,
+    executed_by: str = "RALF Executor",
+    dry_run: bool = False
+) -> Dict[str, Any]:
+    """
+    Update STATE.yaml, improvement-backlog.yaml, and queue.yaml when a task completes.
+
+    This is a convenience function that calls all three sync functions.
+    Returns combined results.
+
+    Args:
+        task_id: Completed task ID (e.g., "TASK-1769911101")
+        state_yaml_path: Full path to STATE.yaml
+        improvement_backlog_path: Full path to improvement-backlog.yaml
+        queue_path: Full path to queue.yaml
+        active_dir: Full path to active/ directory
+        task_content: Task file content (required for improvement sync)
+        executed_by: Agent/user who completed the task
+        dry_run: If True, do not actually write changes
+
+    Returns:
+        {
+            "success": bool,
+            "roadmap_sync": dict (roadmap sync result),
+            "improvement_sync": dict (improvement sync result),
+            "queue_sync": dict (queue sync result),
+            "error": str or None
+        }
+    """
+    result = {
+        "success": True,
+        "roadmap_sync": None,
+        "improvement_sync": None,
+        "queue_sync": None,
+        "error": None
+    }
+
+    # Sync roadmap STATE.yaml
+    roadmap_result = sync_roadmap_on_task_completion(
+        task_id=task_id,
+        state_yaml_path=state_yaml_path,
+        task_content=task_content,
+        executed_by=executed_by,
+        dry_run=dry_run
+    )
+    result["roadmap_sync"] = roadmap_result
+
+    # Sync improvement backlog (if task content provided)
+    if task_content:
+        completed_at = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+        improvement_result = sync_improvement_backlog(
+            task_id=task_id,
+            improvement_backlog_path=improvement_backlog_path,
+            task_content=task_content,
+            completed_at=completed_at,
+            dry_run=dry_run
+        )
+        result["improvement_sync"] = improvement_result
+
+    # Sync queue.yaml
+    try:
+        # Import queue_sync module
+        import sys
+        import os
+        roadmap_sync_dir = os.path.dirname(os.path.abspath(__file__))
+        if roadmap_sync_dir not in sys.path:
+            sys.path.insert(0, roadmap_sync_dir)
+
+        from queue_sync import sync_queue_on_task_completion
+
+        queue_result = sync_queue_on_task_completion(
+            queue_path=queue_path,
+            active_dir=active_dir,
+            dry_run=dry_run
+        )
+        result["queue_sync"] = queue_result
+
+    except Exception as e:
+        # Queue sync failure should not fail the entire operation
+        log_message(f"Queue sync failed (non-critical): {str(e)}", "WARN")
+        result["queue_sync"] = {
+            "success": False,
+            "error": str(e),
+            "removed_count": 0
+        }
+
+    return result
+
+
 # =============================================================================
 # CLI INTERFACE
 # =============================================================================
@@ -783,10 +878,12 @@ def main():
         print("  python roadmap_sync.py roadmap <task_id> <state_yaml_path> [--dry-run]")
         print("  python roadmap_sync.py improvement <task_id> <improvement_backlog_path> <task_file> [--dry-run]")
         print("  python roadmap_sync.py both <task_id> <state_yaml_path> <improvement_backlog_path> <task_file> [--dry-run]")
+        print("  python roadmap_sync.py all <task_id> <state_yaml_path> <improvement_backlog_path> <queue_path> <active_dir> <task_file> [--dry-run]")
         print("\nExamples:")
         print('  python roadmap_sync.py roadmap TASK-1769911101 /workspaces/blackbox5/6-roadmap/STATE.yaml')
         print('  python roadmap_sync.py improvement TASK-1769911101 /workspaces/blackbox5/5-project-memory/blackbox5/operations/improvement-backlog.yaml task.md')
         print('  python roadmap_sync.py both TASK-1769911101 /workspaces/blackbox5/6-roadmap/STATE.yaml /workspaces/blackbox5/5-project-memory/blackbox5/operations/improvement-backlog.yaml task.md')
+        print('  python roadmap_sync.py all TASK-1769911101 /workspaces/blackbox5/6-roadmap/STATE.yaml /workspaces/blackbox5/5-project-memory/blackbox5/operations/improvement-backlog.yaml /workspaces/blackbox5/5-project-memory/blackbox5/.autonomous/communications/queue.yaml /workspaces/blackbox5/5-project-memory/blackbox5/.autonomous/tasks/active task.md')
         sys.exit(1)
 
     mode = sys.argv[1].lower()
@@ -922,8 +1019,75 @@ def main():
 
         sys.exit(0 if result['success'] else 1)
 
+    elif mode == "all":
+        if len(sys.argv) < 8:
+            print("Error: all mode requires <task_id>, <state_yaml_path>, <improvement_backlog_path>, <queue_path>, <active_dir>, and <task_file>")
+            sys.exit(1)
+
+        task_id = sys.argv[2]
+        state_yaml_path = sys.argv[3]
+        improvement_backlog_path = sys.argv[4]
+        queue_path = sys.argv[5]
+        active_dir = sys.argv[6]
+        task_file = sys.argv[7]
+
+        # Read task file
+        with open(task_file, 'r') as f:
+            task_content = f.read()
+
+        print(f"\n{'='*70}")
+        print(f"FULL SYNC (ROADMAP + IMPROVEMENT + QUEUE) - {task_id}")
+        print(f"{'='*70}\n")
+
+        result = sync_all_on_task_completion(
+            task_id=task_id,
+            state_yaml_path=state_yaml_path,
+            improvement_backlog_path=improvement_backlog_path,
+            queue_path=queue_path,
+            active_dir=active_dir,
+            task_content=task_content,
+            executed_by="manual_cli",
+            dry_run=dry_run
+        )
+
+        print(f"\n{'='*70}")
+        print(f"RESULTS")
+        print(f"{'='*70}\n")
+
+        print(f"Overall Success: {result['success']}")
+
+        if result.get('roadmap_sync'):
+            print(f"\n--- Roadmap Sync ---")
+            print(f"Success: {result['roadmap_sync']['success']}")
+            print(f"Plan ID: {result['roadmap_sync'].get('plan_id', 'N/A')}")
+            if result['roadmap_sync']['changes']:
+                print(f"Changes:")
+                for change in result['roadmap_sync']['changes']:
+                    print(f"  - {change}")
+
+        if result.get('improvement_sync'):
+            print(f"\n--- Improvement Sync ---")
+            print(f"Success: {result['improvement_sync']['success']}")
+            print(f"Improvement ID: {result['improvement_sync'].get('improvement_id', 'N/A')}")
+            if result['improvement_sync']['changes']:
+                print(f"Changes:")
+                for change in result['improvement_sync']['changes']:
+                    print(f"  - {change}")
+
+        if result.get('queue_sync'):
+            print(f"\n--- Queue Sync ---")
+            print(f"Success: {result['queue_sync']['success']}")
+            print(f"Tasks removed: {result['queue_sync'].get('removed_count', 0)}")
+            print(f"Tasks remaining: {result['queue_sync'].get('remaining_count', 0)}")
+            if result['queue_sync'].get('removed_tasks'):
+                print(f"Removed tasks:")
+                for task_id in result['queue_sync']['removed_tasks']:
+                    print(f"  - {task_id}")
+
+        sys.exit(0 if result['success'] else 1)
+
     else:
-        print(f"Error: Unknown mode '{mode}'. Use 'roadmap', 'improvement', or 'both'")
+        print(f"Error: Unknown mode '{mode}'. Use 'roadmap', 'improvement', 'both', or 'all'")
         sys.exit(1)
 
 
