@@ -441,19 +441,38 @@ Every 30 seconds:
 
 ## Update Loop Metadata (REQUIRED)
 
+**CRITICAL: Capture completion timestamp IMMEDIATELY after completing task documentation.**
+
+This MUST be done right after writing THOUGHTS.md, RESULTS.md, DECISIONS.md:
+
+```bash
+# CAPTURE COMPLETION TIMESTAMP (do this FIRST, before any other work)
+RUN_DIR="$(echo $RALF_RUN_DIR)"
+COMPLETION_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+echo "$COMPLETION_TIME" > "$RUN_DIR/.completion_time"
+```
+
 **At the end of every loop, update your tracking file:**
 
 ```bash
 RUN_DIR="$(echo $RALF_RUN_DIR)"
-NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+# Read completion timestamp (captured immediately after task completion)
+COMPLETION_TIME=$(cat "$RUN_DIR/.completion_time" 2>/dev/null || echo "$(date -u +%Y-%m-%dT%H:%M:%SZ)")
 
 # Read existing metadata to get start time
 START_TIME=$(cat "$RUN_DIR/metadata.yaml" | grep "timestamp_start:" | cut -d'"' -f2)
 
 # Calculate duration
 START_EPOCH=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$START_TIME" +%s 2>/dev/null || echo "0")
-NOW_EPOCH=$(date +%s)
-DURATION=$((NOW_EPOCH - START_EPOCH))
+COMPLETION_EPOCH=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$COMPLETION_TIME" +%s 2>/dev/null || echo "0")
+DURATION=$((COMPLETION_EPOCH - START_EPOCH))
+
+# Duration validation (warn if > 4 hours)
+DURATION_NOTE=""
+if [[ $DURATION -gt 14400 ]]; then
+  DURATION_NOTE="⚠️  WARNING: Duration > 4 hours ($DURATION seconds). Possible metadata error. Review timestamps: start=$START_TIME, end=$COMPLETION_TIME"
+fi
 
 # Update the file with completion data
 cat > "$RUN_DIR/metadata.yaml" << EOF
@@ -461,7 +480,7 @@ loop:
   number: $(echo $RALF_LOOP_NUMBER)
   agent: executor
   timestamp_start: "$START_TIME"
-  timestamp_end: "$NOW"
+  timestamp_end: "$COMPLETION_TIME"
   duration_seconds: $DURATION
 
 state:
@@ -483,6 +502,7 @@ blockers: []
 
 notes: |
   [Any additional notes]
+  $DURATION_NOTE
 EOF
 ```
 
