@@ -289,19 +289,53 @@ Before marking complete:
 **Reversibility:** [HIGH/MEDIUM/LOW]
 ```
 
-#### Step 3.2: Move Task and Commit
+#### Step 3.2: Sync Queue and Move Task
+
+**CRITICAL: Call the sync function BEFORE moving the task file.**
+
+This ensures that STATE.yaml, improvement-backlog.yaml, queue.yaml, and metrics dashboard are all synchronized automatically.
 
 ```bash
-# Move task file to completed/
+# Step 1: Sync all systems (STATE.yaml, queue.yaml, metrics dashboard)
+# Usage: python3 roadmap_sync.py all <task_id> <state_path> <improvement_path> <queue_path> <active_dir> <task_file> [duration] [run_number] [task_result]
+TASK_FILE="$RALF_PROJECT_DIR/.autonomous/tasks/active/[TASK-FILE]"
+
+# Calculate duration (if you tracked start time)
+# DURATION=$(( $(date +%s) - START_TIME ))
+
+python3 $RALF_ENGINE_DIR/lib/roadmap_sync.py all \
+  "[TASK-ID]" \
+  /workspaces/blackbox5/6-roadmap/STATE.yaml \
+  $RALF_PROJECT_DIR/operations/improvement-backlog.yaml \
+  $RALF_PROJECT_DIR/.autonomous/communications/queue.yaml \
+  $RALF_PROJECT_DIR/.autonomous/tasks/active \
+  "$TASK_FILE" \
+  [DURATION_IN_SECONDS] \
+  [RUN_NUMBER] \
+  "success"
+
+# Step 2: Move task file to completed/
 mv $RALF_PROJECT_DIR/.autonomous/tasks/active/[TASK-FILE] \
    $RALF_PROJECT_DIR/.autonomous/tasks/completed/
 
-# Commit changes
+# Step 3: Commit changes
 cd ~/.blackbox5
 git add -A
 git commit -m "executor: [$(date +%Y%m%d-%H%M%S)] [TASK-ID] - [brief description]"
 git push origin main
 ```
+
+**Parameters:**
+- Positional argument 1: Mode (always "all" for full sync)
+- Positional argument 2: Task ID (e.g., "TASK-1769916001")
+- Positional argument 3: Path to STATE.yaml
+- Positional argument 4: Path to improvement-backlog.yaml
+- Positional argument 5: Path to queue.yaml
+- Positional argument 6: Path to active/ directory
+- Positional argument 7: Path to task file
+- Positional argument 8 (optional): Duration in seconds (0 if unknown)
+- Positional argument 9 (optional): Run number (0 if unknown)
+- Positional argument 10 (optional): Task result ("success", "failure", "partial")
 
 #### Step 3.3: Report Completion
 

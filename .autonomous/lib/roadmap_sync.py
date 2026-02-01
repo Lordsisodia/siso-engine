@@ -884,7 +884,10 @@ def sync_all_on_task_completion(
         from metrics_updater import update_metrics_on_task_completion
 
         # Derive project_dir from state_yaml_path
-        project_dir = os.path.dirname(os.path.dirname(os.path.dirname(state_yaml_path)))
+        # state_yaml_path is like: /workspaces/blackbox5/6-roadmap/STATE.yaml
+        # We need: /workspaces/blackbox5/5-project-memory/blackbox5
+        # Use queue_path to derive: queue_path is like: /workspaces/blackbox5/5-project-memory/blackbox5/.autonomous/communications/queue.yaml
+        project_dir = os.path.dirname(os.path.dirname(os.path.dirname(queue_path)))
 
         metrics_result = update_metrics_on_task_completion(
             project_dir=project_dir,
@@ -1142,19 +1145,6 @@ def main():
                 print(f"Changes:")
                 for change in result['metrics_sync']['changes']:
                     print(f"  - {change}")
-
-        sys.exit(0 if result['success'] else 1)
-
-    else:
-        print(f"Error: Unknown mode '{mode}'. Use 'roadmap', 'improvement', 'both', or 'all'")
-        sys.exit(1)
-            print(f"Success: {result['queue_sync']['success']}")
-            print(f"Tasks removed: {result['queue_sync'].get('removed_count', 0)}")
-            print(f"Tasks remaining: {result['queue_sync'].get('remaining_count', 0)}")
-            if result['queue_sync'].get('removed_tasks'):
-                print(f"Removed tasks:")
-                for task_id in result['queue_sync']['removed_tasks']:
-                    print(f"  - {task_id}")
 
         sys.exit(0 if result['success'] else 1)
 
