@@ -780,12 +780,15 @@ def sync_all_on_task_completion(
     active_dir: str,
     task_content: str = None,
     executed_by: str = "RALF Executor",
-    dry_run: bool = False
+    dry_run: bool = False,
+    duration_seconds: int = 0,
+    run_number: int = 0,
+    task_result: str = "success"
 ) -> Dict[str, Any]:
     """
-    Update STATE.yaml, improvement-backlog.yaml, and queue.yaml when a task completes.
+    Update STATE.yaml, improvement-backlog.yaml, queue.yaml, and metrics dashboard when a task completes.
 
-    This is a convenience function that calls all three sync functions.
+    This is a convenience function that calls all four sync functions.
     Returns combined results.
 
     Args:
@@ -797,6 +800,9 @@ def sync_all_on_task_completion(
         task_content: Task file content (required for improvement sync)
         executed_by: Agent/user who completed the task
         dry_run: If True, do not actually write changes
+        duration_seconds: Task duration in seconds (for metrics update)
+        run_number: Executor run number (for metrics update)
+        task_result: Task result "success", "failure", or "partial" (for metrics update)
 
     Returns:
         {
@@ -804,6 +810,7 @@ def sync_all_on_task_completion(
             "roadmap_sync": dict (roadmap sync result),
             "improvement_sync": dict (improvement sync result),
             "queue_sync": dict (queue sync result),
+            "metrics_sync": dict (metrics sync result),
             "error": str or None
         }
     """
@@ -812,6 +819,7 @@ def sync_all_on_task_completion(
         "roadmap_sync": None,
         "improvement_sync": None,
         "queue_sync": None,
+        "metrics_sync": None,
         "error": None
     }
 
@@ -862,6 +870,39 @@ def sync_all_on_task_completion(
             "success": False,
             "error": str(e),
             "removed_count": 0
+        }
+
+    # Sync metrics dashboard
+    try:
+        # Import metrics_updater module
+        import sys
+        import os
+        roadmap_sync_dir = os.path.dirname(os.path.abspath(__file__))
+        if roadmap_sync_dir not in sys.path:
+            sys.path.insert(0, roadmap_sync_dir)
+
+        from metrics_updater import update_metrics_on_task_completion
+
+        # Derive project_dir from state_yaml_path
+        project_dir = os.path.dirname(os.path.dirname(os.path.dirname(state_yaml_path)))
+
+        metrics_result = update_metrics_on_task_completion(
+            project_dir=project_dir,
+            task_id=task_id,
+            duration_seconds=duration_seconds,
+            result=task_result,
+            run_number=run_number,
+            dry_run=dry_run
+        )
+        result["metrics_sync"] = metrics_result
+
+    except Exception as e:
+        # Metrics sync failure should not fail the entire operation
+        log_message(f"Metrics sync failed (non-critical): {str(e)}", "WARN")
+        result["metrics_sync"] = {
+            "success": False,
+            "error": str(e),
+            "updated_sections": []
         }
 
     return result
@@ -1022,6 +1063,7 @@ def main():
     elif mode == "all":
         if len(sys.argv) < 8:
             print("Error: all mode requires <task_id>, <state_yaml_path>, <improvement_backlog_path>, <queue_path>, <active_dir>, and <task_file>")
+            print("Optional: <duration_seconds> <run_number> <task_result>")
             sys.exit(1)
 
         task_id = sys.argv[2]
@@ -1031,12 +1073,17 @@ def main():
         active_dir = sys.argv[6]
         task_file = sys.argv[7]
 
+        # Optional metrics parameters
+        duration_seconds = int(sys.argv[8]) if len(sys.argv) > 8 else 0
+        run_number = int(sys.argv[9]) if len(sys.argv) > 9 else 0
+        task_result = sys.argv[10] if len(sys.argv) > 10 else "success"
+
         # Read task file
         with open(task_file, 'r') as f:
             task_content = f.read()
 
         print(f"\n{'='*70}")
-        print(f"FULL SYNC (ROADMAP + IMPROVEMENT + QUEUE) - {task_id}")
+        print(f"FULL SYNC (ROADMAP + IMPROVEMENT + QUEUE + METRICS) - {task_id}")
         print(f"{'='*70}\n")
 
         result = sync_all_on_task_completion(
@@ -1047,7 +1094,10 @@ def main():
             active_dir=active_dir,
             task_content=task_content,
             executed_by="manual_cli",
-            dry_run=dry_run
+            dry_run=dry_run,
+            duration_seconds=duration_seconds,
+            run_number=run_number,
+            task_result=task_result
         )
 
         print(f"\n{'='*70}")
@@ -1076,6 +1126,28 @@ def main():
 
         if result.get('queue_sync'):
             print(f"\n--- Queue Sync ---")
+            print(f"Success: {result['queue_sync']['success']}")
+            print(f"Tasks removed: {result['queue_sync'].get('removed_count', 0)}")
+            print(f"Tasks remaining: {result['queue_sync'].get('remaining_count', 0)}")
+            if result['queue_sync'].get('removed_tasks'):
+                print(f"Removed tasks:")
+                for task_id in result['queue_sync']['removed_tasks']:
+                    print(f"  - {task_id}")
+
+        if result.get('metrics_sync'):
+            print(f"\n--- Metrics Sync ---")
+            print(f"Success: {result['metrics_sync']['success']}")
+            print(f"Updated sections: {', '.join(result['metrics_sync'].get('updated_sections', []))}")
+            if result['metrics_sync'].get('changes'):
+                print(f"Changes:")
+                for change in result['metrics_sync']['changes']:
+                    print(f"  - {change}")
+
+        sys.exit(0 if result['success'] else 1)
+
+    else:
+        print(f"Error: Unknown mode '{mode}'. Use 'roadmap', 'improvement', 'both', or 'all'")
+        sys.exit(1)
             print(f"Success: {result['queue_sync']['success']}")
             print(f"Tasks removed: {result['queue_sync'].get('removed_count', 0)}")
             print(f"Tasks remaining: {result['queue_sync'].get('remaining_count', 0)}")
