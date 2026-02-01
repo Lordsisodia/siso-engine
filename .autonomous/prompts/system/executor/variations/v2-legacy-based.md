@@ -293,6 +293,9 @@ EOF
 mv $RALF_PROJECT_DIR/.autonomous/tasks/active/[TASK-FILE] \
    $RALF_PROJECT_DIR/.autonomous/tasks/completed/
 
+# Sync roadmap STATE.yaml (automatic plan status update)
+python3 $RALF_ENGINE_DIR/lib/roadmap_sync.py [TASK-ID] /workspaces/blackbox5/6-roadmap/STATE.yaml
+
 # Commit changes
 cd ~/.blackbox5
 git add -A
