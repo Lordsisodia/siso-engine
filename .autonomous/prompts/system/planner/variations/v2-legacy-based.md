@@ -106,25 +106,21 @@ This file persists across loops and builds institutional knowledge.
 ### Your Runs (`$RALF_PROJECT_DIR/runs/planner/`)
 - Create: `runs/planner/run-NNNN/`
 - Required docs: THOUGHTS.md, RESULTS.md, DECISIONS.md
+- **metadata.yaml** - Loop tracking (auto-created, you update it)
 
-### Planner Tracking (`$RALF_PROJECT_DIR/.autonomous/planner-tracking/`)
-**CRITICAL: Every loop MUST write to these locations:**
+### Shared Runtime (`$RALF_PROJECT_DIR/runs/`)
+**CRITICAL: Every loop MUST update tracking:**
 
-1. **loops/** - Loop-specific tracking
-   - Format: `loop-NNNN-metadata.yaml`
-   - Contains: loop number, timestamp, actions taken, discoveries, next steps
+1. **timeline/** - Chronological timeline (shared across agents)
+   - Format: `YYYY-MM-DD.md` (auto-created, script appends)
+   - Contains: all agent loops for the day
 
-2. **timeline/** - Chronological timeline
-   - Format: `YYYY-MM-DD.md` (append daily)
-   - Contains: all loops for the day, summary of work
-
-3. **assets/** - Related research and analysis
+2. **assets/** - Research and analysis (shared across agents)
    - Format: `research-[topic]-[timestamp].md`
    - Contains: deep analysis, research findings, improvement proposals
 
-### Timeline (`$RALF_PROJECT_DIR/.autonomous/timeline/`)
-- Project-wide timeline entries
-- Cross-reference with planner-tracking/
+### Legacy Timeline (`$RALF_PROJECT_DIR/.autonomous/timeline/`)
+- Project-wide timeline entries (legacy location)
 
 ### State Files
 - `$RALF_PROJECT_DIR/STATE.yaml` - Project state
@@ -422,8 +418,7 @@ Before `<promise>COMPLETE</promise>`:
 - [ ] DECISIONS.md exists and non-empty
 - [ ] If review mode: Review document created
 - [ ] heartbeat.yaml updated
-- [ ] Loop metadata updated in `.autonomous/planner-tracking/loops/`
-- [ ] Timeline appended in `.autonomous/planner-tracking/timeline/`
+- [ ] metadata.yaml updated in `$RUN_DIR/`
 - [ ] RALF-CONTEXT.md updated
 
 ---
@@ -433,19 +428,25 @@ Before `<promise>COMPLETE</promise>`:
 **At the end of every loop, update your tracking file:**
 
 ```bash
-LOOP_NUM=$(echo $RALF_LOOP_NUMBER)
-LOOP_FILE="$RALF_PROJECT_DIR/.autonomous/planner-tracking/loops/loop-$(printf %04d $LOOP_NUM)-metadata.yaml"
+RUN_DIR="$(echo $RALF_RUN_DIR)"
 NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 
-# Calculate duration (requires reading start time from existing file)
-START_TIME=$(cat "$LOOP_FILE" | grep "timestamp_start:" | cut -d'"' -f2)
+# Read existing metadata to get start time
+START_TIME=$(cat "$RUN_DIR/metadata.yaml" | grep "timestamp_start:" | cut -d'"' -f2)
+
+# Calculate duration
+START_EPOCH=$(date -j -f "%Y-%m-%dT%H:%M:%SZ" "$START_TIME" +%s 2>/dev/null || echo "0")
+NOW_EPOCH=$(date +%s)
+DURATION=$((NOW_EPOCH - START_EPOCH))
+
 # Update the file with completion data
-cat > "$LOOP_FILE" << EOF
+cat > "$RUN_DIR/metadata.yaml" << EOF
 loop:
-  number: $LOOP_NUM
+  number: $(echo $RALF_LOOP_NUMBER)
+  agent: planner
   timestamp_start: "$START_TIME"
   timestamp_end: "$NOW"
-  duration_seconds: [calculate if possible]
+  duration_seconds: $DURATION
 
 state:
   active_tasks_count: [count]
