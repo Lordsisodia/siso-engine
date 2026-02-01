@@ -7,6 +7,15 @@ that can occur during the spec-driven development workflow.
 
 from typing import Optional, Dict, Any
 
+__all__ = [
+    "SpecDrivenException",
+    "PRDValidationError",
+    "EpicValidationError",
+    "TaskValidationError",
+    "TaskCreationError",
+    "GitHubSyncError",
+]
+
 
 class SpecDrivenException(Exception):
     """Base exception for all spec-driven pipeline errors."""

@@ -15,6 +15,8 @@ from typing import Dict, List, Optional, Any
 from pathlib import Path
 import sys
 
+__all__ = ["Blackbox5", "get_blackbox5"]
+
 logger = logging.getLogger(__name__)
 
 

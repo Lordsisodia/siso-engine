@@ -2,6 +2,16 @@
 Resilience Exceptions - Custom exceptions for resilience patterns
 """
 
+__all__ = [
+    "ResilienceError",
+    "CircuitBreakerError",
+    "CircuitBreakerOpenError",
+    "CircuitBreakerClosedError",
+    "RetryExhaustedError",
+    "FallbackFailedError",
+    "TimeoutError",
+]
+
 
 class ResilienceError(Exception):
     """Base exception for resilience errors."""

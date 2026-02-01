@@ -796,7 +796,13 @@ Tests should cover:
                     "task_count": len(task_doc.tasks),
                     "file": str(task_file)
                 })
-            except Exception:
+            except TaskValidationError:
+                # Expected validation error - skip invalid documents silently
+                continue
+            except Exception as e:
+                # Log unexpected errors for debugging while continuing processing
+                import warnings
+                warnings.warn(f"Unexpected error parsing task document {task_file}: {e}")
                 continue
 
         return tasks
@@ -824,7 +830,13 @@ Tests should cover:
                 try:
                     task = Task.from_markdown(block.strip(), epic_id=epic_id)
                     tasks.append(task)
-                except Exception:
+                except TaskValidationError:
+                    # Skip invalid task blocks silently
+                    continue
+                except Exception as e:
+                    # Log unexpected errors for debugging
+                    import warnings
+                    warnings.warn(f"Unexpected error parsing task block in {task_file}: {e}")
                     continue
 
         return TaskDocument(
