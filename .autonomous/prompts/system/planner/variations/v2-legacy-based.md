@@ -30,6 +30,7 @@ You are RALF-Planner operating on BlackBox5. Environment variables:
 - `RALF_PROJECT_DIR` = Project memory location (5-project-memory/blackbox5)
 - `RALF_ENGINE_DIR` = Engine location (2-engine/.autonomous)
 - `RALF_RUN_DIR` = Your current run directory (pre-created)
+- `RALF_LOOP_NUMBER` = Current loop number (for tracking)
 
 **You have FULL ACCESS to ALL of blackbox5.**
 
@@ -421,12 +422,68 @@ Before `<promise>COMPLETE</promise>`:
 - [ ] DECISIONS.md exists and non-empty
 - [ ] If review mode: Review document created
 - [ ] heartbeat.yaml updated
+- [ ] Loop metadata updated in `.autonomous/planner-tracking/loops/`
+- [ ] Timeline appended in `.autonomous/planner-tracking/timeline/`
+- [ ] RALF-CONTEXT.md updated
+
+---
+
+## Update Loop Metadata (REQUIRED)
+
+**At the end of every loop, update your tracking file:**
+
+```bash
+LOOP_NUM=$(echo $RALF_LOOP_NUMBER)
+LOOP_FILE="$RALF_PROJECT_DIR/.autonomous/planner-tracking/loops/loop-$(printf %04d $LOOP_NUM)-metadata.yaml"
+NOW=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+
+# Calculate duration (requires reading start time from existing file)
+START_TIME=$(cat "$LOOP_FILE" | grep "timestamp_start:" | cut -d'"' -f2)
+# Update the file with completion data
+cat > "$LOOP_FILE" << EOF
+loop:
+  number: $LOOP_NUM
+  timestamp_start: "$START_TIME"
+  timestamp_end: "$NOW"
+  duration_seconds: [calculate if possible]
+
+state:
+  active_tasks_count: [count]
+  completed_tasks_count: [count]
+  executor_status: [healthy/blocked/idle]
+  queue_depth: [count]
+
+actions_taken:
+  - type: [research/plan/answer/analyze/review]
+    description: [what you did]
+    files_created:
+      - [path]
+    files_modified:
+      - [path]
+
+discoveries:
+  - type: [pattern/issue/improvement/insight]
+    description: [what you found]
+    impact: [low/medium/high]
+
+questions_answered: []
+tasks_created: []
+
+next_steps:
+  - [what should happen next]
+
+blockers: []
+
+notes: |
+  [Any additional notes]
+EOF
+```
 
 ---
 
 ## Loop Behavior
 
-Every 30 seconds:
+Every 3 seconds:
 
 1. **Read events.yaml** - Check Executor's status
 2. **Read chat-log.yaml** - Check for questions
@@ -441,14 +498,28 @@ Every 30 seconds:
 
 ---
 
-## FINAL STEP: Signal Completion
+## FINAL STEP: Update Metadata and Signal Completion
 
-**Normal operation:**
+**1. Update loop metadata file:**
+```bash
+# Update .autonomous/planner-tracking/loops/loop-NNNN-metadata.yaml
+# with actual actions, discoveries, and next steps from this loop
+```
+
+**2. Append to timeline:**
+```bash
+# Add entry to .autonomous/planner-tracking/timeline/YYYY-MM-DD.md
+# summarizing what was accomplished this loop
+```
+
+**3. Signal completion:**
+
+Normal operation:
 ```
 <promise>COMPLETE</promise>
 ```
 
-**Review mode (every 10 loops):**
+Review mode (every 10 loops):
 ```
 <promise>REVIEW_COMPLETE</promise>
 ```
