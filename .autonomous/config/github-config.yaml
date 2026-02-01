@@ -1,0 +1,229 @@
+# GitHub Integration Configuration for RALF
+# Feature F-011 (GitHub Integration Suite)
+#
+# Location: ~/.blackbox5/github-config.yaml
+#
+# Copy this file to your home directory and configure with your GitHub credentials.
+
+# =============================================================================
+# GitHub Authentication
+# =============================================================================
+
+github:
+  # Personal Access Token (PAT) with scopes: repo, issues, admin:repo_hook
+  # Generate at: https://github.com/settings/tokens
+  # Best practice: Set via environment variable GITHUB_TOKEN instead
+  token: "${GITHUB_TOKEN}"
+
+  # GitHub API base URL (change for GitHub Enterprise)
+  base_url: "https://api.github.com"
+
+# =============================================================================
+# Repository Settings
+# =============================================================================
+
+repository:
+  # Repository owner (organization or user)
+  owner: "blackbox5"
+
+  # Repository name
+  repo: "blackbox5"
+
+  # Default branch
+  default_branch: "main"
+
+# =============================================================================
+# Feature Flags
+# =============================================================================
+
+features:
+  # Automatically create PR on feature completion
+  auto_create_prs: false
+
+  # Automatically create issues on task creation
+  auto_create_issues: false
+
+  # Automatically sync task status to issue status
+  auto_sync_status: false
+
+  # Enable webhook server
+  enable_webhooks: false
+
+# =============================================================================
+# Pull Request Settings
+# =============================================================================
+
+pull_requests:
+  # Path to PR template (relative to repo root)
+  template_path: ".github/PULL_REQUEST_TEMPLATE.md"
+
+  # Default labels to apply to auto-created PRs
+  default_labels:
+    - "automated"
+    - "ralf-generated"
+
+  # Base branch for PRs (usually main or master)
+  base_branch: "main"
+
+  # Create PRs as drafts by default
+  create_as_draft: false
+
+# =============================================================================
+# Issue Settings
+# =============================================================================
+
+issues:
+  # Default labels to apply to auto-created issues
+  default_labels:
+    - "ralf-task"
+
+  # Auto-add priority label based on task priority
+  add_priority_label: true
+
+  # Auto-add feature label based on feature_id
+  add_feature_label: true
+
+# =============================================================================
+# Release Notes Settings
+# =============================================================================
+
+releases:
+  # Branch prefix for release branches
+  release_branch_prefix: "release/"
+
+  # Sections to include in auto-generated release notes
+  sections:
+    - "Features"
+    - "Fixes"
+    - "Infrastructure"
+    - "Documentation"
+    - "Tests"
+    - "Performance"
+
+  # Commit message patterns for categorization
+  # (Used by github_release_generator.py)
+  category_patterns:
+    Features:
+      - "^feat"
+      - "^feature"
+      - "F-\\d+"
+      - "TASK-\\d+"
+    Fixes:
+      - "^fix"
+      - "^bugfix"
+    Infrastructure:
+      - "^chore"
+      - "^ci"
+      - "^build"
+    Documentation:
+      - "^docs"
+    Tests:
+      - "^test"
+      - "^spec"
+    Performance:
+      - "^perf"
+      - "^optimize"
+
+# =============================================================================
+# Webhook Settings
+# =============================================================================
+
+webhooks:
+  # Webhook secret for signature verification
+  # Generate with: openssl rand -hex 32
+  # Best practice: Set via environment variable GITHUB_WEBHOOK_SECRET
+  secret: "${GITHUB_WEBHOOK_SECRET}"
+
+  # Port for webhook server
+  port: 8080
+
+  # Host for webhook server (0.0.0.0 for all interfaces)
+  host: "0.0.0.0"
+
+  # Webhook endpoint path
+  endpoint_path: "/webhook"
+
+# =============================================================================
+# Health Monitoring Settings
+# =============================================================================
+
+health_monitoring:
+  # Thresholds for stale items
+  stale_branch_days: 30
+  stale_pr_days: 7
+  stale_issue_days: 14
+
+  # Threshold for unreviewed PRs (hours)
+  unreviewed_pr_hours: 24
+
+  # Enable health alerts
+  enable_alerts: true
+
+  # Alert thresholds
+  alert_thresholds:
+    stale_branches_warning: 5
+    stale_prs_warning: 3
+    stale_issues_info: 10
+    unreviewed_prs_critical: 72  # hours
+    high_pr_count_warning: 20
+
+# =============================================================================
+# Quality Gate Settings
+# =============================================================================
+
+quality_gates:
+  # Enable quality gates (block merge on failures)
+  enabled: true
+
+  # Post automated review comments
+  post_review_comments: false
+
+  # Post CI/CD status comments
+  post_status_comments: true
+
+# =============================================================================
+# CLI Settings
+# =============================================================================
+
+cli:
+  # Default output format (json, yaml, table)
+  output_format: "table"
+
+  # Verbose output
+  verbose: false
+
+  # Dry run mode (no API calls)
+  dry_run: false
+
+# =============================================================================
+# Logging
+# =============================================================================
+
+logging:
+  # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  level: "INFO"
+
+  # Log file path (leave empty for stdout only)
+  file: ""
+
+# =============================================================================
+# Notes
+# =============================================================================
+#
+# Environment Variables (Recommended for Sensitive Data):
+#   - GITHUB_TOKEN: Your GitHub Personal Access Token
+#   - GITHUB_WEBHOOK_SECRET: Your webhook secret (for webhooks)
+#
+# Setup Steps:
+#   1. Generate GitHub PAT at https://github.com/settings/tokens
+#   2. Export GITHUB_TOKEN="ghp_xxx" (or set in your shell profile)
+#   3. Copy this file to ~/.blackbox5/github-config.yaml
+#   4. Configure repository owner/repo for your setup
+#   5. Set feature flags as desired
+#   6. Test connection: python3 -m github_client
+#
+# Security Notes:
+#   - Never commit this file with actual credentials
+#   - Use environment variables for sensitive data
+#   - Rotate tokens regularly (90 days recommended)
+#   - Limit token scopes to minimum required (repo, issues, admin:repo_hook)
