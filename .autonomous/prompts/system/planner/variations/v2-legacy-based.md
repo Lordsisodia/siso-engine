@@ -208,17 +208,24 @@ cat ~/.claude/ralf-state.json 2>/dev/null || echo '{"loop": 0}'
 **Pre-Planning Research (CRITICAL):**
 
 ```bash
-# 1. Check for duplicate tasks in completed/
+# 1. AUTOMATIC DUPLICATE DETECTION (Required)
+# Use the duplicate detector library before creating any task
+python3 $RALF_ENGINE_DIR/lib/duplicate_detector.py <planned-task-file.md>
+
+# If similarity > 80%, the detector will warn you and exit with error
+# Review the similar tasks found and decide: Skip? Continue? Merge?
+
+# 2. Manual duplicate check (backup)
 grep -r "[task keyword]" $RALF_PROJECT_DIR/.autonomous/tasks/completed/ 2>/dev/null | head -5
 grep -r "[task keyword]" $RALF_PROJECT_DIR/tasks/completed/ 2>/dev/null | head -5
 
-# 2. Check recent commits
+# 3. Check recent commits
 cd ~/.blackbox5 && git log --oneline --since="1 week ago" | grep -i "[keyword]" | head -5
 
-# 3. Verify target paths exist
+# 4. Verify target paths exist
 ls -la [target paths] 2>/dev/null
 
-# 4. Check if already in active tasks
+# 5. Check if already in active tasks
 ls $RALF_PROJECT_DIR/.autonomous/tasks/active/ | grep -i "[keyword]"
 ```
 
@@ -226,6 +233,7 @@ ls $RALF_PROJECT_DIR/.autonomous/tasks/active/ | grep -i "[keyword]"
 - Read the completed task
 - Determine: Skip? Continue? Merge?
 - Do NOT create redundant work
+- Log detection attempt to events.yaml
 
 **Task Creation Format:**
 

@@ -158,17 +158,32 @@ cat $RALF_PROJECT_DIR/.autonomous/tasks/active/TASK-*.md
 **Before executing, verify:**
 
 ```bash
-# 1. Check for duplicate tasks in completed/
+# 1. AUTOMATIC DUPLICATE DETECTION (Required)
+# Run the duplicate detector on the task file before claiming it
+python3 $RALF_ENGINE_DIR/lib/duplicate_detector.py <task-file.md>
+
+# If similarity > 80%, the detector will warn you with:
+# - List of similar tasks found
+# - Similarity scores for each
+# - Exit code 1 (warning)
+
+# If duplicate detected:
+# - Review the similar tasks
+# - Skip claiming if it's a true duplicate
+# - Log detection to events.yaml
+# - Report to Planner via chat-log.yaml
+
+# 2. Manual duplicate check (backup)
 grep -r "[task keyword]" $RALF_PROJECT_DIR/.autonomous/tasks/completed/ 2>/dev/null | head -3
 grep -r "[task keyword]" $RALF_PROJECT_DIR/tasks/completed/ 2>/dev/null | head -3
 
-# 2. Check recent commits
+# 3. Check recent commits
 cd ~/.blackbox5 && git log --oneline --since="1 week ago" | grep -i "[keyword]" | head -3
 
-# 3. Verify target files exist
+# 4. Verify target files exist
 ls -la [target paths] 2>/dev/null
 
-# 4. Check file history
+# 5. Check file history
 git log --oneline --since="1 week ago" -- [target paths] | head -3
 ```
 
@@ -176,7 +191,8 @@ git log --oneline --since="1 week ago" -- [target paths] | head -3
 - Read the completed task
 - Determine: Skip? Continue? Merge?
 - Report to Planner via chat-log.yaml
-- Do NOT create redundant work
+- Write detection event to events.yaml
+- Move to next task if duplicate confirmed
 
 ---
 
