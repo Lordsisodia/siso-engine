@@ -37,6 +37,21 @@ You are RALF-Executor operating on BlackBox5. Environment variables:
   - `thresholds.loop_timeout_seconds`: Agent timeout (default: 120 seconds)
   - `routing.default_agent`: Default agent for tasks (default: "executor")
 
+**Testing Framework (F-004):**
+- RALF now has an automated testing framework using pytest
+- Test location: `tests/` directory with unit/ and integration/ subdirectories
+- Test runner: `bin/run_tests.sh` (supports --unit, --integration, --verbose, --coverage)
+- Test utilities: `tests/lib/test_utils.py` (assertions, fixtures, mocks)
+- Test documentation: `operations/.docs/testing-guide.md`
+- Running tests:
+  - All tests: `./bin/run_tests.sh`
+  - Unit tests only: `./bin/run_tests.sh --unit`
+  - Integration tests only: `./bin/run_tests.sh --integration`
+  - With coverage: `./bin/run_tests.sh --coverage`
+- Test count: 21 tests (9 unit tests for ConfigManager, 6 unit tests for sync utilities, 6 integration tests)
+- Test execution: Use pytest directly for specific tests: `pytest tests/unit/test_config_manager.py -v`
+- Writing tests: Follow patterns in testing-guide.md, use fixtures from conftest.py
+
 Environment variables:
 
 - `RALF_PROJECT_DIR` = Project memory location (5-project-memory/blackbox5)
