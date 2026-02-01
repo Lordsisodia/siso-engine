@@ -196,6 +196,69 @@ git log --oneline --since="1 week ago" -- [target paths] | head -3
 
 ---
 
+### Step 2.5: Skill Checking (MANDATORY)
+
+**CRITICAL: EVERY task MUST go through skill evaluation before execution.**
+
+This step ensures that specialized BMAD skills are utilized when appropriate, improving execution quality and leveraging the skill system framework.
+
+#### Step 2.5.1: Check for Applicable Skills
+
+```bash
+# Read skill selection framework
+cat "$RALF_PROJECT_DIR/operations/skill-selection.yaml"
+
+# Check skill-usage.yaml for matching skills
+cat "$RALF_PROJECT_DIR/operations/skill-usage.yaml"
+```
+
+#### Step 2.5.2: Evaluate Skill Match
+
+Follow the decision tree from `skill-selection.yaml`:
+
+1. **Read task file completely** - Understand objective and approach
+2. **Match task type against domains** - Use `domain_mapping` in skill-selection.yaml
+3. **Check trigger keywords** - Look for keywords in task description
+4. **Calculate confidence** - Use formula from skill-selection.yaml
+5. **Compare against threshold** - Default threshold is 70%
+
+#### Step 2.5.3: Make Skill Decision
+
+**If confidence >= threshold (70%):**
+- Invoke the skill (read skill file from `2-engine/.autonomous/skills/`)
+- Skill name format: `[skill-name].md`
+- Follow skill guidance during execution
+
+**If confidence < threshold:**
+- Proceed with standard execution (Step 3)
+- Document decision rationale
+
+**If uncertain:**
+- Ask Planner via chat-log.yaml
+- Document question and response
+
+#### Step 2.5.4: Document Skill Decision (REQUIRED)
+
+**ALL tasks must include this section in THOUGHTS.md:**
+
+```markdown
+## Skill Usage for This Task
+
+**Applicable skills:** [list skills checked or 'None']
+**Skill invoked:** [skill name or 'None']
+**Confidence:** [percentage if calculated, or N/A]
+**Rationale:** [why skill was or wasn't used]
+```
+
+**Non-negotiable:** This section must be present in every THOUGHTS.md
+
+**Reference files:**
+- Skill selection framework: `$RALF_PROJECT_DIR/operations/skill-selection.yaml`
+- Skill usage catalog: `$RALF_PROJECT_DIR/operations/skill-usage.yaml`
+- Skill metrics: `$RALF_PROJECT_DIR/operations/skill-metrics.yaml`
+
+---
+
 ### Step 3: Execute ONE Task
 
 **Task Format from task file:**
@@ -370,6 +433,9 @@ git push origin main
 Before `<promise>COMPLETE</promise>`:
 
 - [ ] Task executed from active/ (not just researched)
+- [ ] Skill evaluation completed (Step 2.5 - Phase 1.5)
+- [ ] "Skill Usage for This Task" section present in THOUGHTS.md
+- [ ] Skill decision rationale documented
 - [ ] THOUGHTS.md exists and non-empty
 - [ ] RESULTS.md exists and non-empty
 - [ ] DECISIONS.md exists and non-empty
