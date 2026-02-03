@@ -1,0 +1,124 @@
+# RALF Agent Container
+# Supports: planner, executor, verifier
+
+FROM ubuntu:22.04
+
+ARG AGENT_TYPE=executor
+ENV RALF_AGENT_TYPE=${AGENT_TYPE}
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    wget \
+    python3 \
+    python3-pip \
+    python3-venv \
+    nodejs \
+    npm \
+    jq \
+    bc \
+    vim \
+    tmux \
+    cron \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Claude Code CLI
+RUN npm install -g @anthropic-ai/claude-code
+
+# Install Python tools
+RUN pip3 install --no-cache-dir \
+    pytest \
+    flake8 \
+    mypy \
+    black \
+    pyyaml \
+    requests \
+    redis
+
+# Create ralf user
+RUN useradd -m -s /bin/bash ralf && \
+    usermod -aG sudo ralf && \
+    echo "ralf ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Setup directories
+RUN mkdir -p /var/ralf/project /var/ralf/data /var/log/ralf /opt/ralf && \
+    chown -R ralf:ralf /var/ralf /opt/ralf
+
+# Copy agent code
+COPY --chown=ralf:ralf 2-engine/.autonomous/prompts /opt/ralf/prompts
+COPY --chown=ralf:ralf bin/ralf-*.sh /opt/ralf/bin/
+COPY --chown=ralf:ralf 5-project-memory /var/ralf/project/5-project-memory
+
+# Make scripts executable
+RUN chmod +x /opt/ralf/bin/*.sh
+
+# Setup git
+RUN git config --global user.email "ralf@autonomous.local" && \
+    git config --global user.name "RALF Agent"
+
+# Create agent-specific startup script
+RUN cat > /opt/ralf/start-agent.sh << 'EOF'
+#!/bin/bash
+set -e
+
+echo "Starting RALF Agent: $RALF_AGENT_TYPE"
+echo "Agent ID: $RALF_AGENT_ID"
+echo "Project: $RALF_PROJECT_DIR"
+
+# Wait for dependencies
+echo "Waiting for API..."
+until curl -s http://api:8000/health > /dev/null; do
+    sleep 2
+done
+echo "API is ready"
+
+# Run agent loop based on type
+case "$RALF_AGENT_TYPE" in
+    planner)
+        echo "Starting Planner loop..."
+        while true; do
+            /opt/ralf/bin/ralf-planner-queue.sh --fill
+            sleep ${RALF_LOOP_INTERVAL:-30}
+        done
+        ;;
+    executor)
+        echo "Starting Executor loop..."
+        while true; do
+            TASK=$(/opt/ralf/bin/ralf-task-select.sh --claim 2>/dev/null | grep "TASK_ID=" | cut -d'=' -f2)
+            if [ -n "$TASK" ]; then
+                echo "Claimed task: $TASK"
+                /opt/ralf/bin/ralf-task-start.sh --task-id "$TASK"
+                # Task execution happens via Claude Code CLI
+                claude --prompt "/opt/ralf/prompts/executor/versions/v4-20260202/executor.md" \
+                       --task-id "$TASK"
+            else
+                echo "No tasks available, waiting..."
+            fi
+            sleep ${RALF_LOOP_INTERVAL:-30}
+        done
+        ;;
+    verifier)
+        echo "Starting Verifier..."
+        /opt/ralf/bin/ralf-verifier.sh --poll
+        ;;
+    *)
+        echo "Unknown agent type: $RALF_AGENT_TYPE"
+        exit 1
+        ;;
+esac
+EOF
+
+RUN chmod +x /opt/ralf/start-agent.sh
+
+# Switch to ralf user
+USER ralf
+WORKDIR /var/ralf/project
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://api:8000/health || exit 1
+
+# Start agent
+CMD ["/opt/ralf/start-agent.sh"]
