@@ -1,0 +1,65 @@
+# tasks.yaml - Master list of all planned work
+# Managed by: Planner Agent
+# Purpose: Full context for all tasks, dependencies, and reasoning
+#
+# The Planner owns this file. It contains:
+# - All tasks identified (planned, ready, blocked, completed)
+# - Full reasoning for each task
+# - Dependencies between tasks
+# - Links to plan documents
+#
+# The Executor reads from this file for context, but does NOT:
+# - Pick tasks from here (reads queue.yaml for that)
+# - Modify priorities
+# - Add new tasks
+
+version: "1.0"
+updated_at: "2026-02-02T00:00:00Z"
+updated_by: "planner"
+
+# =============================================================================
+# TASK DEFINITIONS
+# =============================================================================
+
+tasks:
+  # Example task structure:
+  # - id: "TASK-1769978192"
+  #   title: "Implement verification hook"
+  #   description: "Detailed description of what needs to be done"
+  #   status: planned | ready | blocked | in_progress | completed
+  #   priority: critical | high | medium | low
+  #   reasoning: "Why this task matters and what it unblocks"
+  #   plan_doc: "plans/active/verification-system.md"
+  #   context_links:
+  #     - "architecture/hooks.md"
+  #     - "decisions/d-002-hook-enforcement.md"
+  #   dependencies:
+  #     - "TASK-1769978190"
+  #   estimated_effort: "2 hours"
+  #   created_by: "planner"
+  #   created_at: "2026-02-02T10:00:00Z"
+  #   ready_at: null  # Set when fully planned and unblocked
+  #   completed_at: null  # Set when done
+
+# =============================================================================
+# TASK COUNTS (auto-updated)
+# =============================================================================
+
+stats:
+  total: 0
+  planned: 0
+  ready: 0
+  blocked: 0
+  in_progress: 0
+  completed: 0
+
+# =============================================================================
+# COMPLETED TASKS (archive)
+# =============================================================================
+
+completed: []
+#  - id: "TASK-1769978190"
+#    title: "Previous completed task"
+#    completed_at: "2026-02-01T15:00:00Z"
+#    completed_by: "executor"
+#    run_id: "run-20260201-150000"
