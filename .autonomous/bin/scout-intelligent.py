@@ -296,14 +296,14 @@ def spawn_analyzer(analyzer: Dict[str, str], project_dir: Path, engine_dir: Path
         # This requires the Claude Code CLI to be installed and configured
 
         # Build the command to spawn a subagent
-        # We use claude code with --headless and a structured prompt
+        # We use claude code with --print for non-interactive mode
         cmd = [
             "claude",
-            "code",
-            "--headless",
-            "--prompt", prompt,
+            "--print",
+            "--output-format", "json",
             "--allowed-tools", "Read,Glob,Grep,Bash",
-            "--output-json"
+            "--permission-mode", "delegate",
+            prompt
         ]
 
         # Run the subagent
