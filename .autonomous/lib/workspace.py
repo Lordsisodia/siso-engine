@@ -10,12 +10,17 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Union, Optional, Dict, Any
 import json
+import sys
+
+# Add lib to path for importing paths module
+sys.path.insert(0, str(Path(__file__).parent))
+from paths import get_path_resolver
 
 
 class WorkspaceFactory:
     """Creates and manages per-task workspaces."""
 
-    def __init__(self, base_path: Union[str, Path] = ".Autonomous/workspaces"):
+    def __init__(self, base_path: Union[str, Path] = ".autonomous/workspaces"):
         self.base_path = Path(base_path)
         self.base_path.mkdir(parents=True, exist_ok=True)
 
@@ -153,7 +158,9 @@ See `timeline/` for state transition history.
 def create_workspace_for_task(task_id: str, task_title: str, autonomous_root: Optional[Path] = None) -> Path:
     """Convenience function to create workspace for a task."""
     if autonomous_root is None:
-        autonomous_root = Path(__file__).parent.parent
+        # Use path resolver for consistent path resolution
+        resolver = get_path_resolver()
+        autonomous_root = resolver.engine_path / '.autonomous'
 
     factory = WorkspaceFactory(autonomous_root / "workspaces")
     return factory.create_workspace(task_id, task_title)

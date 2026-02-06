@@ -19,13 +19,17 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 
+# Add lib to path for importing paths module
+sys.path.insert(0, str(Path(__file__).parent))
+from paths import get_path_resolver
+
 
 class SessionTracker:
     """
     Track Legacy run sessions.
 
     Stores tracking data in run folder as tracking.json
-    and archives to .Autonomous/history/
+    and archives to .autonomous/history/
     """
 
     def __init__(
@@ -38,15 +42,15 @@ class SessionTracker:
 
         Args:
             agent_id: Agent identifier (default: "legacy")
-            autonomous_root: Path to .Autonomous folder
+            autonomous_root: Path to .autonomous folder
         """
         self.agent_id = agent_id
 
-        # Determine .Autonomous root
+        # Determine .autonomous root
         if autonomous_root is None:
-            # Find .Autonomous folder
-            script_dir = Path(__file__).parent.parent
-            autonomous_root = script_dir
+            # Use path resolver for consistent path resolution
+            resolver = get_path_resolver()
+            autonomous_root = resolver.engine_path / '.autonomous'
 
         self.autonomous_root = autonomous_root
         self.history_path = autonomous_root / "history"

@@ -1,0 +1,403 @@
+# Testing Guidelines
+# BlackBox5 - Operations
+#
+# Purpose: Standardize testing practices across all RALF executor runs
+#          to ensure consistent quality and early issue detection.
+#
+# Usage: Reference this file during Phase 2 (Execution) when implementing
+#        tasks. Follow the TDD workflow for code changes.
+#
+# Integration: Works alongside skill-selection.yaml and quality-gates.yaml
+
+# =============================================================================
+# Testing Philosophy
+# =============================================================================
+
+philosophy:
+  core_principle: "Write tests first, code second, debug never"
+  tdd_cycle:
+    - step: "RED"
+      description: "Write a failing test that defines the expected behavior"
+    - step: "GREEN"
+      description: "Write minimal code to make the test pass"
+    - step: "REFACTOR"
+      description: "Improve code quality while keeping tests green"
+
+  benefits:
+    - "Catches issues early before they propagate"
+    - "Provides living documentation of expected behavior"
+    - "Enables confident refactoring"
+    - "Reduces debugging time"
+    - "Improves code design through testability"
+
+# =============================================================================
+# Test Types
+# =============================================================================
+
+test_types:
+  unit_tests:
+    description: "Test individual functions/classes in isolation"
+    scope: "Single function or method"
+    tools:
+      - "unittest (Python standard library)"
+      - "pytest (advanced features)"
+    naming: "test_<function_name>_<scenario>"
+    location: "tests/unit/ or alongside source as test_*.py"
+    example: |
+      def test_calculate_total_with_discount():
+          result = calculate_total(100, discount=0.1)
+          assert result == 90
+
+  integration_tests:
+    description: "Test interaction between multiple components"
+    scope: "Multiple related components"
+    tools:
+      - "integration_test.py (RALF framework)"
+      - "subprocess for CLI testing"
+    naming: "test_<system>_<integration_point>"
+    location: "tests/integration/ or 2-engine/.autonomous/lib/"
+    example: |
+      def test_phase_gates_with_context_budget():
+          # Test that phase gates respect context budget
+          pass
+
+  end_to_end_tests:
+    description: "Test complete workflows from start to finish"
+    scope: "Full user workflow"
+    tools:
+      - "Shell scripts with assertions"
+      - "BATS (Bash Automated Testing System)"
+    naming: "test-e2e-<workflow>.sh"
+    location: "tests/end-to-end/"
+    example: |
+      #!/bin/bash
+      # Test complete task execution workflow
+      ./ralf.sh init --task TASK-001
+      ./ralf.sh execute
+      assert_file_exists "runs/run-*/RESULTS.md"
+
+# =============================================================================
+# TDD Workflow
+# =============================================================================
+
+tdd_workflow:
+  phase_1_understand:
+    description: "Understand requirements before writing tests"
+    steps:
+      - "Read task file completely"
+      - "Identify expected inputs and outputs"
+      - "Define edge cases and error conditions"
+      - "Document assumptions"
+
+  phase_2_write_test:
+    description: "Write failing test first"
+    steps:
+      - "Create test file with descriptive name"
+      - "Write test that describes expected behavior"
+      - "Run test to confirm it fails (RED)"
+      - "Commit the failing test"
+
+  phase_3_implement:
+    description: "Write minimal code to pass test"
+    steps:
+      - "Implement simplest solution"
+      - "Focus on correctness over optimization"
+      - "Run test to confirm it passes (GREEN)"
+      - "Commit the implementation"
+
+  phase_4_refactor:
+    description: "Improve code quality"
+    steps:
+      - "Remove duplication"
+      - "Improve naming"
+      - "Simplify logic"
+      - "Run tests to verify still passing"
+      - "Commit refactored code"
+
+# =============================================================================
+# Testing Checklist
+# =============================================================================
+
+testing_checklist:
+  before_implementation:
+    - "[ ] Test file created with appropriate name"
+    - "[ ] Test cases cover happy path"
+    - "[ ] Test cases cover edge cases"
+    - "[ ] Test cases cover error conditions"
+
+  during_implementation:
+    - "[ ] Tests run frequently (after each small change)"
+    - "[ ] Only one test fails at a time"
+    - "[ ] Implementation is minimal to pass test"
+
+  after_implementation:
+    - "[ ] All tests pass"
+    - "[ ] Code coverage acceptable (>70%)"
+    - "[ ] No test left in failing state"
+    - "[ ] Tests are committed with code"
+
+# =============================================================================
+# Common Testing Patterns
+# =============================================================================
+
+patterns:
+  arrange_act_assert:
+    description: "Structure tests in three clear sections"
+    template: |
+      def test_feature():
+          # Arrange
+          input_data = setup_test_data()
+          expected = calculate_expected()
+
+          # Act
+          result = function_under_test(input_data)
+
+          # Assert
+          assert result == expected
+
+  given_when_then:
+    description: "BDD-style test naming and structure"
+    template: |
+      def test_given_context_when_action_then_result():
+          # Given
+          context = setup_context()
+
+          # When
+          result = perform_action(context)
+
+          # Then
+          assert_expected_result(result)
+
+  parameterized_tests:
+    description: "Test multiple scenarios with same logic"
+    python_example: |
+      import unittest
+
+      class TestCalculator(unittest.TestCase):
+          def test_addition(self):
+              test_cases = [
+                  (1, 1, 2),
+                  (0, 0, 0),
+                  (-1, 1, 0),
+                  (100, 200, 300),
+              ]
+              for a, b, expected in test_cases:
+                  with self.subTest(a=a, b=b):
+                      self.assertEqual(add(a, b), expected)
+
+# =============================================================================
+# Async Testing
+# =============================================================================
+
+async_testing:
+  description: "Testing asynchronous code requires special handling"
+
+  patterns:
+    - pattern: "Use asyncio.run() for simple cases"
+      example: |
+        import asyncio
+
+        def test_async_function():
+            result = asyncio.run(async_function())
+            assert result == expected
+
+    - pattern: "Use pytest-asyncio for complex cases"
+      example: |
+        import pytest
+
+        @pytest.mark.asyncio
+        async def test_async_with_fixture():
+            result = await async_function()
+            assert result == expected
+
+    - pattern: "Mock async dependencies"
+      example: |
+        from unittest.mock import AsyncMock
+
+        async def test_with_mock():
+            mock_client = AsyncMock()
+            mock_client.fetch.return_value = mock_data
+            result = await service.get_data(mock_client)
+            assert result == expected
+
+  common_pitfalls:
+    - "Forgetting to await coroutines"
+    - "Mixing sync and async code incorrectly"
+    - "Not handling event loop lifecycle"
+    - "Race conditions in shared state"
+
+# =============================================================================
+# Test Data Management
+# =============================================================================
+
+test_data:
+  fixtures:
+    description: "Reusable test data setup"
+    location: "conftest.py for pytest, setUp() for unittest"
+    example: |
+      # conftest.py
+      import pytest
+
+      @pytest.fixture
+      def sample_task():
+          return {
+              "id": "TASK-001",
+              "title": "Test Task",
+              "status": "pending"
+          }
+
+  factories:
+    description: "Generate test data programmatically"
+    benefits:
+      - "Avoid hardcoded test data"
+      - "Easy to create variations"
+      - "Self-documenting test setup"
+
+  mocking:
+    description: "Isolate tests from external dependencies"
+    tools:
+      - "unittest.mock (Python standard)"
+      - "pytest-mock (pytest plugin)"
+    when_to_use:
+      - "External API calls"
+      - "Database connections"
+      - "File system operations"
+      - "Time-dependent code"
+
+# =============================================================================
+# Integration Testing
+# =============================================================================
+
+integration_testing:
+  approach:
+    description: "Test component interactions"
+    principles:
+      - "Test real component interactions where possible"
+      - "Use test doubles for external services"
+      - "Verify data flow between components"
+      - "Test error propagation"
+
+  ralf_integration:
+    description: "RALF-specific integration testing"
+    components:
+      - name: "Phase Gates"
+        test: "Verify phase transitions work correctly"
+      - name: "Context Budget"
+        test: "Verify token tracking and thresholds"
+      - name: "Decision Registry"
+        test: "Verify decisions are recorded and retrievable"
+      - name: "Telemetry"
+        test: "Verify events are tracked"
+
+  example:
+    description: "Integration test example"
+    code: |
+      class TestRALFIntegration:
+          def test_full_task_execution(self):
+              # Initialize all systems
+              run_dir = create_test_run()
+              phase_gates.init(run_dir)
+              context_budget.init(run_dir)
+
+              # Execute workflow
+              result = execute_task("TASK-001", run_dir)
+
+              # Verify all systems updated
+              assert phase_gates.get_status(run_dir) == "completed"
+              assert context_budget.get_usage(run_dir) > 0
+
+# =============================================================================
+# Quality Gates
+# =============================================================================
+
+quality_gates:
+  pre_commit:
+    - "All tests pass"
+    - "No test failures ignored"
+    - "Test coverage meets threshold"
+    - "No debug code left in tests"
+
+  pre_push:
+    - "Integration tests pass"
+    - "No test flakiness"
+    - "Test documentation complete"
+
+  pre_merge:
+    - "Full test suite passes"
+    - "Code review includes test review"
+    - "Test coverage report generated"
+
+# =============================================================================
+# Troubleshooting
+# =============================================================================
+
+troubleshooting:
+  flaky_tests:
+    symptoms:
+      - "Test passes sometimes, fails others"
+      - "Different results on different runs"
+    solutions:
+      - "Check for race conditions"
+      - "Ensure proper test isolation"
+      - "Avoid time-dependent assertions"
+      - "Use deterministic test data"
+
+  slow_tests:
+    symptoms:
+      - "Tests take too long to run"
+      - "Developers skip running tests"
+    solutions:
+      - "Use test doubles for slow dependencies"
+      - "Run tests in parallel"
+      - "Separate fast and slow tests"
+      - "Profile test execution"
+
+  brittle_tests:
+    symptoms:
+      - "Tests break with minor code changes"
+      - "High maintenance burden"
+    solutions:
+      - "Test behavior, not implementation"
+      - "Use higher-level abstractions"
+      - "Avoid testing private methods"
+      - "Focus on public interfaces"
+
+# =============================================================================
+# Metrics
+# =============================================================================
+
+metrics:
+  test_coverage:
+    target: 70
+    critical_paths: 90
+    description: "Percentage of code covered by tests"
+
+  test_count:
+    unit_per_module: "minimum 3"
+    integration_per_system: "minimum 1"
+    description: "Number of tests per component"
+
+  execution_time:
+    unit_test_max: "1 second"
+    integration_test_max: "10 seconds"
+    description: "Maximum time for test execution"
+
+# =============================================================================
+# References
+# =============================================================================
+
+references:
+  documentation:
+    - "operations/quality-gates.yaml"
+    - "operations/skill-selection.yaml"
+    - ".templates/tasks/task-completion.md.template"
+
+  external:
+    - "Python unittest: https://docs.python.org/3/library/unittest.html"
+    - "pytest: https://docs.pytest.org/"
+    - "BATS: https://github.com/bats-core/bats-core"
+
+  related_learnings:
+    - "L-1769862398-005: Integration Test Value"
+    - "L-1769800446-004: Test-Driven Development Pays Off"
+    - "L-run-integration-test-L1: Integration Testing vs. Unit Testing"

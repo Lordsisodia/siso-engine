@@ -1,0 +1,318 @@
+# BlackBox5 Configuration Schema
+# ===============================
+# Version: 2.0.0
+#
+# JSON Schema-like validation rules for configuration.
+# Used by unified_config.py for runtime validation.
+
+version:
+  type: string
+  required: true
+  pattern: "^\\d+\\.\\d+\\.\\d+$"
+
+system:
+  type: dict
+  properties:
+    name:
+      type: string
+      required: true
+    environment:
+      type: string
+      required: true
+    log_level:
+      type: string
+      default: "INFO"
+      pattern: "^(DEBUG|INFO|WARNING|ERROR|CRITICAL)$"
+    timezone:
+      type: string
+      default: "UTC"
+    debug_mode:
+      type: bool
+      default: false
+
+paths:
+  type: dict
+  properties:
+    blackbox5_home:
+      type: string
+      default: "~/.blackbox5"
+    engine:
+      type: string
+    memory:
+      type: string
+    knowledge:
+      type: string
+    tools:
+      type: string
+    templates:
+      type: string
+    project_root:
+      type: string
+
+api:
+  type: dict
+  properties:
+    enabled:
+      type: bool
+      default: true
+    host:
+      type: string
+      default: "localhost"
+    port:
+      type: int
+      default: 8080
+      validator: port
+    timeout:
+      type: int
+      default: 30
+    cors_enabled:
+      type: bool
+      default: false
+    ssl_required:
+      type: bool
+      default: false
+    rate_limit:
+      type: dict
+      properties:
+        enabled:
+          type: bool
+          default: true
+        requests_per_minute:
+          type: int
+          default: 100
+
+database:
+  type: dict
+  properties:
+    host:
+      type: string
+      default: "localhost"
+    port:
+      type: int
+      default: 5432
+    name:
+      type: string
+      default: "blackbox5"
+    ssl_mode:
+      type: string
+      default: "disable"
+    pool_size:
+      type: int
+      default: 10
+    timeout:
+      type: int
+      default: 30
+
+security:
+  type: dict
+  properties:
+    api_key_required:
+      type: bool
+      default: false
+    rate_limiting:
+      type: bool
+      default: true
+    encryption:
+      type: dict
+      properties:
+        algorithm:
+          type: string
+          default: "AES-256-GCM"
+        key_iterations:
+          type: int
+          default: 100000
+
+features:
+  type: dict
+  properties:
+    automated_testing:
+      type: bool
+      default: true
+    github_integration:
+      type: bool
+      default: true
+    api_gateway:
+      type: bool
+      default: false
+    code_review:
+      type: bool
+      default: false
+    performance_monitoring:
+      type: bool
+      default: false
+    notifications:
+      type: bool
+      default: false
+
+execution:
+  type: dict
+  properties:
+    max_concurrent_tasks:
+      type: int
+      default: 3
+    task_timeout:
+      type: int
+      default: 3600
+    retry_attempts:
+      type: int
+      default: 3
+    retry_delay:
+      type: int
+      default: 60
+    verbose_logging:
+      type: bool
+      default: false
+
+thresholds:
+  type: dict
+  properties:
+    skill_invocation_confidence:
+      type: int
+      default: 70
+      min: 0
+      max: 100
+    queue_depth_min:
+      type: int
+      default: 3
+      min: 0
+    queue_depth_max:
+      type: int
+      default: 5
+      min: 0
+    loop_timeout_seconds:
+      type: int
+      default: 120
+    context:
+      type: dict
+      properties:
+        warning:
+          type: int
+          default: 70
+        critical:
+          type: int
+          default: 85
+        hard_limit:
+          type: int
+          default: 95
+    phase_gates:
+      type: dict
+      properties:
+        auto_advance:
+          type: bool
+          default: false
+        require_verification:
+          type: bool
+          default: true
+
+routing:
+  type: dict
+  properties:
+    default_agent:
+      type: string
+      default: "executor"
+    task_type_routing:
+      type: dict
+    skills:
+      type: dict
+      properties:
+        registry:
+          type: string
+        auto_discover:
+          type: bool
+          default: true
+
+integrations:
+  type: dict
+  properties:
+    github:
+      type: dict
+      properties:
+        enabled:
+          type: bool
+          default: false
+        token:
+          type: string
+        base_url:
+          type: string
+          default: "https://api.github.com"
+    slack:
+      type: dict
+      properties:
+        enabled:
+          type: bool
+          default: false
+        webhook_url:
+          type: string
+        bot_token:
+          type: string
+    mcp:
+      type: dict
+      properties:
+        enabled:
+          type: bool
+          default: false
+        servers:
+          type: list
+
+notifications:
+  type: dict
+  properties:
+    enabled:
+      type: bool
+      default: false
+    on_task_completion:
+      type: bool
+      default: false
+    on_error:
+      type: bool
+      default: true
+    on_milestone:
+      type: bool
+      default: false
+
+monitoring:
+  type: dict
+  properties:
+    enabled:
+      type: bool
+      default: false
+    metrics_port:
+      type: int
+      default: 9090
+    health_check_interval:
+      type: int
+      default: 60
+
+logging:
+  type: dict
+  properties:
+    level:
+      type: string
+      default: "INFO"
+    destination:
+      type: string
+      default: "console"
+    format:
+      type: string
+      default: "text"
+
+cli:
+  type: dict
+  properties:
+    output:
+      type: dict
+    context:
+      type: dict
+    tasks:
+      type: dict
+
+skills:
+  type: dict
+  properties:
+    registry_version:
+      type: string
+    auto_load:
+      type: bool
+      default: true
+    directories:
+      type: list

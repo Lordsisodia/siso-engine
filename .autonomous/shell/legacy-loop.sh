@@ -4,10 +4,16 @@
 
 set -e
 
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PROMPT_FILE="$PROJECT_DIR/.Autonomous/LEGACY.md"
-LOG_DIR="$PROJECT_DIR/.Autonomous/LOGS"
-TELEMETRY_SCRIPT="$PROJECT_DIR/.Autonomous/telemetry.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Source path resolution library
+source "$SCRIPT_DIR/../lib/paths.sh"
+
+# Use path resolver for all paths
+PROJECT_DIR="$(get_engine_path)"
+PROMPT_FILE="$PROJECT_DIR/.autonomous/LEGACY.md"
+LOG_DIR="$PROJECT_DIR/.autonomous/LOGS"
+TELEMETRY_SCRIPT="$SCRIPT_DIR/telemetry.sh"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 SESSION_LOG="$LOG_DIR/ralph-session-$TIMESTAMP.log"
 TELEMETRY_FILE=""
@@ -96,8 +102,10 @@ check_prerequisites() {
     fi
     log "✓ LEGACY.md found"
 
-    # Check active tasks exist
-    local active_tasks=$(find "$PROJECT_DIR/.Autonomous/tasks/active" -name "*.md" -type f ! -name "index.md" ! -name "TEMPLATE.md" 2>/dev/null | wc -l)
+    # Check active tasks exist using path resolver
+    local tasks_path
+    tasks_path=$(get_tasks_path)
+    local active_tasks=$(find "$tasks_path" -name "*.md" -type f ! -name "index.md" ! -name "TEMPLATE.md" 2>/dev/null | wc -l)
     if [ "$active_tasks" -eq 0 ]; then
         log_warning "No active tasks found"
     else

@@ -7,16 +7,18 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Source dry-run library
+# Source path resolution library
+source "$SCRIPT_DIR/../lib/paths.sh"
 source "$SCRIPT_DIR/../lib/dry_run.sh"
 
 # Initialize dry-run mode and get remaining args
 REMAINING_ARGS=$(dry_run_init "$@")
 set -- $REMAINING_ARGS
 
-TELEMETRY_DIR="$PROJECT_DIR/.Autonomous/telemetry"
+# Use path resolver for telemetry directory
+PROJECT_DIR="$(get_engine_path)"
+TELEMETRY_DIR="$PROJECT_DIR/.autonomous/telemetry"
 CURRENT_RUN_DIR=""
 
 # Colors

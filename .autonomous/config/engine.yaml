@@ -1,0 +1,98 @@
+# BlackBox5 Engine Configuration
+# ===============================
+# Version: 2.0.0
+#
+# This file contains engine-specific configuration overrides.
+# It sits between base.yaml and project.yaml in the hierarchy.
+#
+# Configuration Hierarchy:
+#   1. Environment Variables
+#   2. User Config (~/.blackbox5/config/user.yaml)
+#   3. Project Config (project.yaml)
+#   4. Engine Config (this file) <- You are here
+#   5. Base Defaults (base.yaml)
+
+version: "2.0.0"
+
+# ============================================================================
+# System Configuration
+# ============================================================================
+system:
+  name: "RALF Engine"
+  environment: "engine"
+
+# ============================================================================
+# Paths Configuration (Engine-specific)
+# ============================================================================
+paths:
+  engine: "${BB5_ENGINE_ROOT}"
+  autonomous: "${BB5_ENGINE_ROOT}/.autonomous"
+  lib: "${BB5_ENGINE_ROOT}/.autonomous/lib"
+  prompts: "${BB5_ENGINE_ROOT}/.autonomous/prompts"
+  config: "${BB5_ENGINE_ROOT}/.autonomous/config"
+  skills: "${BB5_ENGINE_ROOT}/.autonomous/skills"
+  templates: "${BB5_ENGINE_ROOT}/.autonomous/templates"
+
+# ============================================================================
+# Routing (Engine-specific commands)
+# ============================================================================
+routing:
+  commands:
+    cp: "context/project"
+    vp: "context/project"
+    ca: "context/agent"
+    va: "context/agent"
+    sp: "context/skill"
+    vs: "context/skill"
+
+  # Skill registry location
+  skills:
+    registry: "${BB5_ENGINE_ROOT}/.autonomous/config/skill-registry.yaml"
+    auto_discover: true
+
+# ============================================================================
+# Features (Engine defaults)
+# ============================================================================
+features:
+  automated_testing: true
+  github_integration: true
+  api_gateway: false
+  code_review: true
+  performance_monitoring: true
+
+# ============================================================================
+# Execution (Engine-specific)
+# ============================================================================
+execution:
+  max_concurrent_tasks: 5
+  task_timeout: 7200
+  retry_attempts: 3
+  retry_delay: 60
+  verbose_logging: true
+
+# ============================================================================
+# Integrations (Engine defaults)
+# ============================================================================
+integrations:
+  github:
+    enabled: true
+
+  mcp:
+    enabled: true
+    servers:
+      - name: "filesystem"
+        enabled: true
+      - name: "database"
+        enabled: false
+
+# ============================================================================
+# Monitoring (Engine defaults)
+# ============================================================================
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  health_check_interval: 60
+
+# ============================================================================
+# End of Configuration
+# ============================================================================

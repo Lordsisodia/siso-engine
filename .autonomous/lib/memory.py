@@ -11,6 +11,11 @@ from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 import json
 import yaml
+import sys
+
+# Add lib to path for importing paths module
+sys.path.insert(0, str(Path(__file__).parent))
+from paths import get_path_resolver
 
 
 class MemorySystem:
@@ -23,16 +28,18 @@ class MemorySystem:
     - Context: Summaries of loaded context
     """
 
-    def __init__(self, memory_base_path: Optional[Path] = None):
+    def __init__(self, memory_base_path: Optional[Path] = None, project_name: Optional[str] = None):
         """
         Initialize memory system.
 
         Args:
-            memory_base_path: Path to memory folder (default: .Autonomous/memory)
+            memory_base_path: Path to memory folder (default: uses path resolver)
+            project_name: Project name for path resolution
         """
         if memory_base_path is None:
-            script_dir = Path(__file__).parent.parent
-            memory_base_path = script_dir / "memory"
+            # Use path resolver for consistent path resolution
+            resolver = get_path_resolver(project_name)
+            memory_base_path = resolver.engine_path / '.autonomous' / 'memory'
 
         self.base_path = memory_base_path
         self.decisions_path = self.base_path / "decisions"
