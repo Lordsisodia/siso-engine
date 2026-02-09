@@ -1,0 +1,73 @@
+# Workflow: Edit Prd
+# Edit PRD
+
+name: edit-prd
+command: EP
+description: Edit PRD
+skill: bmad-pm
+agent: John
+complexity: complex
+steps:
+- name: load-prd
+  title: Load PRD
+  description: Load existing PRD for editing
+  actions:
+  - Read PRD file
+  - Understand current state
+  - Identify edit scope
+- name: apply-edits
+  title: Apply Edits
+  description: Apply requested edits to PRD
+  actions:
+  - Update sections
+  - Add new requirements
+  - Remove deprecated content
+- name: validate-changes
+  title: Validate Changes
+  description: Ensure changes maintain PRD integrity
+  actions:
+  - Check consistency
+  - Verify no contradictions
+  - Ensure completeness
+- name: save-updated-prd
+  title: Save Updated PRD
+  description: Save the updated PRD
+  actions:
+  - Write updated file
+  - Create changelog
+  - Archive version
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: ep-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/edit-prd-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
+- Problem statement clear
+- Requirements complete
+- User journeys documented
+- Success criteria measurable
+party_mode_agents:
+- bmad-pm
+- bmad-analyst
+- bmad-architect

@@ -1,0 +1,51 @@
+# chat-log.yaml - Communication between Planner and Executor
+# Purpose: Ask questions, report discoveries, clarify intent
+#
+# This is NOT for real-time chat. It's for:
+# - Executor asking Planner questions about unclear instructions
+# - Executor reporting discoveries Planner should know
+# - Planner responding to questions
+# - Async communication across runs
+
+version: "1.0"
+
+# =============================================================================
+# MESSAGE STRUCTURE
+# =============================================================================
+#
+# - from: planner | executor | architect
+# - to: planner | executor | architect | all
+# - timestamp: ISO 8601
+# - type: question | answer | discovery | clarification | blocker
+# - task_id: Related task (if any)
+# - content: Message text
+# - resolved: true | false (for questions/blockers)
+
+# =============================================================================
+# MESSAGE LOG
+# =============================================================================
+
+messages: []
+#  - from: "executor"
+#    to: "planner"
+#    timestamp: "2026-02-02T14:30:00Z"
+#    type: "question"
+#    task_id: "TASK-1769978192"
+#    content: "Plan says use JWT, but codebase uses sessions. Which should I use?"
+#    resolved: false
+#
+#  - from: "planner"
+#    to: "executor"
+#    timestamp: "2026-02-02T14:35:00Z"
+#    type: "answer"
+#    task_id: "TASK-1769978192"
+#    content: "Use sessions - the JWT reference was outdated. Update the plan doc."
+#    resolved: true
+#
+#  - from: "executor"
+#    to: "planner"
+#    timestamp: "2026-02-02T15:00:00Z"
+#    type: "discovery"
+#    task_id: "TASK-1769978192"
+#    content: "Found 3 other files with same import issue. Fixed all."
+#    resolved: true

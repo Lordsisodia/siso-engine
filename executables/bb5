@@ -1,0 +1,5 @@
+#!/bin/bash
+# BB5 CLI Wrapper Script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENGINE_DIR="$(dirname "$SCRIPT_DIR")"
+exec python3 "$ENGINE_DIR/interface/cli/legacy/ralf.py" "$@"

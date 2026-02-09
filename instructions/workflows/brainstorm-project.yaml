@@ -1,0 +1,56 @@
+# Workflow: Brainstorm Project
+# Brainstorm Project
+
+name: brainstorm-project
+command: BP
+description: Brainstorm Project
+skill: bmad-analyst
+agent: Mary
+complexity: medium
+steps:
+- name: start
+  title: Start
+  description: Start Brainstorm Project
+  actions:
+  - Initialize workflow
+  - Create WIP file
+- name: execute
+  title: Execute
+  description: Execute Brainstorm Project
+  actions:
+  - Perform main workflow
+  - Track progress
+- name: complete
+  title: Complete
+  description: Complete Brainstorm Project
+  actions:
+  - Finalize
+  - Update WIP
+  - Archive
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: bp-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/brainstorm-project-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated

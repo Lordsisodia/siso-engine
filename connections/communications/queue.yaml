@@ -1,0 +1,60 @@
+# queue.yaml - What's ready to execute RIGHT NOW
+# Managed by: Planner (writes), Executor (reads/claims)
+# Purpose: Single source of truth for executor task selection
+#
+# The Planner decides WHAT to do next and writes it here.
+# The Executor reads this file and executes what's specified.
+# This is the CONTRACT between Planner and Executor.
+
+version: "1.0"
+updated_at: "2026-02-02T00:00:00Z"
+updated_by: "planner"
+
+# =============================================================================
+# NEXT TASK (Planner's decision)
+# =============================================================================
+
+# The task that should be executed next. Set by Planner, cleared by Stop hook.
+next_task: null
+
+# Why this task was chosen (Planner's reasoning)
+reasoning: null
+
+# Brief summary of what needs to be done
+context_summary: null
+
+# Link to detailed plan document
+plan_doc: null
+
+# =============================================================================
+# QUEUE STATUS
+# =============================================================================
+
+# Current state of the execution queue
+status: waiting  # waiting | ready | executing | blocked
+
+# If blocked, why
+blocker_reason: null
+
+# When the queue was last processed
+last_processed_at: null
+
+# =============================================================================
+# ACTIVE EXECUTION (set by Executor when claiming)
+# =============================================================================
+
+active_execution:
+  task_id: null
+  claimed_at: null
+  claimed_by: null  # executor run_id
+  estimated_completion: null
+
+# =============================================================================
+# EXECUTOR HEARTBEAT (updated by Executor during execution)
+# =============================================================================
+
+heartbeat:
+  last_seen: null
+  status: idle  # idle | executing | error
+  current_task: null
+  run_id: null

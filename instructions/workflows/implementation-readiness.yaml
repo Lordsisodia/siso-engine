@@ -1,0 +1,64 @@
+# Workflow: Implementation Readiness
+# Implementation Readiness
+
+name: implementation-readiness
+command: IR
+description: Implementation Readiness
+skill: bmad-pm
+agent: John
+complexity: complex
+steps:
+- name: start
+  title: Start
+  description: Start Implementation Readiness
+  actions:
+  - Initialize workflow
+  - Create WIP file
+- name: execute
+  title: Execute
+  description: Execute Implementation Readiness
+  actions:
+  - Perform main workflow
+  - Track progress
+- name: complete
+  title: Complete
+  description: Complete Implementation Readiness
+  actions:
+  - Finalize
+  - Update WIP
+  - Archive
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: ir-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/implementation-readiness-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
+- Problem statement clear
+- Requirements complete
+- User journeys documented
+- Success criteria measurable
+party_mode_agents:
+- bmad-pm
+- bmad-analyst
+- bmad-architect

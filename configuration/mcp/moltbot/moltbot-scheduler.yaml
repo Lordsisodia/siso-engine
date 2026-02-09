@@ -1,0 +1,103 @@
+# Moltbot Hybrid Scheduler Configuration
+# Smart scheduling without micro-management
+
+workflows:
+  github-scout:
+    name: "GitHub Repository Scout"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-scout.md"
+    working_dir: "/opt/ralf"
+    schedule: "0 2 * * *"  # Daily at 2 AM (low GitHub traffic)
+    conditions:
+      max_concurrent: 1
+      skip_if_running: ["codebase-audit"]  # Don't run together
+    recovery:
+      max_retries: 3
+      retry_delay: "10m"
+      on_failure: "notify"  # Don't auto-restart after 3 failures
+    notifications:
+      telegram: "7643203581"
+      on_complete: true
+      on_blocked: true
+      on_failure_after_retries: true
+
+  codebase-audit:
+    name: "Internal Codebase Audit"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-audit.md"
+    working_dir: "/opt/ralf"
+    schedule: "0 4 * * 0"  # Sunday 4 AM
+    conditions:
+      max_concurrent: 1
+      skip_if_running: ["github-scout"]
+      cpu_threshold: 50  # Only if CPU < 50%
+    recovery:
+      max_retries: 2
+      retry_delay: "30m"
+      on_failure: "notify"
+    notifications:
+      telegram: "7643203581"
+      on_complete: true
+      on_blocked: true
+
+  optimizer:
+    name: "Workflow Optimizer"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-optimizer.md"
+    working_dir: "/opt/ralf"
+    trigger: "idle"  # Run when CPU idle and no other workflows
+    conditions:
+      cpu_threshold: 20
+      memory_threshold: 40
+      skip_if_running: ["github-scout", "codebase-audit"]
+    recovery:
+      max_retries: 1
+      on_failure: "silent"  # Optimizer failing is not critical
+    notifications:
+      telegram: "7643203581"
+      on_complete: false  # Too noisy
+      on_blocked: true
+
+  execution-pool:
+    name: "Task Execution Pool"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-executor.md"
+    working_dir: "/opt/ralf"
+    trigger: "queue_depth"  # Run when tasks in queue
+    conditions:
+      min_queue_depth: 1
+      max_instances: 3  # Up to 3 executors in parallel
+    recovery:
+      max_retries: 5  # Executors should keep trying
+      retry_delay: "5m"
+      on_failure: "restart"
+    notifications:
+      telegram: "7643203581"
+      on_blocked: true
+      on_complete: false  # Too frequent
+
+scheduler:
+  check_interval: "30s"  # How often to check conditions
+  state_file: "/opt/moltbot/scheduler-state.yaml"
+  log_file: "/opt/moltbot/logs/scheduler.log"
+
+  # Smart scheduling rules
+  rules:
+    - name: "business_hours"
+      condition: "hour >= 9 && hour <= 17"
+      action: "pause_non_critical"  # Don't run optimizer during day
+
+    - name: "high_cpu"
+      condition: "cpu > 80"
+      action: "pause_all"  # Pause everything if CPU high
+
+    - name: "queue_backlog"
+      condition: "queue_depth > 10"
+      action: "spawn_additional_executors"  # Scale up executors
+
+telegram_commands:
+  enabled: true
+  prefix: "!"
+  commands:
+    start: "Manually start a workflow"
+    stop: "Stop a running workflow"
+    status: "Show all workflow statuses"
+    pause: "Pause scheduler"
+    resume: "Resume scheduler"
+    logs: "Show recent logs"

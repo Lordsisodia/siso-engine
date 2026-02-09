@@ -1,0 +1,30 @@
+# Moltbot Conversational Configuration
+# You talk to Moltbot, Moltbot does things
+
+workflows:
+  github-scout:
+    name: "GitHub Repository Scout"
+    description: "Analyze GitHub repos for useful patterns"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-scout.md"
+    working_dir: "/opt/ralf"
+
+  codebase-audit:
+    name: "Internal Codebase Audit"
+    description: "Analyze BB5 codebase for improvements"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-audit.md"
+    working_dir: "/opt/ralf"
+
+  optimizer:
+    name: "Workflow Optimizer"
+    description: "Optimize running workflows"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-optimizer.md"
+    working_dir: "/opt/ralf"
+
+  execution-pool:
+    name: "Task Execution Pool"
+    description: "Execute pending tasks from queue"
+    command: "claude -p ~/.blackbox5/2-engine/.autonomous/prompts/ralf-executor.md"
+    working_dir: "/opt/ralf"
+    max_instances: 3  # Can run up to 3 in parallel
+
+# No scheduling - you control everything via Telegram/Claude

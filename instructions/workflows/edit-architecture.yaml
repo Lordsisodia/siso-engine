@@ -1,0 +1,72 @@
+# Workflow: Edit Architecture
+# Edit Architecture
+
+name: edit-architecture
+command: EA
+description: Edit Architecture
+skill: bmad-architect
+agent: Winston
+complexity: complex
+steps:
+- name: load-architecture
+  title: Load Architecture
+  description: Load existing architecture
+  actions:
+  - Read architecture doc
+  - Understand current design
+- name: apply-changes
+  title: Apply Changes
+  description: Apply requested changes
+  actions:
+  - Update components
+  - Modify data model
+  - Revise APIs
+- name: validate-integrity
+  title: Validate Integrity
+  description: Ensure changes maintain integrity
+  actions:
+  - Check consistency
+  - Verify interfaces
+  - Update ADRs
+- name: save-changes
+  title: Save Changes
+  description: Save updated architecture
+  actions:
+  - Write updated doc
+  - Document changes
+  - Version control
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: ea-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/edit-architecture-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
+- Components defined
+- Interfaces specified
+- Data model designed
+- NFRs addressed
+party_mode_agents:
+- bmad-architect
+- bmad-dev
+- bmad-qa

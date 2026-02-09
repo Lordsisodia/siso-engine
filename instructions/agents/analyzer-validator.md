@@ -1,0 +1,1 @@
+/Users/shaansisodia/.blackbox5/5-project-memory/blackbox5/.autonomous/research-pipeline/.templates/prompts/analyst-validator.md

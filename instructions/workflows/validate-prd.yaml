@@ -1,0 +1,80 @@
+# Workflow: Validate Prd
+# Validate PRD
+
+name: validate-prd
+command: VP
+description: Validate PRD
+skill: bmad-pm
+agent: John
+complexity: complex
+steps:
+- name: load-prd
+  title: Load PRD
+  description: Load and parse the PRD document
+  actions:
+  - Read PRD file
+  - Parse structure
+  - Identify sections
+- name: check-problem-statement
+  title: Check Problem Statement
+  description: Verify clear problem statement exists
+  actions:
+  - Problem is clearly defined
+  - Target users identified
+  - Impact quantified
+- name: check-requirements
+  title: Check Requirements
+  description: Verify requirements are complete and well-defined
+  actions:
+  - Functional requirements sufficient
+  - NFRs defined
+  - Success criteria measurable
+- name: check-user-journeys
+  title: Check User Journeys
+  description: Verify user journeys cover all user types
+  actions:
+  - All user types covered
+  - Edge cases addressed
+  - Flow is logical
+- name: generate-report
+  title: Generate Validation Report
+  description: Create validation report with findings
+  actions:
+  - List gaps and issues
+  - Provide recommendations
+  - Rate overall completeness
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: vp-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/validate-prd-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
+- Problem statement clear
+- Requirements complete
+- User journeys documented
+- Success criteria measurable
+party_mode_agents:
+- bmad-pm
+- bmad-analyst
+- bmad-architect

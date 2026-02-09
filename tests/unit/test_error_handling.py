@@ -26,7 +26,7 @@ while root.name != 'blackbox5' and root.parent != root:
 engine_path = root / '2-engine'
 sys.path.insert(0, str(engine_path))
 
-from core.agents.definitions.core.skill_manager import SkillManager
+from agents.framework.skill_manager import SkillManager
 
 
 def print_section(title: str, char: str = "="):

@@ -1,0 +1,29 @@
+[Unit]
+Description=BB5 Health Monitor Daemon
+Documentation=https://github.com/shaansisodia/blackbox5/docs/health-monitoring
+After=network.target
+
+[Service]
+Type=simple
+User=%I
+Group=%I
+WorkingDirectory=/home/%I/.blackbox5
+Environment=PYTHONPATH=/home/%I/.blackbox5/bin/lib
+Environment=BB5_HOME=/home/%I/.blackbox5
+EnvironmentFile=/home/%I/.blackbox5/config/watch.env
+ExecStart=/home/%I/.blackbox5/bin/bb5-watch start --foreground
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=10s
+StartLimitInterval=60s
+StartLimitBurst=3
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=false
+ReadWritePaths=/home/%I/.blackbox5/.autonomous/health
+
+[Install]
+WantedBy=multi-user.target

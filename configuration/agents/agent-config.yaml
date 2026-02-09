@@ -1,0 +1,61 @@
+# Agent Configuration for ARCH-067
+# Multi-Agent Autonomous System Configuration
+
+## Task ID Mappings
+# Defines handlers and validation rules for executor/verifier routing
+task_handlers:
+  TASK-SKIL-005:
+    name: "Threshold Fix"
+    handler: "threshold_fix"
+    validation_rules: ["skill_selection_yaml"]
+  TASK-ARCH-012:
+    name: "Engine Path Fix"
+    handler: "engine_path_fix"
+    validation_rules: ["routes_yaml"]
+  TASK-SKIL-008:
+    name: "Standardize Thresholds"
+    handler: "standardize_thresholds"
+    validation_rules: ["skill_selection_yaml"]
+  TASK-METR-002:
+    name: "Sync Completion Counts"
+    handler: "sync_completion"
+    validation_rules: ["task_files"]
+
+## Directory Structure
+# Project-agnostic paths for agent navigation
+paths:
+  operations: "operations"
+  tasks_active: "tasks/active"
+  tasks_completed: "tasks/completed"
+  analysis: ".autonomous/analysis"
+  runs: ".autonomous/runs"
+  communications: ".autonomous/agents/communications"
+
+## Analyzer Prompts
+# Configurable prompts for scout agents
+analyzers:
+  skill:
+    name: "Skill Effectiveness Analyzer"
+    prompt_template: "prompts/agents/skill-analyzer.md"
+  process:
+    name: "Process Friction Analyzer"
+    prompt_template: "prompts/agents/process-analyzer.md"
+  documentation:
+    name: "Documentation Drift Analyzer"
+    prompt_template: "prompts/agents/documentation-analyzer.md"
+  architecture:
+    name: "Architecture Improvement Analyzer"
+    prompt_template: "prompts/agents/architecture-analyzer.md"
+  metrics:
+    name: "Metrics & Quality Analyzer"
+    prompt_template: "prompts/agents/metrics-analyzer.md"
+
+## Dependency Rules
+# Task categories for planner dependency resolution
+dependency_rules:
+  skill_tasks:
+    - "TASK-SKILL-001"
+  infrastructure_tasks:
+    - "TASK-INFRA-001"
+  architecture_tasks:
+    - "TASK-ARCH-001"

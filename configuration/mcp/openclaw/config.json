@@ -1,0 +1,70 @@
+{
+  "models": {
+    "providers": {
+      "zai": {
+        "baseUrl": "https://api.z.ai/api/paas/v4",
+        "apiKey": "455a01beaad94e00b91e8b99b2cb74f6.m0gimfbfc6AlitLz",
+        "models": [
+          {
+            "id": "glm-4.7",
+            "name": "GLM 4.7",
+            "contextWindow": 128000,
+            "maxTokens": 4096,
+            "reasoning": false,
+            "input": ["text"],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            }
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "zai/glm-4.7"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    }
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto"
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "dmPolicy": "pairing",
+      "botToken": "8581639813:AAFA13wDTKEX2x6J-lVfpq9QHnsGRnB1EZo",
+      "groupPolicy": "allowlist",
+      "streamMode": "partial"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "token": "ralf-local-token-12345"
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      }
+    }
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.2.1",
+    "lastTouchedAt": "2026-02-03T18:47:05.516Z"
+  }
+}

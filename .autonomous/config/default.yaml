@@ -1,0 +1,191 @@
+# RALF Configuration System - Default Configuration
+# ================================================
+# This is the base configuration file for RALF (Recursive Agent Loop Framework).
+# It provides default values that can be overridden by:
+#   1. CLI Arguments (highest priority)
+#   2. Environment Variables (RALF_*)
+#   3. Project Config (.ralf/config.yaml)
+#   4. User Config (~/.config/ralf/config.yaml)
+#   5. This file (lowest priority)
+
+ralf:
+  version: "3.0.0"
+  name: "RALF"
+  description: "Recursive Agent Loop Framework"
+
+# Path Configuration
+# Use ${ENV_VAR} syntax for environment variable substitution
+paths:
+  # Core directories
+  project_root: "${RALF_PROJECT_DIR}"
+  engine_dir: "${RALF_ENGINE_DIR}"
+
+  # Project subdirectories
+  autonomous_dir: "${RALF_PROJECT_DIR}/.autonomous"
+  tasks_dir: "${RALF_PROJECT_DIR}/tasks"
+  runs_dir: "${RALF_PROJECT_DIR}/.autonomous/runs"
+  analysis_dir: "${RALF_PROJECT_DIR}/.autonomous/analysis"
+  memory_dir: "${RALF_PROJECT_DIR}/.autonomous/memory"
+  timeline_dir: "${RALF_PROJECT_DIR}/.autonomous/timeline"
+
+  # Engine subdirectories
+  lib_dir: "${RALF_ENGINE_DIR}/.autonomous/lib"
+  config_dir: "${RALF_ENGINE_DIR}/.autonomous/config"
+  prompts_dir: "${RALF_ENGINE_DIR}/.autonomous/prompts"
+  hooks_dir: "${RALF_ENGINE_DIR}/.autonomous/hooks"
+  bin_dir: "${RALF_ENGINE_DIR}/.autonomous/bin"
+  templates_dir: "${RALF_ENGINE_DIR}/.autonomous/templates"
+
+# Agent Configuration
+agents:
+  scout:
+    enabled: true
+    script: "scout-intelligent.py"
+    output_dir: "analysis/scout-reports"
+    timeout_seconds: 300
+    max_analyzers: 5
+    parallel: false
+
+  planner:
+    enabled: true
+    script: "planner-prioritize.py"
+    output_dir: "tasks/active"
+    timeout_seconds: 120
+
+  executor:
+    enabled: true
+    script: "executor-implement.py"
+    output_dir: "analysis/executor-reports"
+    timeout_seconds: 600
+    dry_run: false
+
+  verifier:
+    enabled: true
+    script: "verifier-validate.py"
+    output_dir: "analysis/verifier-reports"
+    timeout_seconds: 180
+
+# Improvement Loop Configuration
+improvement_loop:
+  enabled: true
+  max_iterations: 10
+  auto_execute: false
+  quick_win_threshold:
+    effort_max: 2
+    impact_min: 3
+
+# Feature Toggles
+features:
+  skills:
+    enabled: true
+    config_path: "operations/skill-selection.yaml"
+    auto_trigger: true
+
+  improvement_loop:
+    enabled: true
+    max_iterations: 10
+
+  timeline:
+    enabled: true
+    auto_track: true
+
+  hooks:
+    enabled: true
+    pre_execution: true
+    post_execution: true
+
+  storage:
+    backend: "filesystem"  # Options: filesystem, database, git
+    format: "yaml"         # Options: yaml, json, sqlite
+
+# Logging Configuration
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "${RALF_PROJECT_DIR}/.autonomous/logs/ralf.log"
+  max_size_mb: 10
+  backup_count: 5
+  console: true
+
+# Hook Timeouts (seconds)
+hook_timeouts:
+  pre_tool_use: 30
+  post_tool_use: 30
+  pre_compact: 60
+  post_tool_use_failure: 30
+  session_start: 10
+  session_end: 30
+  subagent_start: 10
+  subagent_stop: 10
+  user_prompt_submit: 5
+  notification: 10
+  permission_request: 30
+  stop: 60
+
+# Priority Thresholds for Planner
+priority_thresholds:
+  CRITICAL: 15.0
+  HIGH: 12.0
+  MEDIUM: 8.0
+  LOW: 0.0
+
+# Effort Mapping (minutes)
+effort_mapping:
+  1: 15   # 15 minutes
+  2: 30   # 30 minutes
+  3: 60   # 1 hour
+  4: 120  # 2 hours
+  5: 240  # 4+ hours
+
+# Task Handler Configuration
+task_handlers:
+  threshold_fix:
+    handler: "execute_threshold_fix"
+    validation_rules:
+      - "check_threshold_value"
+      - "check_documentation_updated"
+      - "check_yaml_valid"
+
+  engine_path_fix:
+    handler: "execute_fix_engine_path"
+    validation_rules:
+      - "check_no_old_references"
+      - "check_new_references_present"
+
+  standardize_thresholds:
+    handler: "execute_standardize_thresholds"
+    validation_rules:
+      - "check_all_thresholds_standardized"
+
+# Dependency Rules for Planner
+dependency_rules:
+  skill_tasks: []
+  infrastructure_tasks: []
+  architecture_tasks: []
+  process_tasks: []
+
+# Storage Backend Configuration
+storage:
+  backend: "filesystem"
+
+  filesystem:
+    base_path: "${RALF_PROJECT_DIR}/.autonomous"
+    tasks_path: "tasks"
+    runs_path: "runs"
+    memory_path: "memory"
+
+  database:
+    type: "sqlite"  # Options: sqlite, postgresql
+    connection_string: "${RALF_DB_CONNECTION}"
+
+  git:
+    auto_commit: false
+    commit_message_template: "ralf: {action} {target}"
+
+# Validation Schema
+schema:
+  version: "1.0.0"
+  required_fields:
+    - ralf.version
+    - paths.project_root
+    - paths.engine_dir

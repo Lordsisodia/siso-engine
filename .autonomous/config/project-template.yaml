@@ -1,0 +1,76 @@
+# RALF Project Configuration Template
+# ===================================
+# Copy this file to your project root as `.ralf/config.yaml`
+# and customize for your project-specific needs.
+
+ralf:
+  version: "3.0.0"
+
+# Project-specific paths (relative to project root)
+# Uncomment and modify as needed
+paths:
+  # tasks_dir: "custom/tasks"
+  # runs_dir: "custom/runs"
+  # analysis_dir: "custom/analysis"
+  # memory_dir: "custom/memory"
+
+# Agent configuration overrides
+agents:
+  scout:
+    enabled: true
+    # parallel: false
+    # max_analyzers: 5
+    # timeout_seconds: 300
+
+  planner:
+    enabled: true
+    # timeout_seconds: 120
+
+  executor:
+    enabled: true
+    # dry_run: false
+    # timeout_seconds: 600
+
+  verifier:
+    enabled: true
+    # timeout_seconds: 180
+
+# Feature toggles
+features:
+  skills:
+    enabled: true
+    auto_trigger: true
+
+  improvement_loop:
+    enabled: true
+    max_iterations: 10
+    auto_execute: false
+
+  timeline:
+    enabled: true
+    auto_track: true
+
+  hooks:
+    enabled: true
+
+# Project-specific logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  console: true
+  # file: ".autonomous/logs/ralf.log"
+
+# Custom task handlers
+# Define project-specific task handlers here
+task_handlers:
+  # example_handler:
+  #   handler: "execute_example"
+  #   validation_rules:
+  #     - "check_example_rule"
+
+# Custom dependency rules
+# Define task dependencies here
+dependency_rules:
+  # skill_tasks: []
+  # infrastructure_tasks: []
+  # architecture_tasks: []
+  # process_tasks: []

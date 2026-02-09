@@ -1,0 +1,37 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "zai/claude-sonnet-4-5"
+      }
+    }
+  },
+  "models": {
+    "providers": {
+      "zai": {
+        "baseUrl": "https://api.z.ai/api/paas/v4",
+        "apiKey": "455a01beaad94e00b91e8b99b2cb74f6.m0gimfbfc6AlitLz",
+        "models": [
+          {
+            "id": "claude-sonnet-4-5-20251101",
+            "name": "Claude Sonnet 4.5",
+            "contextWindow": 200000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "botToken": "8581639813:AAFA13wDTKEX2x6J-lVfpq9QHnsGRnB1EZo"
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "token": "ralf-local-token-12345"
+    }
+  }
+}

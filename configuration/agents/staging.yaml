@@ -1,0 +1,54 @@
+# RALF Staging Environment Configuration
+# =======================================
+# Pre-production environment for testing.
+
+version: "2.0.0-staging"
+
+system:
+  environment: "staging"
+  log_level: "INFO"
+  debug_mode: false
+
+api:
+  host: "staging.ralf.example.com"
+  port: 443
+  timeout: 30
+  cors_enabled: false
+  ssl_required: true
+
+database:
+  host: "staging-db.ralf.example.com"
+  port: 5432
+  name: "ralf_staging"
+  ssl_mode: "require"
+  pool_size: 20
+
+security:
+  api_key_required: true
+  rate_limiting: true
+
+features:
+  # Production-like feature set
+  automated_testing: true
+  github_integration: true
+  api_gateway: true
+  code_review: false
+  performance_monitoring: true
+
+execution:
+  max_concurrent_tasks: 3
+  task_timeout: 3600
+  verbose_logging: false
+
+monitoring:
+  enabled: true
+  metrics_port: 9090
+  alerting:
+    enabled: true
+    webhook_url: "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+
+# Staging-specific settings
+staging:
+  enable_feature_flags: true
+  test_data_cleanup: true
+  performance_profiling: true

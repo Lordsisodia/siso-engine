@@ -1,0 +1,14 @@
+/home/*/.blackbox5/.autonomous/health/*.log {
+    daily
+    rotate 14
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 0644 %USER% %USER%
+    size 100M
+
+    postrotate
+        /bin/systemctl reload bb5-watch@* > /dev/null 2>&1 || true
+    endscript
+}

@@ -1,0 +1,56 @@
+# Workflow: Create Brief
+# Create Brief
+
+name: create-brief
+command: CB
+description: Create Brief
+skill: bmad-analyst
+agent: Mary
+complexity: medium
+steps:
+- name: start
+  title: Start
+  description: Start Create Brief
+  actions:
+  - Initialize workflow
+  - Create WIP file
+- name: execute
+  title: Execute
+  description: Execute Create Brief
+  actions:
+  - Perform main workflow
+  - Track progress
+- name: complete
+  title: Complete
+  description: Complete Create Brief
+  actions:
+  - Finalize
+  - Update WIP
+  - Archive
+apc_menu:
+  enabled: true
+  options:
+    advanced:
+      label: Advanced
+      description: Full workflow with all steps, detailed documentation
+    party:
+      label: Party
+      description: Multi-agent collaborative mode
+    continue:
+      label: Continue
+      description: Resume from last saved checkpoint
+wip_tracking:
+  enabled: true
+  directory: ./wip
+  filename_pattern: cb-{name}-{timestamp}.md
+outputs:
+- type: artifact
+  location: ./artifacts/create-brief-{name}.md
+  format: markdown
+- type: wip
+  location: ./wip/{command}-{name}-{timestamp}.md
+  format: markdown
+verification:
+- WIP file created and updated
+- All steps completed
+- Output artifacts generated
